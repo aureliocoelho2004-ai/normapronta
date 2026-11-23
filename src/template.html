@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NormaPronta ABNT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: balcão de normalização de uma biblioteca — preciso, calmo, confiável
+   IDEA: uma folha A4 sobre a mesa de revisão, com as margens medidas a régua e marcas de caneta vermelha
+   PICTURE: a própria folha A4 é a área de envio; cotas 3 cm / 2 cm desenhadas nas bordas
+   COLOUR and TYPE: papel branco, grafite, um campo de cinza-mesa, caneta de revisão vermelha; Plex Serif nos títulos, Plex Sans no corpo
+   LAYOUT: folha à esquerda grande, opções numa coluna calma à direita; relatório e orçamento logo abaixo */
+:root{color-scheme:light dark;
+--bg:light-dark(#eceae4,#17181a);--paper:light-dark(#ffffff,#222427);--ink:light-dark(#1b1c1e,#ecebe7);--mute:light-dark(#5d6066,#a3a6ab);
+--line:light-dark(#d4d1c8,#3a3d42);--red:light-dark(#c63b25,#ff7a63);--redbg:light-dark(#fbe9e5,#3a2420);--ok:light-dark(#1f6b45,#7fd6a6)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;line-height:1.08;margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,4.4vw,48px)}h2{font-size:24px}h3{font-size:17px;font-family:inherit}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
+.top{padding-bottom:8px}.top p{color:var(--mute);max-width:66ch;margin:12px 0 0}
+.norms{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.norms span{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;background:var(--paper)}
+.desk{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.sheetbox{position:relative;padding:26px 30px 30px 34px;max-width:470px;margin:0 auto;width:100%}
+.sheet{position:relative;aspect-ratio:210/297;background:var(--paper);box-shadow:0 1px 0 var(--line),0 18px 40px -18px rgba(0,0,0,.35);border-radius:3px;cursor:pointer;outline:none;transition:transform .2s}
+.sheet:focus-visible{box-shadow:0 0 0 3px var(--red)}.sheet.drag{transform:translateY(-4px)}
+.mancha{position:absolute;left:14.29%;right:9.52%;top:10.1%;bottom:6.73%;border:1.5px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:18px}
+.mancha b{font-family:"IBM Plex Serif",serif;font-size:clamp(20px,2.4vw,28px);font-weight:600}
+.mancha small{color:var(--mute);font-size:14px}
+.lines{width:78%;display:grid;gap:7px;margin:6px 0}.lines i{display:block;height:5px;border-radius:3px;background:var(--line)}.lines i:first-child{margin-left:12%}
+.dim{position:absolute;font-size:12px;color:var(--red);font-weight:600;white-space:nowrap}
+.dim.t{top:2px;left:50%;transform:translateX(-50%)}.dim.l{left:8px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg)}
+.dim.r{right:6px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%)}.dim.b{bottom:4px;left:50%;transform:translateX(-50%)}
+.pnum{position:absolute;top:4.5%;right:9.52%;font-size:12px;color:var(--mute)}
+.filecard{display:none;align-items:center;gap:10px;background:var(--redbg);color:var(--ink);padding:8px 12px;border-radius:6px;font-size:14px;max-width:100%}
+.filecard.on{display:flex}.filecard span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:clamp(16px,2.4vw,26px)}
+fieldset{border:0;padding:0;margin:0 0 18px}legend{font-weight:600;margin-bottom:8px;font-size:15px}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg label{position:relative}.seg input{position:absolute;opacity:0}
+.seg span{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 8px;font-size:15px;cursor:pointer}
+.seg input:checked+span{background:var(--ink);color:var(--paper)}.seg input:focus-visible+span{outline:2px solid var(--red);outline-offset:-3px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:15px;cursor:pointer}
+.chk input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--red);flex:none}.chk em{display:block;font-style:normal;color:var(--mute);font-size:13px}
+button,.btn{font:600 16px/1 "IBM Plex Sans",sans-serif;min-height:48px;padding:0 20px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+button.ghost{background:transparent;color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.go{width:100%;background:var(--red);border-color:var(--red);color:#fff;font-size:17px}
+.status{margin-top:12px;font-size:14px;color:var(--mute);min-height:1.4em}
+.res{display:none}.res.on{display:block}
+.resgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,36px)}
+.big{display:flex;gap:28px;flex-wrap:wrap;margin:14px 0 18px}.big div{font-size:13px;color:var(--mute)}.big strong{display:block;font:600 clamp(28px,3.4vw,40px)/1.05 "IBM Plex Serif",serif;color:var(--ink)}
+ul.log{list-style:none;margin:0;padding:0}ul.log li{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:15px}
+ul.log li::before{content:"✓";color:var(--ok);font-weight:700;flex:none}ul.log li b{margin-left:auto;color:var(--mute);font-weight:500;font-variant-numeric:tabular-nums}
+ul.warn li::before{content:"!";color:var(--red)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.preview{margin-top:22px;background:light-dark(#d9d6ce,#101113);border-radius:8px;max-height:720px;overflow:auto;padding:12px}
+.preview .docx-wrapper{background:transparent!important;padding:10px!important}
+.preview section.docx{box-shadow:0 8px 24px -12px rgba(0,0,0,.4)!important;margin-bottom:16px!important}
+.quote{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:start}
+.field{display:grid;gap:6px;margin-bottom:14px;font-size:14px}.field input,.field select,textarea{font:16px "IBM Plex Sans",sans-serif;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);width:100%}
+textarea{min-height:200px;line-height:1.5;resize:vertical}
+.total{font:600 clamp(36px,5vw,52px)/1 "IBM Plex Serif",serif;margin:6px 0 4px;white-space:nowrap}
+.plans{display:grid;gap:8px;margin-bottom:14px}.plans label{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer}
+.plans input{accent-color:var(--red);width:18px;height:18px}.plans small{display:block;color:var(--mute)}.plans .pr{white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+.note{font-size:13px;color:var(--mute);margin-top:10px}
+footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
+@media(max-width:820px){.desk,.resgrid,.quote{grid-template-columns:minmax(0,1fr)}.sheetbox{max-width:440px;margin:0 auto}}
+@media(prefers-reduced-motion:reduce){.sheet{transition:none}}
+</style>
+</head>
+<body>
+<header class="band top"><div class="wrap">
+  <h1>Formatação ABNT em minutos, sem tocar no conteúdo</h1>
+  <p>Envie o trabalho em Word (.docx) ou PDF. O NormaPronta ajusta margens, fonte, espaçamentos, títulos, citações, ilustrações e referências e devolve um .docx pronto para conferir e entregar. O arquivo é processado no seu navegador e não é enviado a nenhum servidor.</p>
+  <div class="norms"><span>NBR 14724:2024</span><span>NBR 6023:2025</span><span>NBR 10520:2023</span><span>NBR 6024:2012</span><span>NBR 6027:2012</span><span>NBR 6028:2021</span></div>
+</div></header>
+
+<main class="band" style="padding-top:12px"><div class="wrap">
+  <section class="desk">
+    <div class="sheetbox">
+      <span class="dim t">3 cm</span><span class="dim l">3 cm</span><span class="dim r">2 cm</span><span class="dim b">2 cm</span>
+      <div class="sheet" id="sheet" tabindex="0" role="button" aria-label="Escolher arquivo .docx ou .pdf">
+        <span class="pnum">7</span>
+        <div class="mancha">
+          <b id="dropTitle">Solte aqui o .docx ou .pdf</b>
+          <div class="lines" aria-hidden="true"><i></i><i></i><i></i><i style="width:70%"></i></div>
+          <small id="dropSub">ou toque para escolher o arquivo</small>
+          <div class="filecard" id="filecard"><span id="fname"></span></div>
+        </div>
+      </div>
+      <input type="file" id="file" accept=".docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+    </div>
+
+    <form class="panel" id="opts">
+      <fieldset><legend>Fonte do texto</legend>
+        <div class="seg"><label><input type="radio" name="font" value="Times New Roman" checked><span>Times New Roman</span></label><label><input type="radio" name="font" value="Arial"><span>Arial</span></label></div>
+      </fieldset>
+      <fieldset><legend>Ilustrações e tabelas</legend>
+        <div class="seg"><label><input type="radio" name="fig" value="center" checked><span>Centralizadas</span></label><label><input type="radio" name="fig" value="left"><span>À esquerda</span></label></div>
+      </fieldset>
+      <fieldset><legend>Ajustes</legend>
+        <label class="chk"><input type="checkbox" id="o_refs" checked><span>Padronizar referências<em>Sobrenomes em maiúsculas, “Disponível em” e “Acesso em” no padrão, ordem alfabética</em></span></label>
+        <label class="chk"><input type="checkbox" id="o_cit" checked><span>Atualizar citações para a NBR 10520:2023<em>(SILVA, 2020) vira (Silva, 2020); et al. e apud em itálico</em></span></label>
+        <label class="chk"><input type="checkbox" id="o_quote" checked><span>Recuo de 4 cm nas citações longas<em>Opcional desde 2023, mas exigido pela maioria das bibliotecas</em></span></label>
+        <label class="chk"><input type="checkbox" id="o_blank" checked><span>Remover linhas em branco entre parágrafos</span></label>
+        <label class="chk"><input type="checkbox" id="o_src" checked><span>Trocar “Fonte: o autor” por “Fonte: elaborado pelo próprio autor.”</span></label>
+        <label class="chk"><input type="checkbox" id="o_cover" checked><span>O trabalho tem capa<em>A capa não entra na contagem das páginas</em></span></label>
+      </fieldset>
+      <button type="submit" class="go" id="go" disabled>Formatar nas normas ABNT</button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+</div></main>
+
+<section class="band res" id="res" style="padding-top:0"><div class="wrap panel">
+  <div class="resgrid">
+    <div>
+      <h2>Trabalho formatado</h2>
+      <div class="big" id="big"></div>
+      <div class="actions">
+        <button type="button" id="dl">Baixar .docx formatado</button>
+        <button type="button" class="ghost" id="again">Formatar outro arquivo</button>
+      </div>
+      <p class="note" id="dlnote">Abra no Word e aceite “atualizar campos” para o sumário recalcular as páginas. Para entregar em PDF, use Arquivo › Salvar como › PDF.</p>
+      <h3 style="margin-top:22px">O que foi ajustado</h3>
+      <ul class="log" id="log"></ul>
+    </div>
+    <div>
+      <h3>Confira antes de entregar</h3>
+      <ul class="log warn" id="warn"></ul>
+      <p class="note">O NormaPronta não altera o conteúdo. Itens que dependem de leitura humana, como o destaque do título em cada referência e os dados da capa, ficam listados aqui.</p>
+    </div>
+  </div>
+  <div class="preview" id="preview" aria-label="Pré-visualização do documento formatado"></div>
+</div></section>
+
+<section class="band" id="orc" style="padding-top:0"><div class="wrap panel">
+  <div class="quote">
+    <div>
+      <h2>Orçamento para o cliente</h2>
+      <p class="note" style="margin:8px 0 16px">As páginas são estimadas pelo arquivo enviado (cerca de 280 palavras por página). Ajuste os preços como quiser; ficam salvos neste navegador.</p>
+      <div class="field"><label for="pages">Páginas do trabalho</label><input id="pages" type="number" min="1" value="50" inputmode="numeric"></div>
+      <div class="plans" id="plans"></div>
+      <div class="field"><label for="cli">Nome do cliente</label><input id="cli" placeholder="Ex.: Ana"></div>
+      <div class="field"><label for="prazo">Prazo de entrega</label><select id="prazo"><option value="0">Padrão</option><option value="0.3">Urgente (até 6 h) +30%</option><option value="0.5">Mesmo dia, madrugada +50%</option></select></div>
+    </div>
+    <div>
+      <div class="note">Total</div>
+      <div class="total" id="total">R$ 0</div>
+      <div class="note" id="totalSub"></div>
+      <div class="field" style="margin-top:16px"><label for="msg">Mensagem pronta para o WhatsApp</label><textarea id="msg"></textarea></div>
+      <button type="button" class="ghost" id="copy">Copiar mensagem</button> <span class="note" id="copied"></span>
+    </div>
+  </div>
+</div></section>
+
+<footer class="band" style="padding-top:0"><div class="wrap">
+  <p>Regras aplicadas: A4; margens 3 cm (superior e esquerda) e 2 cm (inferior e direita); fonte 12 e entrelinha 1,5 no texto; recuo de 1,25 cm; títulos de seção conforme a NBR 6024, primárias em nova página; numeração no canto superior direito a partir da primeira seção textual; citações longas, notas, legendas, fontes e tabelas em tamanho menor e espaço simples; referências alinhadas à esquerda, espaço simples e separadas por uma linha em branco. Arquivos PDF são convertidos só em texto: imagens e tabelas do PDF não são recuperadas, então prefira o .docx sempre que existir. Normas da instituição prevalecem sobre a ABNT quando forem diferentes.</p>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.5/dist/docx-preview.min.js"></script>
+<script>/*CORE*/</script>
+<script>
+{
+const $ = id => document.getElementById(id);
+const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: v % 1 ? 2 : 0 });
+let file = null, outBlob = null, outName = '', downloads = null;
+try { if (window.claude && window.claude.use) window.claude.use('downloads').then(d => { downloads = d; }).catch(() => {}); } catch (e) {}
+const store = { get(k, d) { try { const v = localStorage.getItem('np_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('np_' + k, JSON.stringify(v)); } catch (e) {} } };
+
+// ---- arquivo ----
+const sheet = $('sheet'), inp = $('file');
+function pick(f) {
+  if (!f) return;
+  if (!/\.(docx|pdf)$/i.test(f.name)) { $('status').textContent = 'Envie um arquivo .docx ou .pdf. Arquivos .doc antigos: abra no Word e salve como .docx.'; return; }
+  file = f; $('fname').textContent = f.name + ' · ' + (f.size / 1024 / 1024).toFixed(1) + ' MB';
+  $('filecard').classList.add('on'); $('dropTitle').textContent = 'Arquivo pronto'; $('dropSub').textContent = 'toque para trocar';
+  $('go').disabled = false; $('status').textContent = /\.pdf$/i.test(f.name) ? 'PDF: o texto será extraído e montado num novo .docx (sem imagens e tabelas).' : '';
+}
+sheet.addEventListener('click', () => inp.click());
+sheet.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inp.click(); } });
+inp.addEventListener('change', () => pick(inp.files[0]));
+['dragenter', 'dragover'].forEach(ev => sheet.addEventListener(ev, e => { e.preventDefault(); sheet.classList.add('drag'); }));
+['dragleave', 'drop'].forEach(ev => sheet.addEventListener(ev, e => { e.preventDefault(); sheet.classList.remove('drag'); }));
+sheet.addEventListener('drop', e => pick(e.dataTransfer.files[0]));
+document.addEventListener('dragover', e => e.preventDefault()); document.addEventListener('drop', e => e.preventDefault());
+
+// ---- formatação ----
+$('opts').addEventListener('submit', async e => {
+  e.preventDefault(); if (!file) return;
+  const go = $('go'), st = $('status');
+  go.disabled = true; st.textContent = 'Lendo o arquivo…';
+  try {
+    if (!window.JSZip) throw new Error('Não consegui carregar a biblioteca de leitura do Word. Verifique a conexão e recarregue a página.');
+    const buf = await file.arrayBuffer();
+    let zip;
+    const isPdf = /\.pdf$/i.test(file.name);
+    if (isPdf) {
+      if (!window.pdfjsLib) throw new Error('Não consegui carregar o leitor de PDF. Recarregue a página.');
+      const pages = await NormaPronta.extractPdfPages(window.pdfjsLib, new Uint8Array(buf), (n, t) => { st.textContent = 'Lendo o PDF: página ' + n + ' de ' + t + '…'; });
+      const chars = pages.reduce((a, p) => a + p.items.reduce((b, i) => b + i.str.length, 0), 0);
+      if (chars < 200) throw new Error('Este PDF parece ser digitalizado (imagem). Não há texto para formatar; peça o arquivo .docx original.');
+      zip = NormaPronta.buildDocxFromBlocks(JSZip, NormaPronta.blocksFromPdfPages(pages));
+    } else {
+      zip = await JSZip.loadAsync(buf);
+    }
+    st.textContent = 'Aplicando as normas…';
+    const opts = {
+      font: document.querySelector('[name=font]:checked').value,
+      figAlign: document.querySelector('[name=fig]:checked').value,
+      refsFix: $('o_refs').checked, refsSort: $('o_refs').checked, citations: $('o_cit').checked,
+      longQuoteIndent: $('o_quote').checked, removeBlank: $('o_blank').checked, fixSource: $('o_src').checked, hasCover: $('o_cover').checked
+    };
+    const rep = await NormaPronta.formatDocx(zip, opts, { DOMParser, XMLSerializer });
+    if (isPdf) rep.warnings.unshift('Convertido de PDF: confira capa, quebras de parágrafo e reinsira imagens e tabelas a partir do original.');
+    outBlob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    outName = file.name.replace(/\.(docx|pdf)$/i, '') + ' - ABNT.docx';
+    show(rep);
+    st.textContent = 'Pronto.';
+  } catch (err) {
+    console.error(err);
+    st.textContent = (err && err.message) || 'Não foi possível processar este arquivo.';
+  } finally { go.disabled = false; }
+});
+
+function show(rep) {
+  const s = rep.stats;
+  $('big').innerHTML = [['Páginas (estim.)', s.paginasEstimadas], ['Títulos', s.titulos], ['Referências', s.referencias], ['Ajustes', Object.values(rep.changes).reduce((a, b) => a + b, 0)]]
+    .map(([l, v]) => '<div><strong>' + v + '</strong>' + l + '</div>').join('');
+  $('log').innerHTML = Object.entries(rep.changes).map(([k, v]) => '<li>' + esc(k) + (v > 1 ? '<b>' + v + '×</b>' : '') + '</li>').join('');
+  const w = rep.warnings.length ? rep.warnings : ['Nada pendente encontrado. Ainda assim, confira capa, folha de rosto e o sumário depois de atualizar os campos.'];
+  $('warn').innerHTML = w.map(x => '<li>' + esc(x) + '</li>').join('');
+  $('res').classList.add('on');
+  $('pages').value = s.paginasEstimadas; quote();
+  $('res').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  const pv = $('preview'); pv.innerHTML = '';
+  if (window.docx && window.docx.renderAsync) window.docx.renderAsync(outBlob, pv, null, { inWrapper: true, ignoreLastRenderedPageBreak: true, breakPages: true, experimental: true }).catch(() => { pv.innerHTML = '<p class="note" style="padding:12px">Pré-visualização indisponível para este arquivo. O .docx baixado está correto.</p>'; });
+  else pv.innerHTML = '<p class="note" style="padding:12px">Pré-visualização indisponível neste navegador.</p>';
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+$('dl').addEventListener('click', async () => {
+  if (!outBlob) return;
+  if (downloads) {
+    try { await downloads.save({ filename: outName, data: outBlob }); $('dlnote').textContent = 'Arquivo salvo. Abra no Word e aceite “atualizar campos”.'; return; }
+    catch (e) { if (e && e.code === 'declined') return; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(outBlob); a.download = outName; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+});
+$('again').addEventListener('click', () => { $('res').classList.remove('on'); inp.value = ''; inp.click(); });
+
+// ---- orçamento ----
+const defaults = [
+  { id: 'exp', nome: 'Expresso', desc: 'Formatação automática + conferência rápida, entrega em até 2 h', tipo: 'faixa', faixas: [[40, 39.9], [100, 59.9], [250, 89.9]] },
+  { id: 'comp', nome: 'Completo', desc: 'Inclui revisão manual das referências, capa e sumário, 24 h', tipo: 'pag', valor: 2.9, minimo: 89 },
+  { id: 'prem', nome: 'Premium', desc: 'Dissertação ou tese, 48 h, ajustes ilimitados por 7 dias', tipo: 'pag', valor: 3.9, minimo: 249 }
+];
+let plans = store.get('plans', defaults);
+if (!Array.isArray(plans) || plans.length !== 3) plans = defaults;
+let sel = store.get('sel', 'comp');
+function price(p, pages) {
+  if (p.tipo === 'faixa') { const f = p.faixas.find(f => pages <= f[0]); return f ? f[1] : p.faixas[p.faixas.length - 1][1] + Math.ceil((pages - p.faixas[p.faixas.length - 1][0]) / 50) * 20; }
+  return Math.max(p.minimo, Math.round(p.valor * pages * 100) / 100);
+}
+function renderPlans() {
+  const pages = Math.max(1, +$('pages').value || 1);
+  $('plans').innerHTML = plans.map(p => '<label><input type="radio" name="plan" value="' + p.id + '"' + (p.id === sel ? ' checked' : '') + '><span><strong>' + p.nome + '</strong><small>' + p.desc + '</small><small>' +
+    (p.tipo === 'pag' ? 'R$ <input data-k="valor" data-id="' + p.id + '" type="number" step="0.1" value="' + p.valor + '" style="width:5.5em;min-height:32px;padding:2px 6px" aria-label="Preço por página ' + p.nome + '"> por página, mínimo R$ ' + p.minimo : 'Até 40 p. ' + fmt(p.faixas[0][1]) + ' · até 100 p. ' + fmt(p.faixas[1][1]) + ' · até 250 p. ' + fmt(p.faixas[2][1])) +
+    '</small></span><span class="pr">' + fmt(price(p, pages)) + '</span></label>').join('');
+}
+function quote() {
+  renderPlans();
+  const pages = Math.max(1, +$('pages').value || 1);
+  const p = plans.find(x => x.id === sel) || plans[1];
+  const extra = +$('prazo').value;
+  const total = Math.round(price(p, pages) * (1 + extra) * 100) / 100;
+  $('total').textContent = fmt(total);
+  $('totalSub').textContent = p.nome + ' · ' + pages + ' páginas' + (extra ? ' · prazo urgente' : '');
+  const nome = $('cli').value.trim();
+  $('msg').value = 'Oi' + (nome ? ', ' + nome : '') + '! Segue o orçamento da formatação do seu trabalho nas normas ABNT atualizadas (NBR 14724:2024, NBR 6023:2025 e NBR 10520:2023):\n\n' +
+    '• Plano ' + p.nome + ': ' + p.desc.toLowerCase() + '\n• ' + pages + ' páginas' + (extra ? '\n• Prazo urgente' : '') + '\n• Valor: ' + fmt(total) + ' (Pix ou cartão)\n\n' +
+    'O que entra: margens, fonte, espaçamentos, títulos e numeração das seções, sumário, paginação, citações, ilustrações, tabelas e referências. Não altero o conteúdo do texto.\n\n' +
+    'Você recebe o arquivo em Word e em PDF. Se a sua faculdade tiver manual próprio, me mande que eu sigo ele. Posso começar?';
+}
+$('plans').addEventListener('change', e => {
+  if (e.target.name === 'plan') { sel = e.target.value; store.set('sel', sel); }
+  if (e.target.dataset.k) { const p = plans.find(x => x.id === e.target.dataset.id); p.valor = Math.max(0, +e.target.value || 0); store.set('plans', plans); }
+  quote();
+});
+['pages', 'cli', 'prazo'].forEach(id => $(id).addEventListener('input', quote));
+$('copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('msg').value); $('copied').textContent = 'Copiada.'; }
+  catch (e) { $('msg').select(); $('copied').textContent = 'Selecionei o texto: use Copiar do seu aparelho.'; }
+  setTimeout(() => $('copied').textContent = '', 3000);
+});
+quote();
+}
+</script>
+</body>
+</html>
