@@ -3,1167 +3,290 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NormaPronta ABNT</title>
+<title>NormaPronta | Formatação ABNT 2024 e 2025 para TCC em até 24 h</title>
+<meta name="description" content="Formatamos seu TCC, artigo, dissertação ou tese nas normas ABNT atualizadas (NBR 14724:2024, NBR 6023:2025 e NBR 10520:2023), sem alterar o conteúdo. Diagnóstico grátis pelo WhatsApp.">
+<meta property="og:title" content="NormaPronta | Seu TCC nas normas ABNT atualizadas">
+<meta property="og:description" content="Formatação ABNT 2024 e 2025 em até 24 h, sem mexer no seu texto. Peça o diagnóstico grátis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://normaprontatcc.com.br/">
+<meta name="theme-color" content="#15171a">
+<link rel="canonical" href="https://normaprontatcc.com.br/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315171a'/%3E%3Cpath d='M18 46V18h6l16 18V18h6v28h-6L24 28v18z' fill='%23f6f4ef'/%3E%3Ccircle cx='50' cy='48' r='5' fill='%23d8432b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* VOICE: balcão de normalização de uma biblioteca — preciso, calmo, confiável
-   IDEA: uma folha A4 sobre a mesa de revisão, com as margens medidas a régua e marcas de caneta vermelha
-   PICTURE: a própria folha A4 é a área de envio; cotas 3 cm / 2 cm desenhadas nas bordas
-   COLOUR and TYPE: papel branco, grafite, um campo de cinza-mesa, caneta de revisão vermelha; Plex Serif nos títulos, Plex Sans no corpo
-   LAYOUT: folha à esquerda grande, opções numa coluna calma à direita; relatório e orçamento logo abaixo */
-:root{color-scheme:light dark;
---bg:light-dark(#eceae4,#17181a);--paper:light-dark(#ffffff,#222427);--ink:light-dark(#1b1c1e,#ecebe7);--mute:light-dark(#5d6066,#a3a6ab);
---line:light-dark(#d4d1c8,#3a3d42);--red:light-dark(#c63b25,#ff7a63);--redbg:light-dark(#fbe9e5,#3a2420);--ok:light-dark(#1f6b45,#7fd6a6)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
-*{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;overflow-x:clip}
-h1,h2,h3{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;line-height:1.08;margin:0;text-wrap:balance}
-h1{font-size:clamp(30px,4.4vw,48px)}h2{font-size:24px}h3{font-size:17px;font-family:inherit}
-.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
-.top{padding-bottom:8px}.top p{color:var(--mute);max-width:66ch;margin:12px 0 0}
-.norms{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.norms span{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;background:var(--paper)}
-.desk{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
-.sheetbox{position:relative;padding:26px 30px 30px 34px;max-width:470px;margin:0 auto;width:100%}
-.sheet{position:relative;aspect-ratio:210/297;background:var(--paper);box-shadow:0 1px 0 var(--line),0 18px 40px -18px rgba(0,0,0,.35);border-radius:3px;cursor:pointer;outline:none;transition:transform .2s}
-.sheet:focus-visible{box-shadow:0 0 0 3px var(--red)}.sheet.drag{transform:translateY(-4px)}
-.mancha{position:absolute;left:14.29%;right:9.52%;top:10.1%;bottom:6.73%;border:1.5px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:18px}
-.mancha b{font-family:"IBM Plex Serif",serif;font-size:clamp(20px,2.4vw,28px);font-weight:600}
-.mancha small{color:var(--mute);font-size:14px}
-.lines{width:78%;display:grid;gap:7px;margin:6px 0}.lines i{display:block;height:5px;border-radius:3px;background:var(--line)}.lines i:first-child{margin-left:12%}
-.dim{position:absolute;font-size:12px;color:var(--red);font-weight:600;white-space:nowrap}
-.dim.t{top:2px;left:50%;transform:translateX(-50%)}.dim.l{left:8px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg)}
-.dim.r{right:6px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%)}.dim.b{bottom:4px;left:50%;transform:translateX(-50%)}
-.pnum{position:absolute;top:4.5%;right:9.52%;font-size:12px;color:var(--mute)}
-.filecard{display:none;align-items:center;gap:10px;background:var(--redbg);color:var(--ink);padding:8px 12px;border-radius:6px;font-size:14px;max-width:100%}
-.filecard.on{display:flex}.filecard span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:clamp(16px,2.4vw,26px)}
-fieldset{border:0;padding:0;margin:0 0 18px}legend{font-weight:600;margin-bottom:8px;font-size:15px}
-.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.seg label{position:relative}.seg input{position:absolute;opacity:0}
-.seg span{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 8px;font-size:15px;cursor:pointer}
-.seg input:checked+span{background:var(--ink);color:var(--paper)}.seg input:focus-visible+span{outline:2px solid var(--red);outline-offset:-3px}
-.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:15px;cursor:pointer}
-.chk input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--red);flex:none}.chk em{display:block;font-style:normal;color:var(--mute);font-size:13px}
-button,.btn{font:600 16px/1 "IBM Plex Sans",sans-serif;min-height:48px;padding:0 20px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
-button.ghost{background:transparent;color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}
-button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
-.go{width:100%;background:var(--red);border-color:var(--red);color:#fff;font-size:17px}
-.status{margin-top:12px;font-size:14px;color:var(--mute);min-height:1.4em}
-.res{display:none}.res.on{display:block}
-.resgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,36px)}
-.big{display:flex;gap:28px;flex-wrap:wrap;margin:14px 0 18px}.big div{font-size:13px;color:var(--mute)}.big strong{display:block;font:600 clamp(28px,3.4vw,40px)/1.05 "IBM Plex Serif",serif;color:var(--ink)}
-ul.log{list-style:none;margin:0;padding:0}ul.log li{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:15px}
-ul.log li::before{content:"✓";color:var(--ok);font-weight:700;flex:none}ul.log li b{margin-left:auto;color:var(--mute);font-weight:500;font-variant-numeric:tabular-nums}
-ul.warn li::before{content:"!";color:var(--red)}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.preview{margin-top:22px;background:light-dark(#d9d6ce,#101113);border-radius:8px;max-height:720px;overflow:auto;padding:12px}
-.preview .docx-wrapper{background:transparent!important;padding:10px!important}
-.preview section.docx{box-shadow:0 8px 24px -12px rgba(0,0,0,.4)!important;margin-bottom:16px!important}
-.quote{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:start}
-.field{display:grid;gap:6px;margin-bottom:14px;font-size:14px}.field input,.field select,textarea{font:16px "IBM Plex Sans",sans-serif;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);width:100%}
-textarea{min-height:200px;line-height:1.5;resize:vertical}
-.total{font:600 clamp(36px,5vw,52px)/1 "IBM Plex Serif",serif;margin:6px 0 4px;white-space:nowrap}
-.plans{display:grid;gap:8px;margin-bottom:14px}.plans label{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer}
-.plans input{accent-color:var(--red);width:18px;height:18px}.plans small{display:block;color:var(--mute)}.plans .pr{white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
-.note{font-size:13px;color:var(--mute);margin-top:10px}
-footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
-@media(max-width:820px){.desk,.resgrid,.quote{grid-template-columns:minmax(0,1fr)}.sheetbox{max-width:440px;margin:0 auto}}
-@media(prefers-reduced-motion:reduce){.sheet{transition:none}}
+:root{--paper:#f6f4ef;--card:#fff;--ink:#15171a;--mute:#5b5f66;--line:#e2ded4;--red:#d8432b;--red-soft:#fbe7e2;--mark:#ffe37a;--green:#1f7a4d;--wa:#1faa59;
+--r:14px;--shadow:0 1px 0 rgba(0,0,0,.04),0 24px 48px -24px rgba(21,23,26,.28)}
+*{box-sizing:border-box;margin:0;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--paper);color:var(--ink);font:17px/1.6 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(5vw,20px)}
+h1,h2,h3{font-family:"DM Serif Display",Georgia,serif;font-weight:400;line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:clamp(40px,6vw,74px)}h2{font-size:clamp(32px,4.2vw,52px)}h3{font-size:24px}
+.lead{font-size:clamp(18px,1.6vw,20px);color:var(--mute);max-width:56ch}
+.mark{background:linear-gradient(transparent 58%,var(--mark) 58% 92%,transparent 92%);padding:0 .08em}
+.red{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:999px;font:700 16px/1 Manrope,sans-serif;text-decoration:none;border:2px solid var(--ink);cursor:pointer;transition:transform .15s,box-shadow .15s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px -10px rgba(0,0,0,.4)}
+.btn:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn.ghost{background:transparent}
+.btn svg{width:22px;height:22px}
+/* topo */
+header{position:sticky;top:0;z-index:20;background:rgba(246,244,239,.86);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;text-decoration:none;letter-spacing:-.02em}
+.logo i{width:32px;height:32px;border-radius:9px;background:var(--ink);display:grid;place-items:center;color:var(--paper);font:400 20px "DM Serif Display",serif;font-style:normal;position:relative}
+.logo i::after{content:"";position:absolute;right:-3px;bottom:-3px;width:10px;height:10px;border-radius:50%;background:var(--red);border:2px solid var(--paper)}
+.nav nav{display:flex;gap:28px;font-weight:600;font-size:15px}
+.nav nav a{text-decoration:none;color:var(--mute)}.nav nav a:hover{color:var(--ink)}
+.nav .btn{min-height:44px;padding:0 18px;font-size:15px}
+/* hero */
+.hero{padding:clamp(40px,6vw,84px) 0 clamp(56px,7vw,96px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 8px;font-size:14px;font-weight:600;margin-bottom:22px}
+.pill b{background:var(--red);color:#fff;border-radius:999px;padding:2px 9px;font-size:12px;letter-spacing:.02em}
+.hero h1{margin-bottom:22px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 22px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;font-weight:600;color:var(--mute)}
+.trust span{display:flex;align-items:center;gap:7px}.trust span::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.4l2.4 2.3L12 5.2' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/100%}
+/* folhas */
+.sheets{position:relative;height:clamp(380px,44vw,520px)}
+.sheet{position:absolute;width:62%;aspect-ratio:210/297;background:var(--card);border-radius:6px;box-shadow:var(--shadow);padding:9% 7% 7% 10%;overflow:hidden}
+.sheet.before{left:0;top:6%;transform:rotate(-5deg);padding:6% 9%}
+.sheet.after{right:0;top:0;transform:rotate(3deg);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:rotate(3deg) translateY(-10px)}}
+.sheet .tag{position:absolute;top:10px;right:10px;font-size:11px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:6px}
+.before .tag{background:var(--red-soft);color:var(--red)}.after .tag{background:#e3f3ea;color:var(--green)}
+.ln{height:6px;border-radius:3px;background:#dcd8cf;margin:0 0 7px}
+.before .ln{background:#c9c4ba}.before .ln.t{height:10px;background:#7d8aa8;width:70%;margin:6px 0 12px 8%}
+.after .ln.t{height:8px;background:var(--ink);width:46%;margin-bottom:12px}
+.after .ln.i{margin-left:9%}.after .ln.q{margin-left:28%;height:5px;background:#e6e2da}
+.after .num{position:absolute;top:4%;right:7%;font-size:10px;color:var(--mute);font-weight:700}
+.after .dim{position:absolute;font-size:10px;font-weight:800;color:var(--red)}
+.after .dim.l{left:2%;top:46%;writing-mode:vertical-rl;transform:rotate(180deg)}.after .dim.t{top:2.5%;left:42%}
+.after .guide{position:absolute;inset:7.5% 6.5% 6% 9.5%;border:1.5px dashed rgba(216,67,43,.35);border-radius:2px;pointer-events:none}
+.pen{position:absolute;font-family:"DM Serif Display",serif;font-style:italic;color:var(--red);font-size:clamp(14px,1.4vw,17px);line-height:1.1}
+.pen.a{left:6%;bottom:5%;max-width:52%;transform:rotate(-6deg)}.pen.b{left:34%;top:-1%;transform:rotate(-3deg)}
+.circle{position:absolute;border:2.5px solid var(--red);border-radius:50%;opacity:.85}
+.before .circle.c1{width:58%;height:7%;left:4%;top:5%}.before .circle.c2{width:38%;height:6%;left:40%;top:56%}
+.arrow{position:absolute;left:41%;top:44%;width:90px;color:var(--ink);transform:rotate(-8deg)}
+/* faixa */
+.strip{background:var(--ink);color:var(--paper);padding:18px 0;overflow:hidden}
+.strip .row{display:flex;gap:42px;white-space:nowrap;font-weight:700;font-size:15px;animation:marq 30s linear infinite;width:max-content}
+.strip .row span::before{content:"✦";color:var(--red);margin-right:14px}
+@keyframes marq{to{transform:translateX(-50%)}}
+section{padding:clamp(64px,8vw,112px) 0}
+.head{max-width:760px;margin-bottom:clamp(32px,4vw,56px)}
+.head p{margin-top:16px}
+.kicker{font-weight:800;font-size:14px;color:var(--red);margin-bottom:12px;display:block}
+/* mudanças */
+.changes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.chg{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:flex;flex-direction:column;gap:14px}
+.chg .norm{font-size:13px;font-weight:800;color:var(--mute)}
+.chg h3{font-size:23px}
+.diff{font:600 15px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin-top:auto}
+.diff div{padding:9px 12px}.diff .old{background:var(--red-soft);color:#8f2b1b;text-decoration:line-through;text-decoration-color:rgba(143,43,27,.5)}.diff .new{background:#e3f3ea;color:#145236}
+.chg p{color:var(--mute);font-size:15px}
+/* passos */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:s}
+.step{position:relative;padding:28px 26px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.step::before{counter-increment:s;content:counter(s);font:400 54px/1 "DM Serif Display",serif;color:var(--red);display:block;margin-bottom:14px}
+.step h3{margin-bottom:8px}.step p{color:var(--mute);font-size:16px}
+/* checklist */
+.dark{background:var(--ink);color:var(--paper)}
+.dark .lead,.dark .head p{color:#b9bcc2}
+.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:#2a2d31;border-radius:var(--r);overflow:hidden}
+.checks div{background:var(--ink);padding:24px}
+.checks b{display:block;font-size:17px;margin-bottom:6px}
+.checks span{color:#a9adb4;font-size:15px}
+.checks b::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);margin-right:10px;vertical-align:1px}
+.promise{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+.promise div{border:1px solid #33363b;border-radius:var(--r);padding:20px 22px;font-size:15px;color:#c9ccd1}
+.promise strong{display:block;color:var(--paper);font-size:17px;margin-bottom:4px}
+/* planos */
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 28px;display:flex;flex-direction:column;gap:18px;position:relative}
+.plan.top{border:2px solid var(--ink);box-shadow:var(--shadow)}
+.plan .badge{position:absolute;top:-13px;left:28px;background:var(--red);color:#fff;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px}
+.plan .for{color:var(--mute);font-size:15px;margin-top:-10px}
+.price{font:400 46px/1 "DM Serif Display",serif;white-space:nowrap}.price small{font:600 15px Manrope,sans-serif;color:var(--mute);margin-left:6px}
+.plan ul{list-style:none;padding:0;display:grid;gap:9px;font-size:15px}
+.plan li{display:flex;gap:10px}.plan li::before{content:"✓";color:var(--green);font-weight:800}
+.plan .btn{margin-top:auto;width:100%}
+.plan.top .btn{background:var(--ink);color:var(--paper)}
+.ex{margin-top:20px;font-size:15px;color:var(--mute);text-align:center}
+/* faq */
+.faq{max-width:820px}
+details{border-bottom:1px solid var(--line);padding:4px 0}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;align-items:center;font-weight:700;font-size:18px;padding:18px 0;min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:400 30px/1 "DM Serif Display",serif;color:var(--red);transition:transform .2s;flex:none}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--mute);padding:0 0 20px;max-width:68ch}
+/* final */
+.final{padding:0 0 clamp(64px,8vw,112px)}
+.final .box{background:var(--red);color:#fff;border-radius:28px;padding:clamp(36px,6vw,72px);display:grid;grid-template-columns:minmax(0,1.4fr) auto;gap:30px;align-items:center;position:relative;overflow:hidden}
+.final .box::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:40px solid rgba(255,255,255,.08)}
+.final p{color:rgba(255,255,255,.88);margin-top:12px;max-width:52ch}
+.final .btn{background:#fff;border-color:#fff;color:var(--ink);position:relative;z-index:1}
+footer{border-top:1px solid var(--line);padding:32px 0 100px;font-size:14px;color:var(--mute)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.float{position:fixed;right:18px;bottom:18px;z-index:30;width:60px;height:60px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 12px 28px -8px rgba(0,0,0,.45);transition:transform .15s}
+.float:hover{transform:scale(1.06)}.float svg{width:32px;height:32px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.reveal.in{opacity:1;transform:none}
+@media(max-width:960px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.sheets{max-width:520px;width:100%;margin:0 auto}
+.changes,.steps,.plans,.promise{grid-template-columns:minmax(0,1fr)}.checks{grid-template-columns:repeat(2,minmax(0,1fr))}.nav nav{display:none}
+.final .box{grid-template-columns:minmax(0,1fr)}.plan.top{order:-1}}
+@media(max-width:560px){.checks{grid-template-columns:minmax(0,1fr)}.cta .btn{width:100%}.nav .btn span{display:none}.sheets{height:360px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<header class="band top"><div class="wrap">
-  <h1>Formatação ABNT em minutos, sem tocar no conteúdo</h1>
-  <p>Envie o trabalho em Word (.docx) ou PDF. O NormaPronta ajusta margens, fonte, espaçamentos, títulos, citações, ilustrações e referências e devolve um .docx pronto para conferir e entregar. O arquivo é processado no seu navegador e não é enviado a nenhum servidor.</p>
-  <div class="norms"><span>NBR 14724:2024</span><span>NBR 6023:2025</span><span>NBR 10520:2023</span><span>NBR 6024:2012</span><span>NBR 6027:2012</span><span>NBR 6028:2021</span></div>
+<header id="top"><div class="wrap nav">
+  <a class="logo" href="#top" aria-label="NormaPronta, início"><i>N</i>NormaPronta</a>
+  <nav aria-label="Seções"><a href="#mudancas">O que mudou</a><a href="#como">Como funciona</a><a href="#planos">Planos</a><a href="#duvidas">Dúvidas</a></nav>
+  <a class="btn wa js-wa" href="#planos" data-msg="Oi! Quero o diagnóstico grátis do meu trabalho."><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.3 3.5 5.6 4.9 2.1.9 2.9 1 4 .8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg><span>Diagnóstico grátis</span></a>
 </div></header>
 
-<main class="band" style="padding-top:12px"><div class="wrap">
-  <section class="desk">
-    <div class="sheetbox">
-      <span class="dim t">3 cm</span><span class="dim l">3 cm</span><span class="dim r">2 cm</span><span class="dim b">2 cm</span>
-      <div class="sheet" id="sheet" tabindex="0" role="button" aria-label="Escolher arquivo .docx ou .pdf">
-        <span class="pnum">7</span>
-        <div class="mancha">
-          <b id="dropTitle">Solte aqui o .docx ou .pdf</b>
-          <div class="lines" aria-hidden="true"><i></i><i></i><i></i><i style="width:70%"></i></div>
-          <small id="dropSub">ou toque para escolher o arquivo</small>
-          <div class="filecard" id="filecard"><span id="fname"></span></div>
-        </div>
-      </div>
-      <input type="file" id="file" accept=".docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+<main>
+<section class="hero" style="padding-top:clamp(40px,6vw,84px)"><div class="wrap">
+  <div>
+    <div class="pill"><b>NOVO</b> Atualizado para a NBR 14724:2024 e a NBR 6023:2025</div>
+    <h1>Seu TCC nas <span class="mark">normas ABNT</span> de agora, em até 24 horas.</h1>
+    <p class="lead">Você manda o Word que já escreveu. Nós devolvemos tudo formatado, de margens a referências, sem mexer em uma palavra do seu texto.</p>
+    <div class="cta">
+      <a class="btn wa js-wa" href="#planos" data-msg="Oi! Quero o diagnóstico grátis do meu trabalho."><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#wa"/></svg>Pedir diagnóstico grátis</a>
+      <a class="btn ghost" href="#planos">Ver planos e preços</a>
     </div>
-
-    <form class="panel" id="opts">
-      <fieldset><legend>Fonte do texto</legend>
-        <div class="seg"><label><input type="radio" name="font" value="Times New Roman" checked><span>Times New Roman</span></label><label><input type="radio" name="font" value="Arial"><span>Arial</span></label></div>
-      </fieldset>
-      <fieldset><legend>Ilustrações e tabelas</legend>
-        <div class="seg"><label><input type="radio" name="fig" value="center" checked><span>Centralizadas</span></label><label><input type="radio" name="fig" value="left"><span>À esquerda</span></label></div>
-      </fieldset>
-      <fieldset><legend>Ajustes</legend>
-        <label class="chk"><input type="checkbox" id="o_refs" checked><span>Padronizar referências<em>Sobrenomes em maiúsculas, “Disponível em” e “Acesso em” no padrão, ordem alfabética</em></span></label>
-        <label class="chk"><input type="checkbox" id="o_cit" checked><span>Atualizar citações para a NBR 10520:2023<em>(SILVA, 2020) vira (Silva, 2020); et al. e apud em itálico</em></span></label>
-        <label class="chk"><input type="checkbox" id="o_quote" checked><span>Recuo de 4 cm nas citações longas<em>Opcional desde 2023, mas exigido pela maioria das bibliotecas</em></span></label>
-        <label class="chk"><input type="checkbox" id="o_blank" checked><span>Remover linhas em branco entre parágrafos</span></label>
-        <label class="chk"><input type="checkbox" id="o_src" checked><span>Trocar “Fonte: o autor” por “Fonte: elaborado pelo próprio autor.”</span></label>
-        <label class="chk"><input type="checkbox" id="o_cover" checked><span>O trabalho tem capa<em>A capa não entra na contagem das páginas</em></span></label>
-      </fieldset>
-      <button type="submit" class="go" id="go" disabled>Formatar nas normas ABNT</button>
-      <div class="status" id="status" role="status" aria-live="polite"></div>
-    </form>
-  </section>
-</div></main>
-
-<section class="band res" id="res" style="padding-top:0"><div class="wrap panel">
-  <div class="resgrid">
-    <div>
-      <h2>Trabalho formatado</h2>
-      <div class="big" id="big"></div>
-      <div class="actions">
-        <button type="button" id="dl">Baixar .docx formatado</button>
-        <button type="button" class="ghost" id="again">Formatar outro arquivo</button>
-      </div>
-      <p class="note" id="dlnote">Abra no Word e aceite “atualizar campos” para o sumário recalcular as páginas. Para entregar em PDF, use Arquivo › Salvar como › PDF.</p>
-      <h3 style="margin-top:22px">O que foi ajustado</h3>
-      <ul class="log" id="log"></ul>
-    </div>
-    <div>
-      <h3>Confira antes de entregar</h3>
-      <ul class="log warn" id="warn"></ul>
-      <p class="note">O NormaPronta não altera o conteúdo. Itens que dependem de leitura humana, como o destaque do título em cada referência e os dados da capa, ficam listados aqui.</p>
-    </div>
+    <div class="trust"><span>Não alteramos o conteúdo</span><span>Entrega em Word e PDF</span><span>Segue o manual da sua faculdade</span></div>
   </div>
-  <div class="preview" id="preview" aria-label="Pré-visualização do documento formatado"></div>
-</div></section>
-
-<section class="band" id="orc" style="padding-top:0"><div class="wrap panel">
-  <div class="quote">
-    <div>
-      <h2>Orçamento para o cliente</h2>
-      <p class="note" style="margin:8px 0 16px">As páginas são estimadas pelo arquivo enviado (cerca de 280 palavras por página). Ajuste os preços como quiser; ficam salvos neste navegador.</p>
-      <div class="field"><label for="pages">Páginas do trabalho</label><input id="pages" type="number" min="1" value="50" inputmode="numeric"></div>
-      <div class="plans" id="plans"></div>
-      <div class="field"><label for="cli">Nome do cliente</label><input id="cli" placeholder="Ex.: Ana"></div>
-      <div class="field"><label for="prazo">Prazo de entrega</label><select id="prazo"><option value="0">Padrão</option><option value="0.3">Urgente (até 6 h) +30%</option><option value="0.5">Mesmo dia, madrugada +50%</option></select></div>
+  <div class="sheets" aria-hidden="true">
+    <div class="sheet before"><span class="tag">ANTES</span>
+      <div class="ln t"></div><div class="circle c1"></div>
+      <div class="ln" style="width:92%"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:96%"></div><div class="ln" style="width:60%;margin-bottom:18px"></div>
+      <div class="ln" style="width:88%;margin-left:6%"></div><div class="ln" style="width:94%"></div><div class="ln" style="width:72%"></div><div class="circle c2"></div>
+      <div class="ln" style="width:90%;margin-top:16px"></div><div class="ln" style="width:84%"></div><div class="ln" style="width:50%"></div>
+      <div class="pen a">margem errada,<br>citação fora da norma</div>
     </div>
-    <div>
-      <div class="note">Total</div>
-      <div class="total" id="total">R$ 0</div>
-      <div class="note" id="totalSub"></div>
-      <div class="field" style="margin-top:16px"><label for="msg">Mensagem pronta para o WhatsApp</label><textarea id="msg"></textarea></div>
-      <button type="button" class="ghost" id="copy">Copiar mensagem</button> <span class="note" id="copied"></span>
+    <svg class="arrow" viewBox="0 0 100 40"><path d="M4 30C30 6 62 4 92 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M80 8l13 10-15 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="sheet after"><span class="tag">DEPOIS</span><span class="num">7</span><span class="dim t">3 cm</span><span class="dim l">3 cm</span><div class="guide"></div>
+      <div class="ln t"></div>
+      <div class="ln i" style="width:91%"></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:70%;margin-bottom:12px"></div>
+      <div class="ln q" style="width:72%"></div><div class="ln q" style="width:72%"></div><div class="ln q" style="width:50%;margin-bottom:12px"></div>
+      <div class="ln i" style="width:91%"></div><div class="ln"></div><div class="ln" style="width:84%"></div><div class="ln"></div><div class="ln" style="width:40%"></div>
     </div>
   </div>
 </div></section>
 
-<footer class="band" style="padding-top:0"><div class="wrap">
-  <p>Regras aplicadas: A4; margens 3 cm (superior e esquerda) e 2 cm (inferior e direita); fonte 12 e entrelinha 1,5 no texto; recuo de 1,25 cm; títulos de seção conforme a NBR 6024, primárias em nova página; numeração no canto superior direito a partir da primeira seção textual; citações longas, notas, legendas, fontes e tabelas em tamanho menor e espaço simples; referências alinhadas à esquerda, espaço simples e separadas por uma linha em branco. Arquivos PDF são convertidos só em texto: imagens e tabelas do PDF não são recuperadas, então prefira o .docx sempre que existir. Normas da instituição prevalecem sobre a ABNT quando forem diferentes.</p>
+<div class="strip" aria-label="Normas atendidas"><div class="row">
+  <span>NBR 14724:2024 Trabalhos acadêmicos</span><span>NBR 6023:2025 Referências</span><span>NBR 10520:2023 Citações</span><span>NBR 6024 Numeração de seções</span><span>NBR 6027 Sumário</span><span>NBR 6028 Resumo</span>
+  <span>NBR 14724:2024 Trabalhos acadêmicos</span><span>NBR 6023:2025 Referências</span><span>NBR 10520:2023 Citações</span><span>NBR 6024 Numeração de seções</span><span>NBR 6027 Sumário</span><span>NBR 6028 Resumo</span>
+</div></div>
+
+<section id="mudancas"><div class="wrap">
+  <div class="head reveal"><span class="kicker">As normas mudaram</span><h2>Três normas mudaram entre 2023 e 2025. <span class="red">Muitos modelos de TCC não acompanharam.</span></h2>
+  <p class="lead">Se você copiou o modelo de um veterano ou seguiu um guia antigo da internet, seu trabalho pode estar na norma de 2011.</p></div>
+  <div class="changes">
+    <article class="chg reveal"><span class="norm">NBR 10520:2023 · Citações</span><h3>O sobrenome saiu das maiúsculas</h3><p>Dentro dos parênteses, a autoria agora vai só com a inicial maiúscula.</p>
+      <div class="diff"><div class="old">(SILVA, 2020, p. 45)</div><div class="new">(Silva, 2020, p. 45)</div></div></article>
+    <article class="chg reveal"><span class="norm">NBR 14724:2024 · Trabalhos acadêmicos</span><h3>Nova forma de indicar a autoria das ilustrações</h3><p>A versão de 2024 substituiu a de 2011, que estava em vigor havia 13 anos, e mudou detalhes que a banca nota.</p>
+      <div class="diff"><div class="old">Fonte: o autor (2025)</div><div class="new">Fonte: elaborado pelo próprio autor.</div></div></article>
+    <article class="chg reveal"><span class="norm">NBR 6023:2025 · Referências</span><h3>Referências com link e DOI no padrão</h3><p>A edição de 2025 atualizou as regras para documentos on-line. Os sinais &lt; &gt; nas URLs não são mais usados.</p>
+      <div class="diff"><div class="old">Disponível em: &lt;https://...&gt;</div><div class="new">Disponível em: https://...</div></div></article>
+  </div>
+</div></section>
+
+<section id="como" style="padding-top:0"><div class="wrap">
+  <div class="head reveal"><span class="kicker">Como funciona</span><h2>Do arquivo bagunçado ao trabalho pronto para entregar.</h2></div>
+  <div class="steps">
+    <div class="step reveal"><h3>Mande seu arquivo</h3><p>Envie o .docx pelo WhatsApp, com o prazo e o manual da sua faculdade, se houver.</p></div>
+    <div class="step reveal"><h3>Receba o diagnóstico grátis</h3><p>Em poucos minutos você recebe a lista do que está fora da norma e o orçamento exato.</p></div>
+    <div class="step reveal"><h3>Receba Word e PDF</h3><p>Formatamos e revisamos tudo à mão. Você recebe os dois arquivos no prazo combinado.</p></div>
+  </div>
+</div></section>
+
+<section class="dark"><div class="wrap">
+  <div class="head reveal"><span class="kicker">O que ajustamos</span><h2>Tudo o que a norma pede, e nada no seu texto.</h2>
+  <p class="lead">Formatação é forma, não conteúdo. Suas ideias, suas palavras e seus dados continuam exatamente como você escreveu.</p></div>
+  <div class="checks reveal">
+    <div><b>Página e fonte</b><span>A4, margens de 3 e 2 cm, fonte 12, entrelinha 1,5 e recuo de 1,25 cm.</span></div>
+    <div><b>Títulos e seções</b><span>Numeração progressiva e destaque correto até a quinta ordem.</span></div>
+    <div><b>Sumário e paginação</b><span>Sumário automático e números no canto superior direito, a partir da Introdução.</span></div>
+    <div><b>Citações</b><span>Citações longas com recuo de 4 cm e chamadas no padrão de 2023.</span></div>
+    <div><b>Figuras e tabelas</b><span>Título em cima, fonte embaixo, numeração e alinhamento padronizados.</span></div>
+    <div><b>Referências</b><span>Ordem alfabética, autoria, destaque, “Disponível em” e “Acesso em” no padrão.</span></div>
+  </div>
+  <div class="promise">
+    <div class="reveal"><strong>Seu conteúdo intocado</strong>Não reescrevemos nem parafraseamos. Só formatação.</div>
+    <div class="reveal"><strong>Manual da faculdade primeiro</strong>Se a sua instituição tem regras próprias, seguimos elas.</div>
+    <div class="reveal"><strong>Seus arquivos apagados</strong>Excluímos as cópias do seu trabalho 7 dias após a entrega.</div>
+  </div>
+</div></section>
+
+<section id="planos"><div class="wrap">
+  <div class="head reveal"><span class="kicker">Planos</span><h2>Preço justo, combinado antes de começar.</h2>
+  <p class="lead">O diagnóstico é grátis e o orçamento vem pronto, sem surpresa. Você paga metade no Pix para começar e o restante na entrega.</p></div>
+  <div class="plans">
+    <div class="plan reveal"><h3>Expresso</h3><p class="for">Para quem já está quase lá e precisa de rapidez.</p>
+      <div class="price">R$ 39,90<small>até 40 páginas</small></div>
+      <ul><li>Formatação completa nas normas</li><li>Conferência rápida</li><li>Entrega em até 2 horas</li><li>Word e PDF</li></ul>
+      <a class="btn ghost js-wa" href="#planos" data-msg="Oi! Tenho interesse no plano Expresso.">Quero o Expresso</a></div>
+    <div class="plan top reveal"><span class="badge">Mais escolhido</span><h3>Completo</h3><p class="for">TCC, monografia e artigo, com revisão manual.</p>
+      <div class="price">R$ 2,90<small>por página</small></div>
+      <ul><li>Tudo do Expresso</li><li>Revisão manual das referências</li><li>Capa, folha de rosto e sumário</li><li>Entrega em até 24 horas</li></ul>
+      <a class="btn js-wa" href="#planos" data-msg="Oi! Tenho interesse no plano Completo.">Quero o Completo</a></div>
+    <div class="plan reveal"><h3>Premium</h3><p class="for">Dissertações e teses, com acompanhamento.</p>
+      <div class="price">R$ 3,90<small>por página</small></div>
+      <ul><li>Tudo do Completo</li><li>Listas de ilustrações e tabelas</li><li>Ajustes ilimitados por 7 dias</li><li>Entrega em até 48 horas</li></ul>
+      <a class="btn ghost js-wa" href="#planos" data-msg="Oi! Tenho interesse no plano Premium.">Quero o Premium</a></div>
+  </div>
+  <p class="ex reveal">Exemplo: um TCC de 50 páginas no plano Completo sai por R$ 145. Valor mínimo de R$ 89 no Completo e de R$ 249 no Premium. Entrega urgente sob consulta.</p>
+</div></section>
+
+<section id="duvidas" style="padding-top:0"><div class="wrap faq">
+  <div class="head reveal"><span class="kicker">Dúvidas</span><h2>Perguntas frequentes</h2></div>
+  <details><summary>Vocês escrevem ou mudam o meu texto?</summary><p>Não. Trabalhamos só a formatação: aparência, ordem dos elementos e padrões das normas. Não escrevemos, não reescrevemos e não parafraseamos o conteúdo.</p></details>
+  <details><summary>Minha faculdade tem um manual próprio. Vocês seguem?</summary><p>Sim. Mande o manual junto com o arquivo. Quando ele for diferente da ABNT, seguimos o manual da instituição.</p></details>
+  <details><summary>Em que formato preciso enviar?</summary><p>De preferência em Word (.docx). Aceitamos PDF, mas o Word dá um resultado melhor, porque mantém imagens e tabelas editáveis.</p></details>
+  <details><summary>Quanto tempo leva?</summary><p>De 2 horas no Expresso a 48 horas no Premium. O prazo exato vai no orçamento, antes de você pagar.</p></details>
+  <details><summary>E se o orientador pedir alguma correção de formatação?</summary><p>Ajustes de formatação pedidos pelo orientador são feitos sem custo por 7 dias no Premium. Nos outros planos, combinamos antes de começar.</p></details>
+  <details><summary>Como funciona o pagamento?</summary><p>Metade no Pix para começar e o restante na entrega. Também aceitamos cartão.</p></details>
+  <details><summary>Meu arquivo fica guardado com vocês?</summary><p>Não. Usamos seu trabalho só para formatar e apagamos as cópias 7 dias após a entrega.</p></details>
+</div></section>
+
+<div class="final"><div class="wrap"><div class="box reveal">
+  <div><h2>Descubra em minutos o que está fora da norma no seu trabalho.</h2><p>Mande o arquivo e receba a lista de ajustes com o orçamento. É grátis e sem compromisso.</p></div>
+  <a class="btn js-wa" href="#planos" data-msg="Oi! Quero o diagnóstico grátis do meu trabalho."><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#wa"/></svg>Pedir diagnóstico grátis</a>
+</div></div></div>
+</main>
+
+<footer><div class="wrap">
+  <span><strong>NormaPronta</strong> · Formatação de trabalhos acadêmicos nas normas ABNT</span>
+  <span>Não somos afiliados à ABNT. As normas citadas são publicações da Associação Brasileira de Normas Técnicas.</span>
 </div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.5/dist/docx-preview.min.js"></script>
-<script>/* NormaPronta — motor de formatação ABNT
- * NBR 14724:2024 (errata 2025), NBR 6023:2025, NBR 10520:2023, NBR 6024:2012, NBR 6027:2012, NBR 6028:2021
- * Funciona no navegador (DOMParser/XMLSerializer/JSZip globais) e no Node (injetados).
- */
-(function (root) {
-  'use strict';
-  const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
-  const R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
-  const CM = 567; // twips por cm (aprox.)
+<a class="float js-wa" href="#planos" data-msg="Oi! Quero o diagnóstico grátis do meu trabalho." aria-label="Falar no WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true" style="color:#fff"><use href="#wa"/></svg></a>
 
-  const PPR_ORDER = ['pStyle','keepNext','keepLines','pageBreakBefore','framePr','widowControl','numPr','suppressLineNumbers','pBdr','shd','tabs','suppressAutoHyphens','kinsoku','wordWrap','overflowPunct','topLinePunct','autoSpaceDE','autoSpaceDN','bidi','adjustRightInd','snapToGrid','spacing','ind','contextualSpacing','mirrorIndents','suppressOverlap','jc','textDirection','textAlignment','textboxTightWrap','outlineLvl','divId','cnfStyle','rPr','sectPr','pPrChange'];
-  const RPR_ORDER = ['rStyle','rFonts','b','bCs','i','iCs','caps','smallCaps','strike','dstrike','outline','shadow','emboss','imprint','noProof','snapToGrid','vanish','webHidden','color','spacing','w','kern','position','sz','szCs','highlight','u','effect','bdr','shd','fitText','vertAlign','rtl','cs','em','lang','eastAsianLayout','specVanish','oMath'];
-  const SECT_ORDER = ['headerReference','footerReference','footnotePr','endnotePr','type','pgSz','pgMar','paperSrc','pgBorders','lnNumType','pgNumType','cols','formProt','vAlign','noEndnote','titlePg','textDirection','bidi','rtlGutter','docGrid','printerSettings','sectPrChange'];
-  const STYLE_ORDER = ['name','aliases','basedOn','next','link','autoRedefine','hidden','uiPriority','semiHidden','unhideWhenUsed','qFormat','locked','personal','personalCompose','personalReply','rsid','pPr','rPr','tblPr','trPr','tcPr','tblStylePr'];
-  const KEEP_FONTS = /symbol|wingdings|webdings|cambria math|math/i;
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wa" viewBox="0 0 32 32"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.3 3.5 5.6 4.9 2.1.9 2.9 1 4 .8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></symbol></svg>
 
-  const MESES = { janeiro:'jan.', fevereiro:'fev.', 'março':'mar.', marco:'mar.', abril:'abr.', maio:'maio', junho:'jun.', julho:'jul.', agosto:'ago.', setembro:'set.', outubro:'out.', novembro:'nov.', dezembro:'dez.' };
-
-  const PRE_TITLES = /^(RESUMO|ABSTRACT|RESUMEN|R[ÉE]SUM[ÉE]|SUM[ÁA]RIO|AGRADECIMENTOS?|LISTA D[EO]S? .+|ERRATA|DEDICAT[ÓO]RIA|EP[ÍI]GRAFE|FOLHA DE APROVA[ÇC][ÃA]O)$/i;
-  const POST_TITLES = /^(REFER[ÊE]NCIAS( BIBLIOGR[ÁA]FICAS)?|BIBLIOGRAFIA|GLOSS[ÁA]RIO|AP[ÊE]NDICES?(\s+[A-Z])?(\s*[–—-].*)?|ANEXOS?(\s+[A-Z])?(\s*[–—-].*)?|[ÍI]NDICE)$/i;
-  const REF_TITLE = /^(REFER[ÊE]NCIAS( BIBLIOGR[ÁA]FICAS)?|BIBLIOGRAFIA)$/i;
-  const CAPTION = /^(Figura|Tabela|Quadro|Gr[áa]fico|Ilustra[çc][ãa]o|Fotografia|Mapa|Desenho|Esquema|Fluxograma|Organograma|Imagem|Diagrama|Planta|Retrato|Prancha|Lâmina)\s+\d+/i;
-  const SOURCE = /^(Fonte|Fontes|Nota|Notas|Legenda)\s*:/i;
-  const SOURCE_SELF = /^(Fonte|Fontes)\s*:\s*(o\s+|a\s+)?(pr[óo]prio\s+|pr[óo]pria\s+)?(autor|autora|autores|autoras|autoria\s+pr[óo]pria|elaborad[oa]\s+pel[oa]s?\s+(pr[óo]pri[oa]s?\s+)?autor(a|es|as)?|dados\s+da\s+pesquisa\s+\(?autor)[^.]*\.?\s*$/i;
-
-  function deaccent(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, ''); }
-
-  // ---------- utilidades XML ----------
-  function kids(el, name) {
-    const out = [];
-    if (!el) return out;
-    for (let n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 1 && n.localName === name && n.namespaceURI === W) out.push(n);
-    return out;
-  }
-  function kid(el, name) { return kids(el, name)[0] || null; }
-  function all(el, name) { return Array.from(el.getElementsByTagNameNS(W, name)); }
-  function attr(el, name) { return el ? el.getAttributeNS(W, name) || el.getAttribute('w:' + name) : null; }
-  function mk(doc, name, attrs) {
-    const e = doc.createElementNS(W, 'w:' + name);
-    if (attrs) for (const k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttributeNS(W, 'w:' + k, String(attrs[k]));
-    return e;
-  }
-  function insertOrdered(parent, el, order) {
-    const idx = order.indexOf(el.localName);
-    for (let n = parent.firstChild; n; n = n.nextSibling) {
-      if (n.nodeType !== 1) continue;
-      const j = order.indexOf(n.localName);
-      if (j > idx) { parent.insertBefore(el, n); return el; }
-    }
-    parent.appendChild(el);
-    return el;
-  }
-  function setProp(parent, name, attrs, order) {
-    kids(parent, name).forEach(n => parent.removeChild(n));
-    return insertOrdered(parent, mk(parent.ownerDocument, name, attrs), order);
-  }
-  function delProp(parent, name) { kids(parent, name).forEach(n => parent.removeChild(n)); }
-  function ensure(parent, name, order) {
-    let e = kid(parent, name);
-    if (!e) { e = mk(parent.ownerDocument, name); if (order) insertOrdered(parent, e, order); else parent.insertBefore(e, parent.firstChild); }
-    return e;
-  }
-  function pPr(p) { return ensure(p, 'pPr'); }
-  function runs(p) { return all(p, 'r').filter(r => !hasAncestor(r, 'pPr')); }
-  function hasAncestor(n, name) { for (let a = n.parentNode; a; a = a.parentNode) if (a.localName === name) return true; return false; }
-  function ancestor(n, name) { for (let a = n.parentNode; a; a = a.parentNode) if (a.localName === name) return a; return null; }
-  function textNodes(p) { return all(p, 't').filter(t => !hasAncestor(t, 'del')); }
-  function pText(p) { return textNodes(p).map(t => t.textContent).join(''); }
-  function hasDrawing(p) { return all(p, 'drawing').length + all(p, 'pict').length + p.getElementsByTagName('m:oMath').length > 0; }
-
-  // Edição de texto preservando runs: aplica fn ao texto concatenado com mesmo comprimento
-  function mapChars(p, start, end, fn) {
-    let pos = 0;
-    for (const t of textNodes(p)) {
-      const s = t.textContent, a = pos, b = pos + s.length;
-      if (b > start && a < end) {
-        const i0 = Math.max(0, start - a), i1 = Math.min(s.length, end - a);
-        t.textContent = s.slice(0, i0) + fn(s.slice(i0, i1)) + s.slice(i1);
-      }
-      pos = b;
-    }
-  }
-  function setPreserve(t) { t.setAttribute('xml:space', 'preserve'); }
-
-  // Divide um run em [antes][alvo][depois] e devolve o run do alvo
-  function splitRun(r, t, i0, i1) {
-    const doc = r.ownerDocument, s = t.textContent;
-    const mkRun = (txt) => {
-      const nr = r.cloneNode(true);
-      // mantém só rPr e um único t
-      for (let n = nr.firstChild; n;) { const nx = n.nextSibling; if (n.nodeType === 1 && n.localName !== 'rPr') nr.removeChild(n); n = nx; }
-      const nt = mk(doc, 't'); nt.textContent = txt; setPreserve(nt); nr.appendChild(nt); return nr;
-    };
-    if (kids(r, 't').length !== 1) return null;
-    const parent = r.parentNode;
-    const before = s.slice(0, i0), mid = s.slice(i0, i1), after = s.slice(i1);
-    const mr = mkRun(mid);
-    if (before) parent.insertBefore(mkRun(before), r);
-    parent.insertBefore(mr, r);
-    if (after) parent.insertBefore(mkRun(after), r);
-    parent.removeChild(r);
-    return mr;
-  }
-
-  // ---------- estilos ----------
-  function fontAttrs(font) { return { ascii: font, hAnsi: font, cs: font, eastAsia: font }; }
-
-  function fixStyles(sdoc, o, rep) {
-    const styles = sdoc.documentElement;
-    const dd = ensure(styles, 'docDefaults', ['docDefaults', 'latentStyles', 'style']);
-    const rprD = ensure(ensure(dd, 'rPrDefault', ['rPrDefault', 'pPrDefault']), 'rPr');
-    setProp(rprD, 'rFonts', fontAttrs(o.font), RPR_ORDER);
-    setProp(rprD, 'sz', { val: 24 }, RPR_ORDER); setProp(rprD, 'szCs', { val: 24 }, RPR_ORDER);
-    setProp(rprD, 'lang', { val: 'pt-BR', eastAsia: 'en-US', bidi: 'ar-SA' }, RPR_ORDER);
-    const pprD = ensure(ensure(dd, 'pPrDefault', ['rPrDefault', 'pPrDefault']), 'pPr');
-    setProp(pprD, 'spacing', { after: 0, line: 360, lineRule: 'auto' }, PPR_ORDER);
-
-    const byName = {};
-    for (const st of kids(styles, 'style')) {
-      const nm = (attr(kid(st, 'name'), 'val') || '').toLowerCase();
-      byName[nm] = st;
-      // fontes: tirar fontes de tema e cores de todos os estilos
-      const rpr = kid(st, 'rPr');
-      if (rpr) {
-        const rf = kid(rpr, 'rFonts');
-        if (rf && !KEEP_FONTS.test(attr(rf, 'ascii') || '')) setProp(rpr, 'rFonts', fontAttrs(o.font), RPR_ORDER);
-        if (attr(st, 'type') !== 'character' || !/hyperlink/i.test(nm)) delProp(rpr, 'color');
-      }
-    }
-    rep.styleIndex = {};
-    for (const st of kids(styles, 'style')) {
-      rep.styleIndex[attr(st, 'styleId')] = { name: (attr(kid(st, 'name'), 'val') || '').toLowerCase(), outline: attr(kid(kid(st, 'pPr'), 'outlineLvl'), 'val'), basedOn: attr(kid(st, 'basedOn'), 'val') };
-    }
-    function upsert(id, name, type, build) {
-      let st = byName[name.toLowerCase()];
-      if (!st) {
-        st = mk(sdoc, 'style', { type, styleId: id });
-        styles.appendChild(st);
-        insertOrdered(st, mk(sdoc, 'name', { val: name }), STYLE_ORDER);
-        byName[name.toLowerCase()] = st;
-      }
-      delProp(st, 'pPr'); delProp(st, 'rPr');
-      const ppr = insertOrdered(st, mk(sdoc, 'pPr'), STYLE_ORDER);
-      const rpr = insertOrdered(st, mk(sdoc, 'rPr'), STYLE_ORDER);
-      setProp(rpr, 'rFonts', fontAttrs(o.font), RPR_ORDER);
-      setProp(rpr, 'color', { val: '000000' }, RPR_ORDER);
-      build(ppr, rpr, st);
-      return attr(st, 'styleId');
-    }
-    const ids = {};
-    ids.normal = upsert('Normal', 'Normal', 'paragraph', (ppr, rpr) => {
-      setProp(ppr, 'spacing', { before: 0, after: 0, line: 360, lineRule: 'auto' }, PPR_ORDER);
-      setProp(ppr, 'jc', { val: 'both' }, PPR_ORDER);
-      setProp(rpr, 'sz', { val: 24 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 24 }, RPR_ORDER);
-    });
-    // NBR 6024: primária MAIÚSC+negrito; secundária MAIÚSC; terciária negrito; quaternária normal; quinária itálico
-    const H = [null, { b: 1, caps: 1 }, { caps: 1 }, { b: 1 }, {}, { i: 1 }];
-    ids.h = [null];
-    for (let lv = 1; lv <= 5; lv++) {
-      ids.h[lv] = upsert('Heading' + lv, 'heading ' + lv, 'paragraph', (ppr, rpr, st) => {
-        delProp(st, 'basedOn'); delProp(st, 'next');
-        insertOrdered(st, mk(sdoc, 'basedOn', { val: ids.normal }), STYLE_ORDER);
-        insertOrdered(st, mk(sdoc, 'next', { val: ids.normal }), STYLE_ORDER);
-        if (!kid(st, 'qFormat')) insertOrdered(st, mk(sdoc, 'qFormat'), STYLE_ORDER);
-        setProp(ppr, 'keepNext', null, PPR_ORDER); setProp(ppr, 'keepLines', null, PPR_ORDER);
-        setProp(ppr, 'spacing', { before: lv === 1 ? 0 : 360, after: 360, line: 360, lineRule: 'auto' }, PPR_ORDER);
-        setProp(ppr, 'ind', { left: 0, firstLine: 0 }, PPR_ORDER);
-        setProp(ppr, 'jc', { val: 'left' }, PPR_ORDER);
-        setProp(ppr, 'outlineLvl', { val: lv - 1 }, PPR_ORDER);
-        if (H[lv].b) { setProp(rpr, 'b', null, RPR_ORDER); setProp(rpr, 'bCs', null, RPR_ORDER); } else { setProp(rpr, 'b', { val: 0 }, RPR_ORDER); setProp(rpr, 'bCs', { val: 0 }, RPR_ORDER); }
-        setProp(rpr, 'i', { val: H[lv].i ? 1 : 0 }, RPR_ORDER); setProp(rpr, 'iCs', { val: H[lv].i ? 1 : 0 }, RPR_ORDER);
-        setProp(rpr, 'caps', { val: H[lv].caps ? 1 : 0 }, RPR_ORDER);
-        setProp(rpr, 'sz', { val: 24 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 24 }, RPR_ORDER);
-      });
-    }
-    ids.pre = upsert('ABNTTituloSemIndicativo', 'ABNT Título sem indicativo', 'paragraph', (ppr, rpr, st) => {
-      insertOrdered(st, mk(sdoc, 'basedOn', { val: ids.normal }), STYLE_ORDER);
-      setProp(ppr, 'keepNext', null, PPR_ORDER);
-      setProp(ppr, 'spacing', { before: 0, after: 360, line: 360, lineRule: 'auto' }, PPR_ORDER);
-      setProp(ppr, 'ind', { left: 0, firstLine: 0 }, PPR_ORDER);
-      setProp(ppr, 'jc', { val: 'center' }, PPR_ORDER);
-      setProp(rpr, 'b', null, RPR_ORDER); setProp(rpr, 'caps', null, RPR_ORDER);
-    });
-    upsert('FootnoteText', 'footnote text', 'paragraph', (ppr, rpr) => {
-      setProp(ppr, 'spacing', { before: 0, after: 0, line: 240, lineRule: 'auto' }, PPR_ORDER);
-      setProp(ppr, 'jc', { val: 'both' }, PPR_ORDER);
-      setProp(rpr, 'sz', { val: 20 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 20 }, RPR_ORDER);
-    });
-    upsert('Caption', 'caption', 'paragraph', (ppr, rpr) => {
-      setProp(ppr, 'spacing', { before: 0, after: 0, line: 240, lineRule: 'auto' }, PPR_ORDER);
-      setProp(rpr, 'sz', { val: 20 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 20 }, RPR_ORDER);
-      setProp(rpr, 'i', { val: 0 }, RPR_ORDER);
-    });
-    // TOC 1..5 (NBR 6027): mesma grafia dos títulos
-    for (let lv = 1; lv <= 5; lv++) {
-      upsert('TOC' + lv, 'toc ' + lv, 'paragraph', (ppr, rpr, st) => {
-        insertOrdered(st, mk(sdoc, 'basedOn', { val: ids.normal }), STYLE_ORDER);
-        setProp(ppr, 'tabs', null, PPR_ORDER);
-        const tabs = kid(ppr, 'tabs'); tabs.appendChild(mk(sdoc, 'tab', { val: 'right', leader: 'dot', pos: 9061 }));
-        setProp(ppr, 'spacing', { before: 0, after: 0, line: 360, lineRule: 'auto' }, PPR_ORDER);
-        setProp(ppr, 'ind', { left: 0, firstLine: 0 }, PPR_ORDER);
-        setProp(ppr, 'jc', { val: 'left' }, PPR_ORDER);
-        if (H[lv].b) setProp(rpr, 'b', null, RPR_ORDER);
-        if (H[lv].i) setProp(rpr, 'i', null, RPR_ORDER);
-        if (H[lv].caps) setProp(rpr, 'caps', null, RPR_ORDER);
-      });
-    }
-    return ids;
-  }
-
-  // ---------- classificação ----------
-  function headingLevelFromStyle(p, rep) {
-    const ps = attr(kid(kid(p, 'pPr'), 'pStyle'), 'val');
-    let ol = attr(kid(kid(p, 'pPr'), 'outlineLvl'), 'val');
-    if (ol !== null && ol !== '' && +ol < 9) return +ol + 1;
-    let id = ps, guard = 0;
-    while (id && rep.styleIndex[id] && guard++ < 6) {
-      const s = rep.styleIndex[id];
-      let m = s.name.match(/^(heading|t[íi]tulo)\s*(\d)$/);
-      if (m) return Math.min(5, +m[2]);
-      if (s.outline !== null && s.outline !== '' && +s.outline < 9) return Math.min(5, +s.outline + 1);
-      id = s.basedOn;
-    }
-    return 0;
-  }
-  function isBoldPara(p) {
-    const rs = runs(p).filter(r => kids(r, 't').some(t => t.textContent.trim()));
-    if (!rs.length) return false;
-    return rs.every(r => { const b = kid(kid(r, 'rPr'), 'b'); return b && attr(b, 'val') !== '0' && attr(b, 'val') !== 'false'; });
-  }
-  function isUpper(s) { return s === s.toUpperCase() && /\p{L}/u.test(s); }
-
-  function classifyHeading(p, text, rep) {
-    const t = text.trim();
-    if (!t || t.length > 160) return null;
-    const lvStyle = headingLevelFromStyle(p, rep);
-    const bare = t.replace(/[.:]\s*$/, '').trim();
-    if (PRE_TITLES.test(bare) && (isUpper(bare) || lvStyle || isBoldPara(p))) return { kind: 'pre', level: 1 };
-    if (POST_TITLES.test(bare) && (isUpper(bare.split(/\s+[–—-]\s+/)[0]) || lvStyle || isBoldPara(p))) return { kind: 'post', level: 1, refs: REF_TITLE.test(bare) };
-    const t0 = t.length < 100 ? t.replace(/\s*[.:]$/, '') : t;
-    const m = t0.match(/^(\d{1,2}(?:\.\d{1,2}){0,4})(?:\.\s*|\s*[-–—)]\s*|\s+)(\p{L}.*)$/u);
-    if (m && !/[.;,]$/.test(t0) && m[2].length < 140 && /^\p{Lu}/u.test(m[2])) {
-      const lv = m[1].split('.').length;
-      if (lvStyle || isBoldPara(p) || isUpper(m[2]) || t.length < 90) return { kind: 'num', level: lv, number: m[1] };
-    }
-    if (lvStyle) return { kind: 'style', level: lvStyle };
-    if (/^(\d+\s*[.\-–—)]?\s*)?INTRODU[ÇC][ÃA]O$/i.test(bare)) return { kind: 'style', level: 1 };
-    return null;
-  }
-
-  // ---------- formatação de parágrafo ----------
-  function cleanRuns(p, o, size) {
-    for (const r of runs(p)) {
-      const rpr = kid(r, 'rPr'); if (!rpr && !size) continue;
-      const rp = rpr || ensure(r, 'rPr');
-      const rf = kid(rp, 'rFonts');
-      if (rf && !KEEP_FONTS.test(attr(rf, 'ascii') || '') && !kid(r, 'sym')) delProp(rp, 'rFonts');
-      delProp(rp, 'color'); delProp(rp, 'highlight'); delProp(rp, 'shd'); delProp(rp, 'kern'); delProp(rp, 'spacing'); delProp(rp, 'w');
-      const isRefMark = kid(rp, 'vertAlign') || /FootnoteReference|EndnoteReference/i.test(attr(kid(rp, 'rStyle'), 'val') || '');
-      if (size && !isRefMark) { setProp(rp, 'sz', { val: size }, RPR_ORDER); setProp(rp, 'szCs', { val: size }, RPR_ORDER); }
-      else if (!isRefMark) { delProp(rp, 'sz'); delProp(rp, 'szCs'); }
-      // hiperlinks: ABNT não pede azul/sublinhado nas referências
-      if (ancestor(r, 'hyperlink')) { const rs = kid(rp, 'rStyle'); if (rs && /hyperlink|link/i.test(attr(rs, 'val'))) { rp.removeChild(rs); delProp(rp, 'u'); } }
-    }
-  }
-  function stripRunEmphasisForHeading(p) {
-    for (const r of runs(p)) {
-      const rp = kid(r, 'rPr'); if (!rp) continue;
-      ['b', 'bCs', 'i', 'iCs', 'caps', 'smallCaps', 'u', 'sz', 'szCs', 'color', 'rFonts', 'highlight'].forEach(n => delProp(rp, n));
-    }
-  }
-  function setPara(p, cfg) {
-    const pp = pPr(p);
-    if (cfg.style !== undefined) { if (cfg.style) setProp(pp, 'pStyle', { val: cfg.style }, PPR_ORDER); else delProp(pp, 'pStyle'); }
-    if (cfg.keepNext) setProp(pp, 'keepNext', null, PPR_ORDER); else if (cfg.keepNext === false) delProp(pp, 'keepNext');
-    if (cfg.pageBreak) setProp(pp, 'pageBreakBefore', null, PPR_ORDER); else if (cfg.pageBreak === false) delProp(pp, 'pageBreakBefore');
-    if (cfg.spacing) setProp(pp, 'spacing', Object.assign({ lineRule: 'auto' }, cfg.spacing), PPR_ORDER);
-    if (cfg.ind) setProp(pp, 'ind', cfg.ind, PPR_ORDER);
-    if (cfg.ind === null) delProp(pp, 'ind');
-    if (cfg.jc) setProp(pp, 'jc', { val: cfg.jc }, PPR_ORDER);
-    if (cfg.outline === null) delProp(pp, 'outlineLvl');
-    delProp(pp, 'shd'); delProp(pp, 'pBdr'); delProp(pp, 'contextualSpacing');
-    const mark = kid(pp, 'rPr');
-    if (mark) { delProp(mark, 'rFonts'); delProp(mark, 'color'); if (cfg.size) { setProp(mark, 'sz', { val: cfg.size }, RPR_ORDER); setProp(mark, 'szCs', { val: cfg.size }, RPR_ORDER); } else { delProp(mark, 'sz'); delProp(mark, 'szCs'); } }
-  }
-  function isPageBreakOnly(p) {
-    if (pText(p).trim() || hasDrawing(p)) return false;
-    return all(p, 'br').some(b => attr(b, 'type') === 'page') || !!kid(kid(p, 'pPr'), 'pageBreakBefore');
-  }
-  function isEmpty(p) {
-    if (pText(p).trim() || hasDrawing(p)) return false;
-    if (kid(kid(p, 'pPr'), 'sectPr')) return false;
-    if (all(p, 'fldChar').length || all(p, 'instrText').length || all(p, 'footnoteReference').length || all(p, 'object').length) return false;
-    if (all(p, 'br').some(b => attr(b, 'type') === 'page')) return false;
-    return true;
-  }
-  function firstTextEdit(p, re, rep) {
-    const ts = textNodes(p);
-    const t = ts.find(x => x.textContent.length);
-    if (!t) return false;
-    const before = t.textContent; const after = before.replace(re, rep);
-    if (after !== before) { t.textContent = after; setPreserve(t); return true; }
-    return false;
-  }
-  function trimTrailingDot(p) {
-    const ts = textNodes(p).filter(t => t.textContent.trim());
-    const t = ts[ts.length - 1]; if (!t) return false;
-    const s = t.textContent; const n = s.replace(/\s*[.:]\s*$/, '');
-    if (n !== s && !/\b(et al|etc|p|v|n)$/i.test(n)) { t.textContent = n; return true; }
-    return false;
-  }
-  function replaceAllText(p, text) {
-    const ts = textNodes(p); if (!ts.length) return;
-    ts[0].textContent = text; setPreserve(ts[0]);
-    for (let i = 1; i < ts.length; i++) ts[i].textContent = '';
-  }
-
-  // ---------- referências (NBR 6023:2025) ----------
-  function parseAuthors(text) {
-    // devolve [{s,e}] intervalos de sobrenomes a pôr em MAIÚSCULAS, e o fim do bloco de autoria
-    const spans = []; let i = 0; const L = text.length;
-    for (let guard = 0; guard < 25 && i < L; guard++) {
-      while (text[i] === ' ') i++;
-      if (/^et al\.?/i.test(text.slice(i))) break;
-      const comma = text.indexOf(',', i);
-      if (comma < 0 || comma - i > 60) break;
-      const surname = text.slice(i, comma);
-      if (!/^\p{Lu}[\p{L}'’\- ]*$/u.test(surname) || surname.trim().split(/\s+/).length > 4) break;
-      spans.push({ s: i, e: comma });
-      // nomes
-      let j = comma + 1, end = -1, next = -1;
-      while (j < L) {
-        while (text[j] === ' ') j++;
-        let k = j; while (k < L && !/[ ;]/.test(text[k])) k++;
-        let tok = text.slice(j, k);
-        if (text[k] === ';') { next = k + 1; break; }
-        if (!tok) { end = j; break; }
-        if (/\.$/.test(tok)) {
-          const core = tok.replace(/\.$/, '');
-          const isInit = /^\p{Lu}(\.?-?\p{Lu})?$/u.test(core) || /^\p{Lu}\.\p{Lu}$/u.test(core);
-          if (!isInit) { end = k; break; }
-          // inicial: continua se o próximo também for inicial ou partícula
-          let m = k; while (text[m] === ' ') m++;
-          let q = m; while (q < L && !/[ ;]/.test(text[q])) q++;
-          const nx = text.slice(m, q);
-          if (text[q] === ';' && /^\p{Lu}\.?$/u.test(nx.replace(/\.$/, ''))) { j = m; continue; }
-          if (/^(\p{Lu}\.)+(-\p{Lu}\.)?;?$/u.test(nx) || /^(de|da|do|dos|das|e)$/i.test(nx)) { j = m; continue; }
-          end = k; break;
-        }
-        j = k; if (j - comma > 80) { end = -2; break; }
-      }
-      if (end === -2) { spans.pop(); break; }
-      if (next > 0) { i = next; continue; }
-      break;
-    }
-    return spans;
-  }
-  function titleCase(w) { return w.toLowerCase().replace(/(^|[\s\-'’])(\p{L})/gu, (m, a, b) => a + b.toUpperCase()).replace(/\b(De|Da|Do|Dos|Das|E)\b/g, x => x.toLowerCase()); }
-
-  function fixReference(p, rep) {
-    let changed = [];
-    const text = pText(p);
-    const spans = parseAuthors(text);
-    for (const sp of spans) {
-      const seg = text.slice(sp.s, sp.e);
-      if (seg !== seg.toUpperCase()) { mapChars(p, sp.s, sp.e, s => s.toUpperCase()); changed.push('autoria em maiúsculas'); }
-      rep.surnames.add(deaccent(seg.trim().toUpperCase()));
-      seg.trim().split(/\s+/).forEach(w => w.length > 2 && rep.surnames.add(deaccent(w.toUpperCase())));
-    }
-    if (!spans.length) {
-      const m = text.match(/^([^.]{2,90})\./);
-      if (m && m[1] === m[1].toUpperCase() && /\p{L}{2}/u.test(m[1])) { /* entidade já em maiúsculas */ }
-      else rep.refNoAuthor.push(text.slice(0, 70));
-    }
-    for (const t of textNodes(p)) {
-      let s = t.textContent, o = s;
-      s = s.replace(/<\s*((?:https?:\/\/|www\.)[^>\s]+)\s*>/gi, '$1');
-      s = s.replace(/Dispon[ií]vel\s+(em|no\s+site|na\s+internet|on-?line)\s*:?\s*/gi, 'Disponível em: ');
-      s = s.replace(/Acess(?:o|ado)\s+(?:em|no\s+dia)\s*:?\s*/gi, 'Acesso em: ');
-      s = s.replace(/(Acesso em: )(\d{1,2})(?:º)?\s*(?:de\s+)?(janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s*(?:de\s+)?(\d{4})/gi,
-        (m, a, d, mes, y) => a + (+d) + ' ' + MESES[mes.toLowerCase()] + ' ' + y);
-      s = s.replace(/(Acesso em: )(\d{1,2})\/(\d{1,2})\/(\d{4})/g, (m, a, d, mo, y) => a + (+d) + ' ' + Object.values(MESES).filter((v, i, arr) => arr.indexOf(v) === i)[+mo - 1] + ' ' + y);
-      s = s.replace(/\bdoi\s*:\s*/gi, 'DOI: ').replace(/DOI: (?:https?:\/\/)?(?:dx\.)?doi\.org\//gi, 'DOI: https://doi.org/');
-      s = s.replace(/\s{2,}/g, ' ');
-      if (s !== o) { t.textContent = s; setPreserve(t); changed.push('elementos complementares'); }
-    }
-    const hasEmph = runs(p).some(r => { const rp = kid(r, 'rPr'); return rp && (kid(rp, 'b') || kid(rp, 'i')) && kids(r, 't').some(t => t.textContent.trim()); });
-    if (!hasEmph && spans.length) rep.refNoEmph.push(text.slice(0, 70));
-    return changed.length > 0;
-  }
-
-  // ---------- citações (NBR 10520:2023) ----------
-  function fixCitations(p, rep) {
-    let n = 0;
-    for (const t of textNodes(p)) {
-      let s = t.textContent, o = s;
-      // (SILVA, 2020, p. 3) -> (Silva, 2020, p. 3) ; também 'SILVA; SOUZA, 2019'
-      s = s.replace(/\(([^()]{2,200}?\d{4}[a-z]?[^()]*)\)/g, (m, inner) => '(' + inner.replace(/\b(\p{Lu}[\p{Lu}'’\-]+(?:\s+\p{Lu}[\p{Lu}'’\-]+){0,3})\b/gu, (w) => rep.surnames.has(deaccent(w)) || rep.surnames.has(deaccent(w.split(/\s+/)[0])) ? titleCase(w) : w) + ')');
-      // narrativa: SILVA (2020) / SILVA et al. (2020)
-      s = s.replace(/\b(\p{Lu}[\p{Lu}'’\-]{2,})(\s+et\s+al\.?)?(\s*\(\d{4})/gu, (m, w, ea, rest) => (rep.surnames.has(deaccent(w)) ? titleCase(w) : w) + (ea || '') + rest);
-      s = s.replace(/\bet\s+al\b\.?/g, 'et al.').replace(/\bet al\.\./g, 'et al.');
-      if (s !== o) { t.textContent = s; setPreserve(t); n++; }
-    }
-    // itálico em et al. e apud
-    for (const t of textNodes(p)) {
-      const r = t.parentNode; if (r.localName !== 'r') continue;
-      const rp = kid(r, 'rPr'); if (rp && kid(rp, 'i')) continue;
-      const m = t.textContent.match(/\bet al\.|\bapud\b/);
-      if (!m) continue;
-      const mr = splitRun(r, t, m.index, m.index + m[0].length);
-      if (mr) { setProp(ensure(mr, 'rPr', null), 'i', null, RPR_ORDER); n++; return n + fixCitations(p, rep); }
-    }
-    return n;
-  }
-
-  // ---------- documento principal ----------
-  function bodyParas(body) { return all(body, 'p'); }
-
-  function makeHeaderXml(o) {
-    return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-      '<w:hdr xmlns:w="' + W + '" xmlns:r="' + R + '"><w:p><w:pPr><w:jc w:val="right"/><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:ind w:firstLine="0"/></w:pPr>' +
-      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="begin"/></w:r>' +
-      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r>' +
-      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="separate"/></w:r>' +
-      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:t>1</w:t></w:r>' +
-      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="end"/></w:r></w:p></w:hdr>';
-  }
-
-  function fixSect(sp, o) {
-    kids(sp, 'headerReference').forEach(n => sp.removeChild(n));
-    kids(sp, 'footerReference').forEach(n => sp.removeChild(n));
-    delProp(sp, 'titlePg');
-    const old = kid(sp, 'pgSz');
-    const land = old && attr(old, 'orient') === 'landscape';
-    setProp(sp, 'pgSz', land ? { w: 16838, h: 11906, orient: 'landscape' } : { w: 11906, h: 16838 }, SECT_ORDER);
-    // anverso: esquerda/superior 3 cm; direita/inferior 2 cm
-    setProp(sp, 'pgMar', { top: 1701, right: 1134, bottom: 1134, left: 1701, header: 709, footer: 709, gutter: 0 }, SECT_ORDER);
-    delProp(sp, 'pgNumType');
-    const cols = kid(sp, 'cols'); if (cols && +attr(cols, 'num') > 1) setProp(sp, 'cols', { space: 708 }, SECT_ORDER);
-  }
-
-  async function formatDocx(zip, opts, env) {
-    const o = Object.assign({ font: 'Times New Roman', indent: true, longQuoteIndent: true, refsSort: true, refsFix: true, citations: true, removeBlank: true, pageBreaks: true, figAlign: 'center', fixSource: true, pageNumbers: true, hasCover: true }, opts || {});
-    const DP = env.DOMParser, XS = env.XMLSerializer;
-    const parse = s => new DP().parseFromString(s, 'application/xml');
-    const ser = d => new XS().serializeToString(d);
-    const rep = { changes: {}, warnings: [], surnames: new Set(), refNoAuthor: [], refNoEmph: [], words: 0, stats: {} };
-    const inc = (k, n = 1) => { rep.changes[k] = (rep.changes[k] || 0) + n; };
-
-    const docFile = zip.file('word/document.xml');
-    if (!docFile) throw new Error('Arquivo .docx inválido (word/document.xml não encontrado).');
-    const doc = parse(await docFile.async('string'));
-    let stylesXml = zip.file('word/styles.xml') ? await zip.file('word/styles.xml').async('string') :
-      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="' + W + '"/>';
-    const sdoc = parse(stylesXml);
-    const ids = fixStyles(sdoc, o, rep);
-    inc('Fonte ' + o.font + ' 12 e entrelinha 1,5 como padrão');
-
-    const body = kid(doc.documentElement, 'body');
-    const paras = bodyParas(body);
-    rep.words = paras.reduce((a, p) => a + (pText(p).match(/\S+/g) || []).length, 0);
-
-    // 1ª passada: títulos e regiões
-    const info = new Map();
-    let firstText = -1;
-    const isToc = p => { const s = attr(kid(kid(p, 'pPr'), 'pStyle'), 'val') || ''; const sdt = ancestor(p, 'sdt'); return /^TOC|^Sum[aá]rio\d|^toc/i.test(s) || (sdt && all(sdt, 'docPartGallery').some(g => /Table of Contents/i.test(attr(g, 'val')))); };
-    paras.forEach((p, idx) => {
-      if (ancestor(p, 'tbl') || ancestor(p, 'txbxContent') || isToc(p)) return;
-      const t = pText(p);
-      const h = classifyHeading(p, t, rep);
-      if (h) info.set(p, h);
-      if (firstText < 0 && h && h.level === 1 && (h.kind === 'num' || /^INTRODU/i.test(t.replace(/^[\d.\s]+/, '')))) firstText = idx;
-    });
-    // TOC: parágrafos dentro de sdt de sumário ou com estilo TOC
-    const hasPre = firstText > 0;
-    if (hasPre && o.hasCover) {
-      // só desconta a capa se houver conteúdo antes do primeiro título pré-textual
-      const firstPreTitle = paras.findIndex(p => info.get(p) && info.get(p).kind === 'pre');
-      const limit = firstPreTitle >= 0 ? Math.min(firstPreTitle, firstText) : firstText;
-      if (!paras.slice(0, limit).some(p => pText(p).trim() && !isToc(p))) o.hasCover = false;
-    }
-
-    let region = hasPre ? 'pre' : 'text';
-    let preTitle = '', refParas = [];
-    let sawTocField = paras.some(p => all(p, 'instrText').some(i => /\bTOC\b/.test(i.textContent)));
-
-    for (let idx = 0; idx < paras.length; idx++) {
-      const p = paras[idx];
-      if (!p.parentNode) continue;
-      const inTbl = ancestor(p, 'tbl'), inBox = ancestor(p, 'txbxContent');
-      const t = pText(p), tt = t.trim();
-      if (idx === firstText) region = 'text';
-      const h = info.get(p);
-
-      if (inBox) { cleanRuns(p, o); continue; }
-      if (inTbl) {
-        cleanRuns(p, o, 20);
-        setPara(p, { spacing: { before: 0, after: 0, line: 240 }, ind: { left: 0, right: 0, firstLine: 0 } });
-        inc('Texto de tabelas e quadros em tamanho menor, espaço simples');
-        continue;
-      }
-      if (isToc(p)) { cleanRuns(p, o); inc('Sumário ajustado'); continue; }
-
-      if (h) {
-        if (h.kind === 'pre') {
-          preTitle = tt.toUpperCase();
-          stripRunEmphasisForHeading(p);
-          setPara(p, { style: ids.pre, pageBreak: o.pageBreaks, ind: null, jc: 'center', outline: null });
-          trimTrailingDot(p);
-          inc('Títulos sem indicativo numérico centralizados (NBR 6024)');
-          continue;
-        }
-        if (h.kind === 'post') {
-          region = h.refs ? 'refs' : 'post';
-          stripRunEmphasisForHeading(p);
-          setPara(p, { style: ids.h[1], pageBreak: o.pageBreaks, ind: null, jc: 'center' });
-          trimTrailingDot(p);
-          firstTextEdit(p, /\s*[-–—]\s+/, ' – ');
-          inc('Títulos sem indicativo numérico centralizados (NBR 6024)');
-          continue;
-        }
-        if (region === 'pre' && h.kind !== 'num') { cleanRuns(p, o); continue; }
-        region = region === 'refs' || region === 'post' ? region : 'text';
-        if (region !== 'text') { /* títulos dentro de apêndices */ }
-        stripRunEmphasisForHeading(p);
-        const lv = Math.min(5, h.level);
-        setPara(p, { style: ids.h[lv], pageBreak: lv === 1 && o.pageBreaks && idx !== firstText ? true : (lv === 1 ? undefined : false), ind: null, jc: 'left', spacing: null });
-        delProp(pPr(p), 'spacing'); delProp(pPr(p), 'jc');
-        if (firstTextEdit(p, /^(\d{1,2}(?:\.\d{1,2}){0,4})(?:\s*[.\-–—)]+(?!\d)\s*|(?=\p{L}))/u, '$1 ')) inc('Indicativo numérico separado do título só por espaço (NBR 6024)');
-        if (trimTrailingDot(p)) inc('Ponto final removido de títulos');
-        inc('Títulos de seção ' + lv + 'ª ordem padronizados (NBR 6024)');
-        if (/^cap[íi]tulo\b/i.test(tt)) rep.warnings.push('Título “' + tt.slice(0, 50) + '”: a NBR 14724:2024 usa “seções”, não “capítulos”. Revise o texto.');
-        continue;
-      }
-
-      // parágrafos comuns
-      if (region === 'pre') {
-        cleanRuns(p, o, 24);
-        if (/^(RESUMO|ABSTRACT|RESUMEN)/.test(preTitle) && tt) {
-          setPara(p, { jc: 'both', ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 0, line: 360 } });
-          if (/^(palavras?-chave|keywords?|palabras clave)\s*:/i.test(tt)) { setPara(p, { spacing: { before: 360, after: 0, line: 360 } }); inc('Resumo em parágrafo único, palavras-chave destacadas (NBR 6028)'); }
-        } else if (/apresentad[oa]\s+(ao|à|a)|requisito\s+parcial|como\s+requisito|para\s+obten[çc][ãa]o\s+do\s+t[íi]tulo/i.test(tt)) {
-          setPara(p, { jc: 'both', ind: { left: 8 * CM, firstLine: 0 }, spacing: { before: 0, after: 0, line: 240 } });
-          inc('Natureza do trabalho recuada do meio da mancha, espaço simples');
-        }
-        continue;
-      }
-
-      if (region === 'refs') {
-        if (!tt && !hasDrawing(p)) { if (o.removeBlank && isEmpty(p)) { p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); } continue; }
-        cleanRuns(p, o, 24);
-        setPara(p, { style: ids.normal, jc: 'left', ind: { left: 0, right: 0, firstLine: 0, hanging: 0 }, spacing: { before: 0, after: 240, line: 240 } });
-        delProp(pPr(p), 'numPr');
-        if (o.refsFix && fixReference(p, rep)) inc('Referências padronizadas (NBR 6023:2025)');
-        refParas.push(p);
-        inc('Referências alinhadas à esquerda, espaço simples, separadas por linha em branco');
-        continue;
-      }
-
-      // região textual e pós-textual
-      if (o.removeBlank && !tt && isEmpty(p)) {
-        p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); continue;
-      }
-      if (isPageBreakOnly(p)) {
-        const next = paras.slice(idx + 1).find(x => x.parentNode && !ancestor(x, 'tbl') && (pText(x).trim() || hasDrawing(x)));
-        if (o.pageBreaks && next && info.get(next) && info.get(next).level === 1) { p.parentNode.removeChild(p); inc('Quebras de página manuais substituídas por início de seção em nova página'); }
-        continue;
-      }
-      if (hasDrawing(p) && !tt) {
-        cleanRuns(p, o);
-        setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 0, line: 240 }, keepNext: true });
-        inc('Ilustrações alinhadas de forma consistente (NBR 14724:2024)');
-        continue;
-      }
-      if (CAPTION.test(tt)) {
-        let pv = p.previousSibling; while (pv && pv.nodeType !== 1) pv = pv.previousSibling;
-        if (pv && (pv.localName === 'tbl' || (pv.localName === 'p' && hasDrawing(pv) && !pText(pv).trim()))) {
-          let pv2 = pv.previousSibling; while (pv2 && pv2.nodeType !== 1) pv2 = pv2.previousSibling;
-          if (!(pv2 && pv2.localName === 'p' && CAPTION.test(pText(pv2).trim()))) { pv.parentNode.insertBefore(p, pv); inc('Título de tabela/ilustração movido para cima do elemento (NBR 14724:2024)'); }
-        }
-        cleanRuns(p, o, 20);
-        setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 240, after: 0, line: 240 }, keepNext: true });
-        if (firstTextEdit(p, /^((?:\S+)\s+\d+)\s*[-–—:.]\s*/, '$1 – ')) inc('Designação de ilustrações e tabelas com travessão');
-        inc('Títulos de ilustrações e tabelas na parte superior, tamanho menor');
-        continue;
-      }
-      if (SOURCE.test(tt)) {
-        cleanRuns(p, o, 20);
-        if (o.fixSource && SOURCE_SELF.test(tt)) { replaceAllText(p, 'Fonte: elaborado pelo próprio autor.'); inc('“Fonte: o autor” atualizado para “elaborado pelo próprio autor” (NBR 14724:2024)'); }
-        setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 240, line: 240 } });
-        inc('Fontes e notas de ilustrações em tamanho menor, espaço simples');
-        continue;
-      }
-      const curInd = kid(pPr(p), 'ind');
-      const leftInd = curInd ? +(attr(curInd, 'left') || attr(curInd, 'start') || 0) : 0;
-      const sName = (rep.styleIndex[attr(kid(pPr(p), 'pStyle'), 'val')] || {}).name || '';
-      const isList = !!kid(pPr(p), 'numPr') || /^([•●▪◦\-–]\s|[a-z]\)\s|\d+\)\s)/.test(tt) || /list/i.test(sName);
-      const quoteLike = /quote|cita[çc][ãa]o|citacao/i.test(sName) || (leftInd >= 2 * CM && !isList && !kid(pPr(p), 'numPr')) ||
-        (/^[“"«]/.test(tt) && /[”"»]\s*\(?[^()]*\d{4}[^()]*\)?\.?$/.test(tt) && tt.length > 300);
-      if (quoteLike && o.longQuoteIndent !== 'off') {
-        cleanRuns(p, o, 20);
-        if (/^[“"«]/.test(tt)) { mapChars(p, t.indexOf(tt[0]), t.indexOf(tt[0]) + 1, () => ''); const t2 = pText(p); const m = t2.match(/[”"»](?=\s*(\(|$|\.))/); if (m) mapChars(p, m.index, m.index + 1, () => ''); inc('Aspas removidas de citações longas'); }
-        setPara(p, { style: ids.normal, jc: 'both', ind: { left: o.longQuoteIndent ? 4 * CM : 0, right: 0, firstLine: 0 }, spacing: { before: 360, after: 360, line: 240 } });
-        p._needsCite = true;
-        inc('Citações diretas longas: recuo 4 cm, fonte menor, espaço simples (NBR 10520:2023)');
-        continue;
-      }
-      cleanRuns(p, o);
-      if (isList) {
-        setPara(p, { style: ids.normal, jc: 'both', spacing: { before: 0, after: 0, line: 360 } });
-        inc('Alíneas justificadas, entrelinha 1,5');
-      } else {
-        setPara(p, { style: ids.normal, jc: 'both', ind: { left: 0, right: 0, firstLine: o.indent ? Math.round(1.25 * CM) : 0 }, spacing: { before: 0, after: 0, line: 360 } });
-        inc('Parágrafos justificados, recuo 1,25 cm, entrelinha 1,5');
-      }
-      p._needsCite = true;
-    }
-
-    // ordem alfabética das referências (sistema autor-data)
-    if (o.refsSort && refParas.length > 1) {
-      const numbered = refParas.filter(p => /^\s*(\[\d+\]|\d+[.)\s])/.test(pText(p))).length > refParas.length / 2;
-      if (!numbered) {
-        const key = p => deaccent(pText(p)).toUpperCase().replace(/[^A-Z0-9 ,.]/g, '');
-        const sorted = refParas.slice().sort((a, b) => key(a).localeCompare(key(b), 'pt'));
-        if (sorted.some((p, i) => p !== refParas[i])) {
-          const anchor = refParas[0].previousSibling, parent = refParas[0].parentNode;
-          const marker = doc.createComment('refs');
-          parent.insertBefore(marker, refParas[0]);
-          refParas.forEach(p => p.parentNode.removeChild(p));
-          sorted.forEach(p => parent.insertBefore(p, marker));
-          parent.removeChild(marker);
-          inc('Referências em ordem alfabética (sistema autor-data)');
-        }
-      }
-    }
-    // citações no texto (depois de conhecer os sobrenomes das referências)
-    if (o.citations) {
-      for (const p of paras) if (p._needsCite && p.parentNode) { const n = fixCitations(p, rep); if (n) inc('Chamadas de autoria em maiúsculas e minúsculas (NBR 10520:2023)', n); }
-    }
-
-    // seções e paginação
-    const bodySect = kid(body, 'sectPr') || body.appendChild(mk(doc, 'sectPr'));
-    const sects = all(body, 'sectPr');
-    sects.forEach(sp => fixSect(sp, o));
-    inc('Papel A4 e margens 3 cm (sup./esq.) e 2 cm (inf./dir.)');
-    if (o.pageNumbers) {
-      // parte do cabeçalho
-      let n = 1; while (zip.file('word/headerABNT' + n + '.xml')) n++;
-      const hdrName = 'headerABNT' + n + '.xml';
-      zip.file('word/' + hdrName, makeHeaderXml(o));
-      const relsPath = 'word/_rels/document.xml.rels';
-      const rdoc = parse(zip.file(relsPath) ? await zip.file(relsPath).async('string') : '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"/>');
-      const RNS = 'http://schemas.openxmlformats.org/package/2006/relationships';
-      let rid = 'rIdABNT' + n;
-      const rel = rdoc.createElementNS(RNS, 'Relationship');
-      rel.setAttribute('Id', rid); rel.setAttribute('Type', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/header'); rel.setAttribute('Target', hdrName);
-      rdoc.documentElement.appendChild(rel);
-      zip.file(relsPath, ser(rdoc));
-      const ct = parse(await zip.file('[Content_Types].xml').async('string'));
-      const CT = 'http://schemas.openxmlformats.org/package/2006/content-types';
-      const ov = ct.createElementNS(CT, 'Override');
-      ov.setAttribute('PartName', '/word/' + hdrName); ov.setAttribute('ContentType', 'application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml');
-      ct.documentElement.appendChild(ov);
-      zip.file('[Content_Types].xml', ser(ct));
-
-      const addHdr = sp => { const hr = mk(doc, 'headerReference', { type: 'default' }); hr.setAttributeNS(R, 'r:id', rid); sp.insertBefore(hr, sp.firstChild); };
-      if (hasPre) {
-        // quebra de seção antes da primeira seção textual: pré-textuais sem número visível
-        const target = paras[firstText];
-        let prev = target.previousSibling; while (prev && prev.nodeType !== 1) prev = prev.previousSibling;
-        let holder;
-        if (prev && prev.localName === 'p' && !kid(kid(prev, 'pPr'), 'sectPr')) {
-          holder = prev;
-          all(holder, 'br').filter(b => attr(b, 'type') === 'page').forEach(b => b.parentNode.removeChild(b));
-          delProp(pPr(holder), 'pageBreakBefore');
-        }
-        else { holder = mk(doc, 'p'); target.parentNode.insertBefore(holder, target); }
-        const sp = bodySect.cloneNode(true);
-        kids(sp, 'headerReference').forEach(x => sp.removeChild(x));
-        delProp(sp, 'type'); insertOrdered(sp, mk(doc, 'type', { val: 'nextPage' }), SECT_ORDER);
-        // sempre retrato nas pré-textuais
-        setProp(sp, 'pgSz', { w: 11906, h: 16838 }, SECT_ORDER);
-        if (o.hasCover) insertOrdered(sp, mk(doc, 'pgNumType', { start: 0 }), SECT_ORDER);
-        insertOrdered(pPr(holder), sp, PPR_ORDER);
-        // seções anteriores (se houver várias): também sem cabeçalho, contagem começa na primeira
-        const pre = all(body, 'sectPr').filter(s => s !== sp && s !== bodySect && (s.compareDocumentPosition ? (s.compareDocumentPosition(sp) & 4) : true));
-        if (pre.length && o.hasCover) { delProp(sp, 'pgNumType'); insertOrdered(pre[0], mk(doc, 'pgNumType', { start: 0 }), SECT_ORDER); }
-        delProp(pPr(target), 'pageBreakBefore');
-        // primeira seção textual em diante: número no canto superior direito
-        const after = all(body, 'sectPr'); const iSp = after.indexOf(sp);
-        addHdr(after[iSp + 1]);
-        inc('Numeração no canto superior direito a partir da primeira seção textual (capa não contada)');
-      } else {
-        addHdr(sects[0] === bodySect ? bodySect : sects[0]);
-        inc('Numeração de páginas no canto superior direito');
-      }
-    }
-
-    // notas de rodapé
-    if (zip.file('word/footnotes.xml')) {
-      const fdoc = parse(await zip.file('word/footnotes.xml').async('string'));
-      for (const p of all(fdoc.documentElement, 'p')) {
-        cleanRuns(p, o, 20);
-        setPara(p, { jc: 'both', ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 0, line: 240 } });
-      }
-      zip.file('word/footnotes.xml', ser(fdoc));
-      inc('Notas de rodapé em tamanho menor, espaço simples');
-    }
-    // atualizar sumário/campos ao abrir
-    if (zip.file('word/settings.xml')) {
-      const st = parse(await zip.file('word/settings.xml').async('string'));
-      const S = st.documentElement;
-      if (!kid(S, 'updateFields')) { const u = mk(st, 'updateFields', { val: 'true' }); S.appendChild(u); }
-      zip.file('word/settings.xml', ser(st));
-    }
-
-    zip.file('word/document.xml', ser(doc));
-    zip.file('word/styles.xml', ser(sdoc));
-
-    // avisos
-    const capCount = paras.filter(p => p.parentNode && /\bcap[íi]tulos?\b/i.test(pText(p))).length;
-    if (capCount) rep.warnings.push('A palavra “capítulo” aparece em ' + capCount + ' parágrafo(s). A NBR 14724:2024 divide o trabalho em “seções”; troque por “seção” onde se referir à estrutura do trabalho.');
-    if (!refParas.length) rep.warnings.push('Não encontrei a seção REFERÊNCIAS. Confira se o título está escrito exatamente “REFERÊNCIAS”.');
-    if (rep.refNoAuthor.length) rep.warnings.push(rep.refNoAuthor.length + ' referência(s) sem autoria pessoal reconhecida (entidade ou título como entrada). Confira manualmente: “' + rep.refNoAuthor.slice(0, 3).join('”, “') + '”.');
-    if (rep.refNoEmph.length) rep.warnings.push(rep.refNoEmph.length + ' referência(s) sem destaque no título (negrito ou itálico, NBR 6023). Ex.: “' + rep.refNoEmph.slice(0, 2).join('”, “') + '”.');
-    if (!hasPre) rep.warnings.push('Não identifiquei elementos pré-textuais (capa, folha de rosto). A numeração foi aplicada a todas as páginas.');
-    if (sawTocField) rep.warnings.push('O sumário automático será atualizado quando você abrir o arquivo no Word (aceite “atualizar campos”).');
-    rep.stats = { palavras: rep.words, paginasEstimadas: Math.max(1, Math.round(rep.words / 280)), referencias: refParas.length, titulos: info.size };
-    delete rep.styleIndex; rep.surnames = rep.surnames.size;
-    return rep;
-  }
-
-  // ---------- PDF → DOCX (texto) ----------
-  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-  function buildDocxFromBlocks(JSZip, blocks) {
-    const zip = new JSZip();
-    zip.file('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/></Types>');
-    zip.file('_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
-    zip.file('word/_rels/document.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/></Relationships>');
-    zip.file('word/styles.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="' + W + '"><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>');
-    zip.file('word/settings.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:settings xmlns:w="' + W + '"/>');
-    let body = '';
-    for (const b of blocks) {
-      let ppr = '';
-      if (b.center) ppr += '<w:jc w:val="center"/>';
-      if (b.pageBreak) ppr = '<w:pageBreakBefore/>' + ppr;
-      if (b.indentLeft) ppr += '';
-      const indent = b.indentLeft ? '<w:ind w:left="' + Math.round(b.indentLeft) + '"/>' : '';
-      const pp = '<w:pPr>' + (b.pageBreak ? '<w:pageBreakBefore/>' : '') + indent + (b.center ? '<w:jc w:val="center"/>' : '') + '</w:pPr>';
-      const rs = b.runs.map(r => '<w:r>' + ((r.b || r.i) ? '<w:rPr>' + (r.b ? '<w:b/>' : '') + (r.i ? '<w:i/>' : '') + '</w:rPr>' : '') + '<w:t xml:space="preserve">' + esc(r.t) + '</w:t></w:r>').join('');
-      body += '<w:p>' + pp + rs + '</w:p>';
-    }
-    zip.file('word/document.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="' + W + '" xmlns:r="' + R + '"><w:body>' + body + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1701" w:right="1134" w:bottom="1134" w:left="1701" w:header="709" w:footer="709" w:gutter="0"/></w:sectPr></w:body></w:document>');
-    return zip;
-  }
-
-  // pages: [{width,height,items:[{str,x,y,h,bold,italic}]}]  (y medido do topo)
-  function blocksFromPdfPages(pages) {
-    // remove cabeçalhos/rodapés repetidos e números de página
-    const edgeCount = {};
-    const lineize = pg => {
-      const items = pg.items.filter(i => i.str.trim() || i.str === ' ').sort((a, b) => a.y - b.y || a.x - b.x);
-      const lines = [];
-      for (const it of items) {
-        let L = lines.find(l => Math.abs(l.y - it.y) < Math.max(2, it.h * 0.4));
-        if (!L) { L = { y: it.y, h: it.h, items: [] }; lines.push(L); }
-        L.items.push(it); L.h = Math.max(L.h, it.h);
-      }
-      lines.sort((a, b) => a.y - b.y);
-      lines.forEach(l => { l.items.sort((a, b) => a.x - b.x); l.x = l.items[0].x; l.xEnd = Math.max(...l.items.map(i => i.x + (i.w || 0))); l.text = l.items.map(i => i.str).join('').replace(/\s+/g, ' ').trim(); });
-      return lines.filter(l => l.text);
-    };
-    const pls = pages.map(pg => ({ pg, lines: lineize(pg) }));
-    pls.forEach(({ lines }) => [lines[0], lines[lines.length - 1]].forEach(l => { if (l) { const k = l.text.replace(/\d+/g, '#'); edgeCount[k] = (edgeCount[k] || 0) + 1; } }));
-    const blocks = [];
-    let cur = null;
-    const allH = []; pls.forEach(({ lines }) => lines.forEach(l => allH.push(l.h)));
-    allH.sort((a, b) => a - b);
-    const bodyH = allH[Math.floor(allH.length / 2)] || 12;
-    const gaps = []; pls.forEach(({ lines }) => { for (let i = 1; i < lines.length; i++) { const g = lines[i].y - lines[i - 1].y; if (g > 0) gaps.push(g / lines[i].h); } });
-    gaps.sort((a, b) => a - b);
-    const gapRatio = gaps[Math.floor(gaps.length * 0.4)] || 1.5;
-    const flush = () => { if (cur && cur.runs.length) blocks.push(cur); cur = null; };
-    pls.forEach(({ pg, lines }, pi) => {
-      const lefts = lines.map(l => l.x).sort((a, b) => a - b);
-      const marginL = lefts[Math.floor(lefts.length * 0.15)] || 0;
-      const rights = lines.map(l => l.xEnd).sort((a, b) => a - b);
-      const marginR = rights[Math.floor(rights.length * 0.85)] || pg.width;
-      let prevY = null, prevH = bodyH;
-      lines.forEach((l, li) => {
-        const k = l.text.replace(/\d+/g, '#');
-        if ((li === 0 || li === lines.length - 1) && (/^\d{1,4}$/.test(l.text) || (edgeCount[k] >= Math.max(3, pages.length * 0.5)))) return;
-        const gap = prevY === null ? 0 : l.y - prevY;
-        const bold = l.items.every(i => i.bold || !i.str.trim());
-        const big = l.h > bodyH * 1.15;
-        const centered = Math.abs((l.x - marginL) - (marginR - l.xEnd)) < 20 && l.x - marginL > 30;
-        const indentFirst = l.x - marginL > 10 && l.x - marginL < 60;
-        const indentBlock = l.x - marginL >= 60 && !centered;
-        const newPara = !cur || prevY === null || gap > prevH * gapRatio * 1.45 || CAPTION.test(l.text) || SOURCE.test(l.text) || /^\d{1,2}\p{Lu}/u.test(l.text) && l.h < bodyH * 0.95 || bold !== cur.bold || big || cur.big || (indentFirst && !cur.quote) || centered !== cur.center || indentBlock !== !!cur.quote || /^(\d+(\.\d+)*\s+\p{Lu}|[•●▪]\s|[a-z]\)\s)/u.test(l.text) && gap > 0;
-        const prevLine = li > 0 ? lines[li - 1] : null;
-        const prevFull = prevLine && !/[.:!?]$/.test(prevLine.text) && prevLine.xEnd >= marginR - 50 && cur && !cur.center;
-        const cont = cur && prevFull && prevY !== null && gap < prevH * 3.2 && !big && !cur.big && bold === cur.bold && !centered && !indentFirst && !CAPTION.test(l.text) && !SOURCE.test(l.text);
-        if (newPara && !cont) {
-          flush();
-          cur = { runs: [], bold, big, center: centered, quote: indentBlock, indentLeft: indentBlock ? (l.x - marginL) * 20 : 0, pageBreak: li === 0 && pi > 0 && blocks.length > 0 && false };
-        } else {
-          if (!newPara) { } 
-          const last = cur.runs[cur.runs.length - 1];
-          if (last && /[A-Za-zÀ-ÿ]-$/.test(last.t) && /^\p{Ll}/u.test(l.text)) last.t = last.t.slice(0, -1);
-          else if (last) last.t += ' ';
-        }
-        for (const it of l.items) {
-          const last = cur.runs[cur.runs.length - 1];
-          const s = it.str;
-          if (last && !!last.b === !!it.bold && !!last.i === !!it.italic) last.t += s;
-          else cur.runs.push({ t: s, b: it.bold, i: it.italic });
-        }
-        cur.runs.forEach(r => r.t = r.t.replace(/\s{2,}/g, ' '));
-        prevY = l.y; prevH = l.h;
-        if (/[.:]$/.test(l.text) && l.xEnd < marginR - 40) { flush(); prevY = null; }
-      });
-      // quebra de página: mantém parágrafo se a última linha não fechou frase
-      if (cur && /[.:!?]$/.test(cur.runs.map(r => r.t).join('').trim())) flush();
-      prevY = null;
-    });
-    flush();
-    blocks.forEach(b => { b.runs = b.runs.map(r => ({ ...r, t: r.t })).filter(r => r.t); if (b.runs.length) { b.runs[0].t = b.runs[0].t.replace(/^\s+/, ''); b.runs[b.runs.length - 1].t = b.runs[b.runs.length - 1].t.replace(/\s+$/, ''); } });
-    return blocks.filter(b => b.runs.length);
-  }
-
-  async function extractPdfPages(pdfjsLib, data, onProgress) {
-    const pdf = await pdfjsLib.getDocument({ data, disableFontFace: true, isEvalSupported: false }).promise;
-    const pages = [];
-    for (let n = 1; n <= pdf.numPages; n++) {
-      const page = await pdf.getPage(n);
-      const vp = page.getViewport({ scale: 1 });
-      const tc = await page.getTextContent();
-      try { await page.getOperatorList(); } catch (e) { }
-      const fontInfo = {};
-      const items = [];
-      for (const it of tc.items) {
-        if (!('str' in it)) continue;
-        let fi = fontInfo[it.fontName];
-        if (!fi) {
-          let name = '';
-          try { const f = page.commonObjs.get(it.fontName); name = (f && (f.name || f.loadedName)) || ''; } catch (e) { }
-          name += ' ' + ((tc.styles[it.fontName] || {}).fontFamily || '');
-          fi = fontInfo[it.fontName] = { bold: /bold|black|heavy|semibold|,b\b/i.test(name), italic: /italic|oblique/i.test(name) };
-        }
-        const tr = it.transform;
-        const h = Math.hypot(tr[2], tr[3]) || Math.abs(tr[3]) || 10;
-        items.push({ str: it.str, x: tr[4], y: vp.height - tr[5], h, w: it.width, bold: fi.bold, italic: fi.italic });
-      }
-      pages.push({ width: vp.width, height: vp.height, items });
-      if (onProgress) onProgress(n, pdf.numPages);
-    }
-    return pages;
-  }
-
-  const api = { extractPdfPages, formatDocx, buildDocxFromBlocks, blocksFromPdfPages, parseAuthors };
-  if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.NormaPronta = api;
-})(typeof window !== 'undefined' ? window : globalThis);
-</script>
 <script>
 {
-const $ = id => document.getElementById(id);
-const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: v % 1 ? 2 : 0 });
-let file = null, outBlob = null, outName = '', downloads = null;
-try { if (window.claude && window.claude.use) window.claude.use('downloads').then(d => { downloads = d; }).catch(() => {}); } catch (e) {}
-const store = { get(k, d) { try { const v = localStorage.getItem('np_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('np_' + k, JSON.stringify(v)); } catch (e) {} } };
-
-// ---- arquivo ----
-const sheet = $('sheet'), inp = $('file');
-function pick(f) {
-  if (!f) return;
-  if (!/\.(docx|pdf)$/i.test(f.name)) { $('status').textContent = 'Envie um arquivo .docx ou .pdf. Arquivos .doc antigos: abra no Word e salve como .docx.'; return; }
-  file = f; $('fname').textContent = f.name + ' · ' + (f.size / 1024 / 1024).toFixed(1) + ' MB';
-  $('filecard').classList.add('on'); $('dropTitle').textContent = 'Arquivo pronto'; $('dropSub').textContent = 'toque para trocar';
-  $('go').disabled = false; $('status').textContent = /\.pdf$/i.test(f.name) ? 'PDF: o texto será extraído e montado num novo .docx (sem imagens e tabelas).' : '';
-}
-sheet.addEventListener('click', () => inp.click());
-sheet.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inp.click(); } });
-inp.addEventListener('change', () => pick(inp.files[0]));
-['dragenter', 'dragover'].forEach(ev => sheet.addEventListener(ev, e => { e.preventDefault(); sheet.classList.add('drag'); }));
-['dragleave', 'drop'].forEach(ev => sheet.addEventListener(ev, e => { e.preventDefault(); sheet.classList.remove('drag'); }));
-sheet.addEventListener('drop', e => pick(e.dataTransfer.files[0]));
-document.addEventListener('dragover', e => e.preventDefault()); document.addEventListener('drop', e => e.preventDefault());
-
-// ---- formatação ----
-$('opts').addEventListener('submit', async e => {
-  e.preventDefault(); if (!file) return;
-  const go = $('go'), st = $('status');
-  go.disabled = true; st.textContent = 'Lendo o arquivo…';
-  try {
-    if (!window.JSZip) throw new Error('Não consegui carregar a biblioteca de leitura do Word. Verifique a conexão e recarregue a página.');
-    const buf = await file.arrayBuffer();
-    let zip;
-    const isPdf = /\.pdf$/i.test(file.name);
-    if (isPdf) {
-      if (!window.pdfjsLib) throw new Error('Não consegui carregar o leitor de PDF. Recarregue a página.');
-      const pages = await NormaPronta.extractPdfPages(window.pdfjsLib, new Uint8Array(buf), (n, t) => { st.textContent = 'Lendo o PDF: página ' + n + ' de ' + t + '…'; });
-      const chars = pages.reduce((a, p) => a + p.items.reduce((b, i) => b + i.str.length, 0), 0);
-      if (chars < 200) throw new Error('Este PDF parece ser digitalizado (imagem). Não há texto para formatar; peça o arquivo .docx original.');
-      zip = NormaPronta.buildDocxFromBlocks(JSZip, NormaPronta.blocksFromPdfPages(pages));
-    } else {
-      zip = await JSZip.loadAsync(buf);
-    }
-    st.textContent = 'Aplicando as normas…';
-    const opts = {
-      font: document.querySelector('[name=font]:checked').value,
-      figAlign: document.querySelector('[name=fig]:checked').value,
-      refsFix: $('o_refs').checked, refsSort: $('o_refs').checked, citations: $('o_cit').checked,
-      longQuoteIndent: $('o_quote').checked, removeBlank: $('o_blank').checked, fixSource: $('o_src').checked, hasCover: $('o_cover').checked
-    };
-    const rep = await NormaPronta.formatDocx(zip, opts, { DOMParser, XMLSerializer });
-    if (isPdf) rep.warnings.unshift('Convertido de PDF: confira capa, quebras de parágrafo e reinsira imagens e tabelas a partir do original.');
-    outBlob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-    outName = file.name.replace(/\.(docx|pdf)$/i, '') + ' - ABNT.docx';
-    show(rep);
-    st.textContent = 'Pronto.';
-  } catch (err) {
-    console.error(err);
-    st.textContent = (err && err.message) || 'Não foi possível processar este arquivo.';
-  } finally { go.disabled = false; }
-});
-
-function show(rep) {
-  const s = rep.stats;
-  $('big').innerHTML = [['Páginas (estim.)', s.paginasEstimadas], ['Títulos', s.titulos], ['Referências', s.referencias], ['Ajustes', Object.values(rep.changes).reduce((a, b) => a + b, 0)]]
-    .map(([l, v]) => '<div><strong>' + v + '</strong>' + l + '</div>').join('');
-  $('log').innerHTML = Object.entries(rep.changes).map(([k, v]) => '<li>' + esc(k) + (v > 1 ? '<b>' + v + '×</b>' : '') + '</li>').join('');
-  const w = rep.warnings.length ? rep.warnings : ['Nada pendente encontrado. Ainda assim, confira capa, folha de rosto e o sumário depois de atualizar os campos.'];
-  $('warn').innerHTML = w.map(x => '<li>' + esc(x) + '</li>').join('');
-  $('res').classList.add('on');
-  $('pages').value = s.paginasEstimadas; quote();
-  $('res').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  const pv = $('preview'); pv.innerHTML = '';
-  if (window.docx && window.docx.renderAsync) window.docx.renderAsync(outBlob, pv, null, { inWrapper: true, ignoreLastRenderedPageBreak: true, breakPages: true, experimental: true }).catch(() => { pv.innerHTML = '<p class="note" style="padding:12px">Pré-visualização indisponível para este arquivo. O .docx baixado está correto.</p>'; });
-  else pv.innerHTML = '<p class="note" style="padding:12px">Pré-visualização indisponível neste navegador.</p>';
-}
-function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-
-$('dl').addEventListener('click', async () => {
-  if (!outBlob) return;
-  if (downloads) {
-    try { await downloads.save({ filename: outName, data: outBlob }); $('dlnote').textContent = 'Arquivo salvo. Abra no Word e aceite “atualizar campos”.'; return; }
-    catch (e) { if (e && e.code === 'declined') return; }
-  }
-  const a = document.createElement('a'); a.href = URL.createObjectURL(outBlob); a.download = outName; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-});
-$('again').addEventListener('click', () => { $('res').classList.remove('on'); inp.value = ''; inp.click(); });
-
-// ---- orçamento ----
-const defaults = [
-  { id: 'exp', nome: 'Expresso', desc: 'Formatação automática + conferência rápida, entrega em até 2 h', tipo: 'faixa', faixas: [[40, 39.9], [100, 59.9], [250, 89.9]] },
-  { id: 'comp', nome: 'Completo', desc: 'Inclui revisão manual das referências, capa e sumário, 24 h', tipo: 'pag', valor: 2.9, minimo: 89 },
-  { id: 'prem', nome: 'Premium', desc: 'Dissertação ou tese, 48 h, ajustes ilimitados por 7 dias', tipo: 'pag', valor: 3.9, minimo: 249 }
-];
-let plans = store.get('plans', defaults);
-if (!Array.isArray(plans) || plans.length !== 3) plans = defaults;
-let sel = store.get('sel', 'comp');
-function price(p, pages) {
-  if (p.tipo === 'faixa') { const f = p.faixas.find(f => pages <= f[0]); return f ? f[1] : p.faixas[p.faixas.length - 1][1] + Math.ceil((pages - p.faixas[p.faixas.length - 1][0]) / 50) * 20; }
-  return Math.max(p.minimo, Math.round(p.valor * pages * 100) / 100);
-}
-function renderPlans() {
-  const pages = Math.max(1, +$('pages').value || 1);
-  $('plans').innerHTML = plans.map(p => '<label><input type="radio" name="plan" value="' + p.id + '"' + (p.id === sel ? ' checked' : '') + '><span><strong>' + p.nome + '</strong><small>' + p.desc + '</small><small>' +
-    (p.tipo === 'pag' ? 'R$ <input data-k="valor" data-id="' + p.id + '" type="number" step="0.1" value="' + p.valor + '" style="width:5.5em;min-height:32px;padding:2px 6px" aria-label="Preço por página ' + p.nome + '"> por página, mínimo R$ ' + p.minimo : 'Até 40 p. ' + fmt(p.faixas[0][1]) + ' · até 100 p. ' + fmt(p.faixas[1][1]) + ' · até 250 p. ' + fmt(p.faixas[2][1])) +
-    '</small></span><span class="pr">' + fmt(price(p, pages)) + '</span></label>').join('');
-}
-function quote() {
-  renderPlans();
-  const pages = Math.max(1, +$('pages').value || 1);
-  const p = plans.find(x => x.id === sel) || plans[1];
-  const extra = +$('prazo').value;
-  const total = Math.round(price(p, pages) * (1 + extra) * 100) / 100;
-  $('total').textContent = fmt(total);
-  $('totalSub').textContent = p.nome + ' · ' + pages + ' páginas' + (extra ? ' · prazo urgente' : '');
-  const nome = $('cli').value.trim();
-  $('msg').value = 'Oi' + (nome ? ', ' + nome : '') + '! Segue o orçamento da formatação do seu trabalho nas normas ABNT atualizadas (NBR 14724:2024, NBR 6023:2025 e NBR 10520:2023):\n\n' +
-    '• Plano ' + p.nome + ': ' + p.desc.toLowerCase() + '\n• ' + pages + ' páginas' + (extra ? '\n• Prazo urgente' : '') + '\n• Valor: ' + fmt(total) + ' (Pix ou cartão)\n\n' +
-    'O que entra: margens, fonte, espaçamentos, títulos e numeração das seções, sumário, paginação, citações, ilustrações, tabelas e referências. Não altero o conteúdo do texto.\n\n' +
-    'Você recebe o arquivo em Word e em PDF. Se a sua faculdade tiver manual próprio, me mande que eu sigo ele. Posso começar?';
-}
-$('plans').addEventListener('change', e => {
-  if (e.target.name === 'plan') { sel = e.target.value; store.set('sel', sel); }
-  if (e.target.dataset.k) { const p = plans.find(x => x.id === e.target.dataset.id); p.valor = Math.max(0, +e.target.value || 0); store.set('plans', plans); }
-  quote();
-});
-['pages', 'cli', 'prazo'].forEach(id => $(id).addEventListener('input', quote));
-$('copy').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText($('msg').value); $('copied').textContent = 'Copiada.'; }
-  catch (e) { $('msg').select(); $('copied').textContent = 'Selecionei o texto: use Copiar do seu aparelho.'; }
-  setTimeout(() => $('copied').textContent = '', 3000);
-});
-quote();
+  // >>> Coloque aqui o número do WhatsApp com DDI e DDD, só números. Ex.: '5511999998888'
+  const WHATSAPP = '';
+  document.querySelectorAll('.js-wa').forEach(a => {
+    if (!WHATSAPP) return;
+    a.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(a.dataset.msg || 'Oi!');
+    a.target = '_blank'; a.rel = 'noopener';
+  });
+  const h = document.querySelector('header');
+  addEventListener('scroll', () => h.classList.toggle('scrolled', scrollY > 8), { passive: true });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 </script>
 </body>
