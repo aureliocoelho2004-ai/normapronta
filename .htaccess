@@ -1,4 +1,19 @@
 DirectoryIndex index.html
+Options -Indexes
+
+# Código-fonte e arquivos do repositório não ficam públicos
+RedirectMatch 404 ^/src(/|$)
+RedirectMatch 404 ^/README\.md$
+RedirectMatch 404 ^/\.git
+
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Força HTTPS
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
