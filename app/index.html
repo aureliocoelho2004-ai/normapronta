@@ -85,6 +85,7 @@ details#rulesBox{margin-top:10px}details#rulesBox summary{cursor:pointer;font-we
 .manual{font-size:13px;margin-top:6px}.manual ul{list-style:none;padding:0;margin:6px 0 0}.manual li{padding:6px 0;border-top:1px solid var(--line)}
 .manual li b{display:block}.manual q{color:var(--mute);display:block;margin-top:2px}.manual .miss{color:var(--mute)}
 @media(max-width:520px){.profsave{grid-template-columns:minmax(0,1fr)}.rgrid{grid-template-columns:minmax(0,1fr)}}
+.linkbtn{all:unset;cursor:pointer;color:var(--red);text-decoration:underline;font-size:13px}.linkbtn:focus-visible{outline:2px solid var(--red)}
 .sum{margin-top:22px;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--redbg)}
 footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
 @media(max-width:820px){.desk,.resgrid,.quote{grid-template-columns:minmax(0,1fr)}.sheetbox{max-width:440px;margin:0 auto}}
@@ -179,8 +180,11 @@ footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
       <div class="big" id="big"></div>
       <div class="actions">
         <button type="button" id="dl">Baixar .docx formatado</button>
+        <button type="button" class="ghost" id="prevBtn">Gerar prévia com marca d'água</button>
         <button type="button" class="ghost" id="again">Formatar outro arquivo</button>
       </div>
+      <p class="note" id="prevNote">A prévia é um PDF só de imagens, com “PRÉVIA — SEM VALOR ACADÊMICO” gravado em cada página: dá para conferir, mas não para editar nem entregar. <button type="button" class="linkbtn" id="prevPdfBtn">Prefere a prévia idêntica ao Word? Envie o PDF salvo pelo Word.</button></p>
+      <input type="file" id="prevPdfFile" accept=".pdf,application/pdf" hidden>
       <p class="note" id="dlnote">Abra no Word e aceite “atualizar campos” para o sumário recalcular as páginas. Para entregar em PDF, use Arquivo › Salvar como › PDF.</p>
       <div class="sum">
         <h3>Resumo para o cliente</h3>
@@ -230,6 +234,8 @@ footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.5/dist/docx-preview.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>/* NormaPronta — motor de formatação ABNT
  * NBR 14724:2024 (errata 2025), NBR 6023:2025, NBR 10520:2023, NBR 6024:2012, NBR 6027:2012, NBR 6028:2021
  * Funciona no navegador (DOMParser/XMLSerializer/JSZip globais) e no Node (injetados).
@@ -1502,14 +1508,140 @@ function show(rep) {
 }
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
+async function saveFile(blob, name) {
+  if (downloads) {
+    try { await downloads.save({ filename: name, data: blob }); return 'saved'; }
+    catch (e) { if (e && e.code === 'declined') return 'declined'; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  return 'saved';
+}
 $('dl').addEventListener('click', async () => {
   if (!outBlob) return;
-  if (downloads) {
-    try { await downloads.save({ filename: outName, data: outBlob }); $('dlnote').textContent = 'Arquivo salvo. Abra no Word e aceite “atualizar campos”.'; return; }
-    catch (e) { if (e && e.code === 'declined') return; }
+  if (await saveFile(outBlob, outName) === 'saved') $('dlnote').textContent = 'Arquivo salvo. Abra no Word e aceite “atualizar campos”.';
+});
+
+// ---- prévia com marca d'água (páginas viram imagem; a marca fica gravada nos pixels) ----
+const MARK = 'PRÉVIA — SEM VALOR ACADÊMICO', SITE = 'normaprontatcc.com.br';
+function stampPage(src, sx, sy, sw, sh, W, H, top) {
+  // desenha um trecho de 'src' numa página A4 W×H (px), a partir da altura 'top', e grava a marca
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+  if (src) g.drawImage(src, sx, sy, sw, sh, 0, top, W, sh * (W / sw));
+  g.save();
+  g.translate(W / 2, H / 2); g.rotate(-Math.PI / 5);
+  const fs = Math.round(W / 17);
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  for (let row = -6; row <= 6; row++) {
+    g.font = '700 ' + fs + 'px Arial, sans-serif'; g.fillStyle = 'rgba(198,59,37,0.22)';
+    const off = (row % 2) * W * 0.25;
+    for (let col = -2; col <= 2; col++) g.fillText(MARK, col * W * 0.95 + off, row * fs * 3.1);
+    g.font = '600 ' + Math.round(fs * 0.45) + 'px Arial, sans-serif'; g.fillStyle = 'rgba(198,59,37,0.28)';
+    for (let col = -2; col <= 2; col++) g.fillText(SITE, col * W * 0.95 + off, row * fs * 3.1 + fs * 0.95);
   }
-  const a = document.createElement('a'); a.href = URL.createObjectURL(outBlob); a.download = outName; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  g.restore();
+  g.fillStyle = 'rgba(21,23,26,.85)'; g.fillRect(0, H - Math.round(H * 0.028), W, Math.round(H * 0.028));
+  g.fillStyle = '#fff'; g.font = '600 ' + Math.round(H * 0.012) + 'px Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('Prévia para conferência · a versão final em Word e PDF é enviada após o pagamento · ' + SITE, W / 2, H - Math.round(H * 0.014));
+  return c;
+}
+function pagesToPdf(pages, name) {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
+  pages.forEach((c, i) => { if (i) pdf.addPage('a4', 'portrait'); pdf.addImage(c.toDataURL('image/jpeg', 0.62), 'JPEG', 0, 0, 210, 297, undefined, 'FAST'); });
+  pdf.setProperties({ title: 'Prévia sem valor acadêmico', creator: 'NormaPronta' });
+  return pdf.output('blob');
+}
+function blankRow(ctx, y, x0, x1) {
+  const row = ctx.getImageData(x0, y, x1 - x0, 1).data;
+  for (let i = 0; i < row.length; i += 12) if (row[i] < 235 || row[i + 1] < 235 || row[i + 2] < 235) return false;
+  return true;
+}
+async function previewFromDocx(blob, onProg) {
+  if (!window.docx || !window.html2canvas || !window.jspdf) throw new Error('Bibliotecas da prévia não carregaram. Recarregue a página.');
+  const host = document.createElement('div');
+  host.style.cssText = 'position:absolute;left:0;top:0;width:820px;z-index:-1;pointer-events:none;background:#fff';
+  document.body.appendChild(host);
+  try {
+    await window.docx.renderAsync(blob, host, null, { inWrapper: false, ignoreLastRenderedPageBreak: true, breakPages: true, experimental: true, renderHeaders: false, renderFooters: false });
+    // html2canvas quebra palavras no meio quando o texto usa white-space: pre-wrap; na prévia usamos o modo normal
+    const fix = document.createElement('style'); fix.textContent = '.np-prev section.docx, .np-prev section.docx *{hyphens:manual!important;-webkit-hyphens:manual!important}.np-prev section.docx span{white-space:normal!important}'; host.className = 'np-prev'; host.appendChild(fix);
+    await (document.fonts && document.fonts.ready);
+    const secs = Array.from(host.querySelectorAll('section.docx'));
+    if (!secs.length) throw new Error('Não consegui desenhar o documento.');
+    const SCALE = 1.2, out = [];
+    let done = 0;
+    for (const sec of secs) {
+      sec.style.boxShadow = 'none'; sec.style.margin = '0';
+      const cs = getComputedStyle(sec);
+      const padT = parseFloat(cs.paddingTop) || 0, padB = parseFloat(cs.paddingBottom) || 0, padL = parseFloat(cs.paddingLeft) || 0, padR = parseFloat(cs.paddingRight) || 0;
+      const Wcss = sec.offsetWidth, Hpage = Wcss * 297 / 210, per = Hpage - padT - padB;
+      const total = sec.scrollHeight - padB;
+      const r = sec.getBoundingClientRect();
+      const baseY = 0, baseX = 0; // no html2canvas, x/y são relativos ao próprio elemento
+      // seções primárias e títulos sem indicativo começam em nova página (o desenho do navegador não faz isso sozinho)
+      const breaks = $('r_np').checked ? Array.from(sec.querySelectorAll('p')).filter(p => /docx_heading1\b|docx_abnttitulosemindicativo/i.test(p.className))
+        .map(p => p.getBoundingClientRect().top - r.top).filter(v => v > padT + 4) : [];
+      let y = padT;
+      while (y < total - 2) {
+        const brk = breaks.find(v => v > y + 4 && v < y + per);
+        const want = brk != null ? brk - y : Math.min(per, total - y), chunkH = Math.min(want + 4, total - y);
+        const cv = await html2canvas(sec, { scale: SCALE, backgroundColor: '#ffffff', x: baseX, y: baseY + y, width: Wcss, height: chunkH, scrollX: 0, scrollY: 0, windowWidth: document.documentElement.scrollWidth, logging: false, useCORS: true });
+        let cut = want;
+        if (brk == null && y + want < total - 2) {
+          const ctx = cv.getContext('2d', { willReadFrequently: true });
+          const x0 = Math.round(padL * SCALE), x1 = Math.round((Wcss - padR) * SCALE);
+          for (let k = Math.round(want * SCALE) - 1, lim = Math.round(want * 0.82 * SCALE); k > lim; k--) {
+            if (blankRow(ctx, k, x0, x1) && blankRow(ctx, Math.max(0, k - 1), x0, x1)) { cut = k / SCALE; break; }
+          }
+        }
+        const W = Math.round(Wcss * SCALE), H = Math.round(Hpage * SCALE);
+        out.push(stampPage(cv, 0, 0, cv.width, Math.round(cut * SCALE), W, H, Math.round(padT * SCALE)));
+        y += cut; done++;
+        if (onProg) onProg(done);
+        if (out.length > 400) throw new Error('Documento grande demais para a prévia.');
+      }
+    }
+    return out;
+  } finally { host.remove(); }
+}
+async function previewFromPdf(buf, onProg) {
+  if (!window.pdfjsLib || !window.jspdf) throw new Error('Bibliotecas da prévia não carregaram. Recarregue a página.');
+  const pdf = await window.pdfjsLib.getDocument({ data: buf, isEvalSupported: false }).promise;
+  const out = [];
+  for (let n = 1; n <= pdf.numPages; n++) {
+    const page = await pdf.getPage(n);
+    const vp1 = page.getViewport({ scale: 1 }), scale = 952 / vp1.width, vp = page.getViewport({ scale });
+    const c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+    out.push(stampPage(c, 0, 0, c.width, c.height, c.width, c.height, 0));
+    if (onProg) onProg(n, pdf.numPages);
+  }
+  return out;
+}
+async function runPreview(make) {
+  const btn = $('prevBtn'), note = $('prevNote'), old = btn.textContent;
+  btn.disabled = true;
+  try {
+    const pages = await make(t => { btn.textContent = 'Gerando prévia… ' + t; });
+    btn.textContent = 'Montando o PDF…';
+    await new Promise(r => setTimeout(r, 30));
+    const pdfBlob = pagesToPdf(pages);
+    const base = (outName || (file && file.name) || 'trabalho').replace(/\s*-\s*ABNT\.docx$/i, '').replace(/\.(docx|pdf)$/i, '');
+    if (await saveFile(pdfBlob, base + ' - PRÉVIA.pdf') === 'saved') note.firstChild.textContent = 'Prévia salva com ' + pages.length + ' página(s). Mande ao cliente junto com o resumo. ';
+  } catch (err) { console.error(err); note.firstChild.textContent = (err && err.message ? err.message : 'Não consegui gerar a prévia.') + ' '; }
+  finally { btn.disabled = false; btn.textContent = old; }
+}
+$('prevBtn').addEventListener('click', () => { if (outBlob) runPreview(p => previewFromDocx(outBlob, n => p('página ' + n))); });
+$('prevPdfBtn').addEventListener('click', () => $('prevPdfFile').click());
+$('prevPdfFile').addEventListener('change', async () => {
+  const f = $('prevPdfFile').files[0]; if (!f) return;
+  const buf = new Uint8Array(await f.arrayBuffer());
+  outName = outName || f.name;
+  await runPreview(p => previewFromPdf(buf, (n, t) => p(n + ' de ' + t)));
+  $('prevPdfFile').value = '';
 });
 $('again').addEventListener('click', () => { $('res').classList.remove('on'); inp.value = ''; inp.click(); });
 
