@@ -241,7 +241,7 @@
     const m = t0.match(/^(\d{1,2}(?:\.\d{1,2}){0,4})(?:\.\s*|\s*[-–—)]\s*|\s+)(\p{L}.*)$/u);
     if (m && !/[.;,]$/.test(t0) && m[2].length < 140 && /^\p{Lu}/u.test(m[2])) {
       const lv = m[1].split('.').length;
-      if (lvStyle || isBoldPara(p) || isUpper(m[2]) || t.length < 90) return { kind: 'num', level: lv, number: m[1] };
+      if (lvStyle || isBoldPara(p) || isUpper(m[2]) || t.length < 90) return { kind: 'num', level: lv, number: m[1], styled: !!lvStyle };
     }
     if (lvStyle) return { kind: 'style', level: lvStyle };
     if (/^(\d+\s*[.\-–—)]?\s*)?INTRODU[ÇC][ÃA]O$/i.test(bare)) return { kind: 'style', level: 1 };
@@ -395,9 +395,9 @@
     for (const t of textNodes(p)) {
       let s = t.textContent, o = s;
       // (SILVA, 2020, p. 3) -> (Silva, 2020, p. 3) ; também 'SILVA; SOUZA, 2019'
-      s = s.replace(/\(([^()]{2,200}?\d{4}[a-z]?[^()]*)\)/g, (m, inner) => '(' + inner.replace(/\b(\p{Lu}[\p{Lu}'’\-]+(?:\s+\p{Lu}[\p{Lu}'’\-]+){0,3})\b/gu, (w) => rep.surnames.has(deaccent(w)) || rep.surnames.has(deaccent(w.split(/\s+/)[0])) ? titleCase(w) : w) + ')');
+      s = s.replace(/\(([^()]{2,200}?\d{4}[a-z]?[^()]*)\)/g, (m, inner) => '(' + inner.replace(/\b(\p{Lu}[\p{Lu}'’\-]+(?:\s+\p{Lu}[\p{Lu}'’\-]+){0,3})\b/gu, (w) => { if (rep.surnames.has(deaccent(w)) || rep.surnames.has(deaccent(w.split(/\s+/)[0]))) { rep.diag.citUpper++; return titleCase(w); } return w; }) + ')');
       // narrativa: SILVA (2020) / SILVA et al. (2020)
-      s = s.replace(/\b(\p{Lu}[\p{Lu}'’\-]{2,})(\s+et\s+al\.?)?(\s*\(\d{4})/gu, (m, w, ea, rest) => (rep.surnames.has(deaccent(w)) ? titleCase(w) : w) + (ea || '') + rest);
+      s = s.replace(/\b(\p{Lu}[\p{Lu}'’\-]{2,})(\s+et\s+al\.?)?(\s*\(\d{4})/gu, (m, w, ea, rest) => (rep.surnames.has(deaccent(w)) ? (rep.diag.citUpper++, titleCase(w)) : w) + (ea || '') + rest);
       s = s.replace(/\bet\s+al\b\.?/g, 'et al.').replace(/\bet al\.\./g, 'et al.');
       if (s !== o) { t.textContent = s; setPreserve(t); n++; }
     }
@@ -408,7 +408,7 @@
       const m = t.textContent.match(/\bet al\.|\bapud\b/);
       if (!m) continue;
       const mr = splitRun(r, t, m.index, m.index + m[0].length);
-      if (mr) { setProp(ensure(mr, 'rPr', null), 'i', null, RPR_ORDER); n++; return n + fixCitations(p, rep); }
+      if (mr) { setProp(ensure(mr, 'rPr', null), 'i', null, RPR_ORDER); n++; rep.diag.citItalic++; return n + fixCitations(p, rep); }
     }
     return n;
   }
@@ -439,12 +439,59 @@
     const cols = kid(sp, 'cols'); if (cols && +attr(cols, 'num') > 1) setProp(sp, 'cols', { space: 708 }, SECT_ORDER);
   }
 
+  // ---------- diagnóstico (estado original, antes de formatar) ----------
+  function snapshotStyles(sdoc) {
+    const S = sdoc.documentElement, out = { font: '', sz: 0, line: 0, rule: '', after: 0, jc: '', first: 0 };
+    const dd = kid(S, 'docDefaults');
+    const take = (rpr, ppr) => {
+      const rf = kid(rpr, 'rFonts');
+      if (rf) { const f = attr(rf, 'ascii') || (attr(rf, 'asciiTheme') ? '(tema)' : ''); if (f) out.font = f; }
+      const sz = kid(rpr, 'sz'); if (sz) out.sz = +attr(sz, 'val');
+      const sp = kid(ppr, 'spacing');
+      if (sp) { if (attr(sp, 'line')) { out.line = +attr(sp, 'line'); out.rule = attr(sp, 'lineRule') || 'auto'; } if (attr(sp, 'after')) out.after = +attr(sp, 'after'); }
+      const jc = kid(ppr, 'jc'); if (jc) out.jc = attr(jc, 'val');
+      const ind = kid(ppr, 'ind'); if (ind && attr(ind, 'firstLine')) out.first = +attr(ind, 'firstLine');
+    };
+    if (dd) take(kid(kid(dd, 'rPrDefault'), 'rPr'), kid(kid(dd, 'pPrDefault'), 'pPr'));
+    const normal = kids(S, 'style').find(st => attr(st, 'type') === 'paragraph' && (attr(st, 'default') === '1' || attr(st, 'styleId') === 'Normal'));
+    if (normal) take(kid(normal, 'rPr'), kid(normal, 'pPr'));
+    if (!out.font || out.font === '(tema)') out.font = out.font || '(tema)';
+    if (!out.sz) out.sz = 20;
+    if (!out.line) { out.line = 240; out.rule = 'auto'; }
+    if (!out.jc) out.jc = 'left';
+    return out;
+  }
+  const OK_FONT = /^(times new roman|arial)$/i;
+  function paraDeviations(p, base, o) {
+    const pp = kid(p, 'pPr');
+    const sp = kid(pp, 'spacing'), jc = kid(pp, 'jc'), ind = kid(pp, 'ind');
+    const line = sp && attr(sp, 'line') ? +attr(sp, 'line') : base.line;
+    const rule = sp && attr(sp, 'line') ? (attr(sp, 'lineRule') || 'auto') : base.rule;
+    const after = sp && attr(sp, 'after') ? +attr(sp, 'after') : base.after;
+    const before = sp && attr(sp, 'before') ? +attr(sp, 'before') : 0;
+    const align = jc ? attr(jc, 'val') : base.jc;
+    const first = ind && attr(ind, 'firstLine') ? +attr(ind, 'firstLine') : (ind && attr(ind, 'hanging') ? -attr(ind, 'hanging') : base.first);
+    const r = runs(p).find(r => kids(r, 't').some(t => t.textContent.trim()));
+    const rp = r ? kid(r, 'rPr') : null;
+    const rf = kid(rp, 'rFonts');
+    const font = rf ? (attr(rf, 'ascii') || (attr(rf, 'asciiTheme') ? '(tema)' : base.font)) : base.font;
+    const sz = kid(rp, 'sz') ? +attr(kid(rp, 'sz'), 'val') : base.sz;
+    return {
+      font: !OK_FONT.test(font) || sz !== 24,
+      spacing: rule !== 'auto' || Math.abs(line - 360) > 12 || after > 40 || before > 40,
+      align: align !== 'both' && align !== 'distribute',
+      indent: o.indent ? Math.abs(first - 709) > 40 : first !== 0
+    };
+  }
+
   async function formatDocx(zip, opts, env) {
     const o = Object.assign({ font: 'Times New Roman', indent: true, longQuoteIndent: true, refsSort: true, refsFix: true, citations: true, removeBlank: true, pageBreaks: true, figAlign: 'center', fixSource: true, pageNumbers: true, hasCover: true }, opts || {});
     const DP = env.DOMParser, XS = env.XMLSerializer;
     const parse = s => new DP().parseFromString(s, 'application/xml');
     const ser = d => new XS().serializeToString(d);
-    const rep = { changes: {}, warnings: [], surnames: new Set(), refNoAuthor: [], refNoEmph: [], words: 0, stats: {} };
+    const rep = { changes: {}, warnings: [], surnames: new Set(), refNoAuthor: [], refNoEmph: [], words: 0, stats: {},
+      diag: { pageSize: false, margins: false, marginsTxt: '', paraTotal: 0, paraWrong: 0, paraFont: 0, paraSpacing: 0, paraAlign: 0, paraIndent: 0,
+        headings: 0, headNoStyle: 0, citUpper: 0, citItalic: 0, quotes: 0, figs: 0, refs: 0, refsOrder: false, refNoEmph: 0, pageNum: 'ok', blank: 0, capitulo: 0, defaultFont: '' } };
     const inc = (k, n = 1) => { rep.changes[k] = (rep.changes[k] || 0) + n; };
 
     const docFile = zip.file('word/document.xml');
@@ -453,6 +500,24 @@
     let stylesXml = zip.file('word/styles.xml') ? await zip.file('word/styles.xml').async('string') :
       '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="' + W + '"/>';
     const sdoc = parse(stylesXml);
+    const base = snapshotStyles(sdoc);
+    rep.diag.defaultFont = base.font + ' ' + (base.sz / 2).toString().replace('.', ',');
+    // margens e papel originais
+    {
+      const bs = kid(kid(doc.documentElement, 'body'), 'sectPr');
+      const sz = kid(bs, 'pgSz'), mg = kid(bs, 'pgMar');
+      if (sz) { const w = +attr(sz, 'w'), h = +attr(sz, 'h'); const a = Math.min(w, h), b = Math.max(w, h); if (Math.abs(a - 11906) > 60 || Math.abs(b - 16838) > 60) rep.diag.pageSize = true; }
+      if (mg) {
+        const v = ['top', 'left', 'bottom', 'right'].map(k => +attr(mg, k));
+        const want = [1701, 1701, 1134, 1134];
+        if (v.some((x, i) => Math.abs(x - want[i]) > 30)) { rep.diag.margins = true; rep.diag.marginsTxt = v.map(x => (x / CM).toFixed(1).replace('.0', '').replace('.', ',')).join(' / ') + ' cm'; }
+      } else rep.diag.margins = true;
+      // numeração original
+      const files = Object.keys(zip.files);
+      const hasPage = async re => { for (const f of files.filter(f => re.test(f))) { if (/PAGE/.test(await zip.file(f).async('string'))) return true; } return false; };
+      if (await hasPage(/^word\/footer[^/]*\.xml$/)) rep.diag.pageNum = 'rodape';
+      else if (!(await hasPage(/^word\/header[^/]*\.xml$/))) rep.diag.pageNum = 'nenhuma';
+    }
     const ids = fixStyles(sdoc, o, rep);
     inc('Fonte ' + o.font + ' 12 e entrelinha 1,5 como padrão');
 
@@ -522,12 +587,15 @@
         if (region === 'pre' && h.kind !== 'num') { cleanRuns(p, o); continue; }
         region = region === 'refs' || region === 'post' ? region : 'text';
         if (region !== 'text') { /* títulos dentro de apêndices */ }
+        let headBad = h.kind === 'num' && !h.styled;
+        if (headBad) rep.diag.headNoStyle++;
         stripRunEmphasisForHeading(p);
         const lv = Math.min(5, h.level);
         setPara(p, { style: ids.h[lv], pageBreak: lv === 1 && o.pageBreaks && idx !== firstText ? true : (lv === 1 ? undefined : false), ind: null, jc: 'left', spacing: null });
         delProp(pPr(p), 'spacing'); delProp(pPr(p), 'jc');
-        if (firstTextEdit(p, /^(\d{1,2}(?:\.\d{1,2}){0,4})(?:\s*[.\-–—)]+(?!\d)\s*|(?=\p{L}))/u, '$1 ')) inc('Indicativo numérico separado do título só por espaço (NBR 6024)');
-        if (trimTrailingDot(p)) inc('Ponto final removido de títulos');
+        if (firstTextEdit(p, /^(\d{1,2}(?:\.\d{1,2}){0,4})(?:\s*[.\-–—)]+(?!\d)\s*|(?=\p{L}))/u, '$1 ')) { inc('Indicativo numérico separado do título só por espaço (NBR 6024)'); headBad = true; }
+        if (trimTrailingDot(p)) { inc('Ponto final removido de títulos'); headBad = true; }
+        if (headBad) rep.diag.headings++;
         inc('Títulos de seção ' + lv + 'ª ordem padronizados (NBR 6024)');
         if (/^cap[íi]tulo\b/i.test(tt)) rep.warnings.push('Título “' + tt.slice(0, 50) + '”: a NBR 14724:2024 usa “seções”, não “capítulos”. Revise o texto.');
         continue;
@@ -547,11 +615,11 @@
       }
 
       if (region === 'refs') {
-        if (!tt && !hasDrawing(p)) { if (o.removeBlank && isEmpty(p)) { p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); } continue; }
+        if (!tt && !hasDrawing(p)) { if (o.removeBlank && isEmpty(p)) { p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); rep.diag.blank++; } continue; }
         cleanRuns(p, o, 24);
         setPara(p, { style: ids.normal, jc: 'left', ind: { left: 0, right: 0, firstLine: 0, hanging: 0 }, spacing: { before: 0, after: 240, line: 240 } });
         delProp(pPr(p), 'numPr');
-        if (o.refsFix && fixReference(p, rep)) inc('Referências padronizadas (NBR 6023:2025)');
+        if (o.refsFix && fixReference(p, rep)) { inc('Referências padronizadas (NBR 6023:2025)'); rep.diag.refs++; }
         refParas.push(p);
         inc('Referências alinhadas à esquerda, espaço simples, separadas por linha em branco');
         continue;
@@ -559,7 +627,7 @@
 
       // região textual e pós-textual
       if (o.removeBlank && !tt && isEmpty(p)) {
-        p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); continue;
+        p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); rep.diag.blank++; continue;
       }
       if (isPageBreakOnly(p)) {
         const next = paras.slice(idx + 1).find(x => x.parentNode && !ancestor(x, 'tbl') && (pText(x).trim() || hasDrawing(x)));
@@ -576,17 +644,18 @@
         let pv = p.previousSibling; while (pv && pv.nodeType !== 1) pv = pv.previousSibling;
         if (pv && (pv.localName === 'tbl' || (pv.localName === 'p' && hasDrawing(pv) && !pText(pv).trim()))) {
           let pv2 = pv.previousSibling; while (pv2 && pv2.nodeType !== 1) pv2 = pv2.previousSibling;
-          if (!(pv2 && pv2.localName === 'p' && CAPTION.test(pText(pv2).trim()))) { pv.parentNode.insertBefore(p, pv); inc('Título de tabela/ilustração movido para cima do elemento (NBR 14724:2024)'); }
+          if (!(pv2 && pv2.localName === 'p' && CAPTION.test(pText(pv2).trim()))) { pv.parentNode.insertBefore(p, pv); inc('Título de tabela/ilustração movido para cima do elemento (NBR 14724:2024)'); p._figBad = true; }
         }
         cleanRuns(p, o, 20);
         setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 240, after: 0, line: 240 }, keepNext: true });
-        if (firstTextEdit(p, /^((?:\S+)\s+\d+)\s*[-–—:.]\s*/, '$1 – ')) inc('Designação de ilustrações e tabelas com travessão');
+        if (firstTextEdit(p, /^((?:\S+)\s+\d+)\s*[-–—:.]\s*/, '$1 – ')) { inc('Designação de ilustrações e tabelas com travessão'); p._figBad = true; }
+        if (p._figBad) rep.diag.figs++;
         inc('Títulos de ilustrações e tabelas na parte superior, tamanho menor');
         continue;
       }
       if (SOURCE.test(tt)) {
         cleanRuns(p, o, 20);
-        if (o.fixSource && SOURCE_SELF.test(tt)) { replaceAllText(p, 'Fonte: elaborado pelo próprio autor.'); inc('“Fonte: o autor” atualizado para “elaborado pelo próprio autor” (NBR 14724:2024)'); }
+        if (o.fixSource && SOURCE_SELF.test(tt) && !/^Fonte: elaborado pelo próprio autor\.?$/.test(tt)) { rep.diag.figs++; replaceAllText(p, 'Fonte: elaborado pelo próprio autor.'); inc('“Fonte: o autor” atualizado para “elaborado pelo próprio autor” (NBR 14724:2024)'); }
         setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 240, line: 240 } });
         inc('Fontes e notas de ilustrações em tamanho menor, espaço simples');
         continue;
@@ -598,12 +667,24 @@
       const quoteLike = /quote|cita[çc][ãa]o|citacao/i.test(sName) || (leftInd >= 2 * CM && !isList && !kid(pPr(p), 'numPr')) ||
         (/^[“"«]/.test(tt) && /[”"»]\s*\(?[^()]*\d{4}[^()]*\)?\.?$/.test(tt) && tt.length > 300);
       if (quoteLike && o.longQuoteIndent !== 'off') {
+        {
+          const sp0 = kid(pPr(p), 'spacing'); const line0 = sp0 && attr(sp0, 'line') ? +attr(sp0, 'line') : base.line;
+          const r0 = runs(p).find(r => kids(r, 't').some(t => t.textContent.trim())); const sz0 = kid(kid(r0, 'rPr'), 'sz') ? +attr(kid(kid(r0, 'rPr'), 'sz'), 'val') : base.sz;
+          if ((o.longQuoteIndent && Math.abs(leftInd - 4 * CM) > 60) || line0 > 260 || sz0 >= 24 || /^[“"«]/.test(tt)) rep.diag.quotes++;
+        }
         cleanRuns(p, o, 20);
         if (/^[“"«]/.test(tt)) { mapChars(p, t.indexOf(tt[0]), t.indexOf(tt[0]) + 1, () => ''); const t2 = pText(p); const m = t2.match(/[”"»](?=\s*(\(|$|\.))/); if (m) mapChars(p, m.index, m.index + 1, () => ''); inc('Aspas removidas de citações longas'); }
         setPara(p, { style: ids.normal, jc: 'both', ind: { left: o.longQuoteIndent ? 4 * CM : 0, right: 0, firstLine: 0 }, spacing: { before: 360, after: 360, line: 240 } });
         p._needsCite = true;
         inc('Citações diretas longas: recuo 4 cm, fonte menor, espaço simples (NBR 10520:2023)');
         continue;
+      }
+      {
+        const dv = paraDeviations(p, base, o);
+        if (isList) dv.indent = false;
+        rep.diag.paraTotal++;
+        if (dv.font) rep.diag.paraFont++; if (dv.spacing) rep.diag.paraSpacing++; if (dv.align) rep.diag.paraAlign++; if (dv.indent) rep.diag.paraIndent++;
+        if (dv.font || dv.spacing || dv.align || dv.indent) rep.diag.paraWrong++;
       }
       cleanRuns(p, o);
       if (isList) {
@@ -629,7 +710,7 @@
           refParas.forEach(p => p.parentNode.removeChild(p));
           sorted.forEach(p => parent.insertBefore(p, marker));
           parent.removeChild(marker);
-          inc('Referências em ordem alfabética (sistema autor-data)');
+          inc('Referências em ordem alfabética (sistema autor-data)'); rep.diag.refsOrder = true;
         }
       }
     }
@@ -725,6 +806,7 @@
     if (rep.refNoEmph.length) rep.warnings.push(rep.refNoEmph.length + ' referência(s) sem destaque no título (negrito ou itálico, NBR 6023). Ex.: “' + rep.refNoEmph.slice(0, 2).join('”, “') + '”.');
     if (!hasPre) rep.warnings.push('Não identifiquei elementos pré-textuais (capa, folha de rosto). A numeração foi aplicada a todas as páginas.');
     if (sawTocField) rep.warnings.push('O sumário automático será atualizado quando você abrir o arquivo no Word (aceite “atualizar campos”).');
+    rep.diag.capitulo = capCount; rep.diag.refNoEmph = rep.refNoEmph.length;
     rep.stats = { palavras: rep.words, paginasEstimadas: Math.max(1, Math.round(rep.words / 280)), referencias: refParas.length, titulos: info.size };
     delete rep.styleIndex; rep.surnames = rep.surnames.size;
     return rep;

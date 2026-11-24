@@ -68,6 +68,7 @@ textarea{min-height:200px;line-height:1.5;resize:vertical}
 .plans{display:grid;gap:8px;margin-bottom:14px}.plans label{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer}
 .plans input{accent-color:var(--red);width:18px;height:18px}.plans small{display:block;color:var(--mute)}.plans .pr{white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
 .note{font-size:13px;color:var(--mute);margin-top:10px}
+.sum{margin-top:22px;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--redbg)}
 footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
 @media(max-width:820px){.desk,.resgrid,.quote{grid-template-columns:minmax(0,1fr)}.sheetbox{max-width:440px;margin:0 auto}}
 @media(prefers-reduced-motion:reduce){.sheet{transition:none}}
@@ -127,6 +128,14 @@ footer{color:var(--mute);font-size:14px}footer p{max-width:80ch}
         <button type="button" class="ghost" id="again">Formatar outro arquivo</button>
       </div>
       <p class="note" id="dlnote">Abra no Word e aceite “atualizar campos” para o sumário recalcular as páginas. Para entregar em PDF, use Arquivo › Salvar como › PDF.</p>
+      <div class="sum">
+        <h3>Resumo para o cliente</h3>
+        <p class="note" style="margin:4px 0 10px">Mostra o tamanho do problema, não o que corrigir. Os números saem do arquivo original, antes da formatação.</p>
+        <label class="chk" style="padding:4px 0"><input type="checkbox" id="sumPrice" checked><span>Incluir o orçamento</span></label>
+        <textarea id="sumTxt" aria-label="Resumo para o cliente" style="min-height:260px"></textarea>
+        <div class="actions" style="margin-top:10px"><button type="button" id="sumCopy">Copiar resumo</button><span class="note" id="sumCopied" style="align-self:center"></span></div>
+        <p class="note">Dica: mande junto um print da primeira página da Introdução já formatada, na pré-visualização mais abaixo. O arquivo completo vai depois do pagamento.</p>
+      </div>
       <h3 style="margin-top:22px">O que foi ajustado</h3>
       <ul class="log" id="log"></ul>
     </div>
@@ -231,7 +240,49 @@ $('opts').addEventListener('submit', async e => {
   } finally { go.disabled = false; }
 });
 
+let lastRep = null;
+function plural(n, um, varios) { return n + ' ' + (n === 1 ? um : varios); }
+function renderSummary() {
+  if (!lastRep) return;
+  const d = lastRep.diag || {}, items = []; let total = 0;
+  if (d.pageSize || d.margins) {
+    const parts = []; if (d.pageSize) parts.push('papel fora do tamanho A4'); if (d.margins) parts.push('margens de ' + (d.marginsTxt || 'medida errada') + ' (a norma pede 3 cm em cima e à esquerda, 2 cm embaixo e à direita)');
+    items.push('Página: ' + parts.join('; ')); total += parts.length;
+  }
+  if (d.paraWrong) {
+    const what = []; if (d.paraFont) what.push('fonte ou tamanho'); if (d.paraSpacing) what.push('entrelinha ou espaço entre parágrafos'); if (d.paraIndent) what.push('recuo'); if (d.paraAlign) what.push('alinhamento');
+    items.push('Texto: ' + d.paraWrong + ' de ' + d.paraTotal + ' parágrafos com ' + what.join(', ').replace(/, ([^,]*)$/, ' e $1') + ' fora do padrão'); total += d.paraWrong;
+  }
+  if (d.headings) { items.push('Títulos: ' + plural(d.headings, 'título fora da NBR 6024', 'títulos fora da NBR 6024') + (d.headNoStyle ? (d.headNoStyle === d.headings ? (d.headings > 1 ? '; nenhum deles entra' : '; ele não entra') + ' no sumário automático' : '; ' + d.headNoStyle + ' deles não ' + (d.headNoStyle > 1 ? 'entram' : 'entra') + ' no sumário automático') : '')); total += d.headings; }
+  const cit = []; if (d.citUpper) cit.push(plural(d.citUpper, 'chamada de autoria no padrão antigo, em maiúsculas', 'chamadas de autoria no padrão antigo, em maiúsculas')); if (d.citItalic) cit.push(plural(d.citItalic, '“et al.” ou “apud” sem itálico', '“et al.” ou “apud” sem itálico')); if (d.quotes) cit.push(plural(d.quotes, 'citação longa sem o recuo e a fonte da norma', 'citações longas sem o recuo e a fonte da norma'));
+  if (cit.length) { items.push('Citações: ' + cit.join('; ')); total += d.citUpper + d.citItalic + d.quotes; }
+  if (d.figs) { items.push('Figuras e tabelas: ' + plural(d.figs, 'título ou fonte fora do padrão', 'títulos ou fontes fora do padrão')); total += d.figs; }
+  const ref = []; if (d.refs) ref.push(plural(d.refs, 'referência fora da NBR 6023:2025', 'referências fora da NBR 6023:2025')); if (d.refsOrder) ref.push('lista fora da ordem alfabética'); if (d.refNoEmph) ref.push(plural(d.refNoEmph, 'referência sem destaque no título', 'referências sem destaque no título'));
+  if (ref.length) { items.push('Referências: ' + ref.join('; ')); total += d.refs + (d.refsOrder ? 1 : 0) + d.refNoEmph; }
+  if (d.pageNum === 'rodape') { items.push('Paginação: números no rodapé (a norma pede no canto superior direito)'); total++; }
+  if (d.pageNum === 'nenhuma') { items.push('Paginação: o trabalho não tem numeração de páginas'); total++; }
+  if (d.blank) { items.push('Espaçamento: ' + plural(d.blank, 'linha em branco sobrando', 'linhas em branco sobrando') + ' entre parágrafos'); total += d.blank; }
+  if (d.capitulo) { items.push('Estrutura: a palavra “capítulo” aparece em ' + plural(d.capitulo, 'parágrafo', 'parágrafos') + '; a norma de 2024 fala em “seções”'); total++; }
+  const nome = $('cli').value.trim();
+  let msg = 'Oi' + (nome ? ', ' + nome : '') + '! Fiz o diagnóstico do seu trabalho nas normas ABNT atualizadas (NBR 14724:2024, NBR 6023:2025 e NBR 10520:2023).\n\n';
+  if (!total) msg += 'Boa notícia: encontrei poucos pontos fora da norma. Posso fazer uma revisão final de formatação para você entregar com segurança.';
+  else msg += 'Encontrei ' + plural(total, 'ponto', 'pontos') + ' fora da norma:\n\n' + items.map(i => '• ' + i).join('\n');
+  if ($('sumPrice').checked) {
+    const q = currentQuote();
+    msg += '\n\nA correção completa sai por ' + fmt(q.total) + ' no plano ' + q.plan.nome + ' (' + plural(q.pages, 'página', 'páginas') + '), com entrega em Word e PDF. Não altero nada do conteúdo do seu texto.';
+  }
+  msg += '\n\nQuer que eu comece?';
+  $('sumTxt').value = msg;
+}
+$('sumPrice').addEventListener('change', renderSummary);
+$('sumCopy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('sumTxt').value); $('sumCopied').textContent = 'Copiado.'; }
+  catch (e) { $('sumTxt').select(); $('sumCopied').textContent = 'Selecionei o texto: use Copiar do seu aparelho.'; }
+  setTimeout(() => $('sumCopied').textContent = '', 3000);
+});
+
 function show(rep) {
+  lastRep = rep;
   const s = rep.stats;
   $('big').innerHTML = [['Páginas (estim.)', s.paginasEstimadas], ['Títulos', s.titulos], ['Referências', s.referencias], ['Ajustes', Object.values(rep.changes).reduce((a, b) => a + b, 0)]]
     .map(([l, v]) => '<div><strong>' + v + '</strong>' + l + '</div>').join('');
@@ -239,7 +290,7 @@ function show(rep) {
   const w = rep.warnings.length ? rep.warnings : ['Nada pendente encontrado. Ainda assim, confira capa, folha de rosto e o sumário depois de atualizar os campos.'];
   $('warn').innerHTML = w.map(x => '<li>' + esc(x) + '</li>').join('');
   $('res').classList.add('on');
-  $('pages').value = s.paginasEstimadas; quote();
+  $('pages').value = s.paginasEstimadas; quote(); renderSummary();
   $('res').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   const pv = $('preview'); pv.innerHTML = '';
   if (window.docx && window.docx.renderAsync) window.docx.renderAsync(outBlob, pv, null, { inWrapper: true, ignoreLastRenderedPageBreak: true, breakPages: true, experimental: true }).catch(() => { pv.innerHTML = '<p class="note" style="padding:12px">Pré-visualização indisponível para este arquivo. O .docx baixado está correto.</p>'; });
@@ -277,12 +328,15 @@ function renderPlans() {
     (p.tipo === 'pag' ? 'R$ <input data-k="valor" data-id="' + p.id + '" type="number" step="0.1" value="' + p.valor + '" style="width:5.5em;min-height:32px;padding:2px 6px" aria-label="Preço por página ' + p.nome + '"> por página, mínimo R$ ' + p.minimo : 'Até 40 p. ' + fmt(p.faixas[0][1]) + ' · até 100 p. ' + fmt(p.faixas[1][1]) + ' · até 250 p. ' + fmt(p.faixas[2][1])) +
     '</small></span><span class="pr">' + fmt(price(p, pages)) + '</span></label>').join('');
 }
+function currentQuote() {
+  const pages = Math.max(1, +$('pages').value || 1);
+  const plan = plans.find(x => x.id === sel) || plans[1];
+  const extra = +$('prazo').value;
+  return { pages, plan, extra, total: Math.round(price(plan, pages) * (1 + extra) * 100) / 100 };
+}
 function quote() {
   renderPlans();
-  const pages = Math.max(1, +$('pages').value || 1);
-  const p = plans.find(x => x.id === sel) || plans[1];
-  const extra = +$('prazo').value;
-  const total = Math.round(price(p, pages) * (1 + extra) * 100) / 100;
+  const { pages, plan: p, extra, total } = currentQuote();
   $('total').textContent = fmt(total);
   $('totalSub').textContent = p.nome + ' · ' + pages + ' páginas' + (extra ? ' · prazo urgente' : '');
   const nome = $('cli').value.trim();
@@ -290,6 +344,7 @@ function quote() {
     '• Plano ' + p.nome + ': ' + p.desc.toLowerCase() + '\n• ' + pages + ' páginas' + (extra ? '\n• Prazo urgente' : '') + '\n• Valor: ' + fmt(total) + ' (Pix ou cartão)\n\n' +
     'O que entra: margens, fonte, espaçamentos, títulos e numeração das seções, sumário, paginação, citações, ilustrações, tabelas e referências. Não altero o conteúdo do texto.\n\n' +
     'Você recebe o arquivo em Word e em PDF. Se a sua faculdade tiver manual próprio, me mande que eu sigo ele. Posso começar?';
+  renderSummary();
 }
 $('plans').addEventListener('change', e => {
   if (e.target.name === 'plan') { sel = e.target.value; store.set('sel', sel); }
