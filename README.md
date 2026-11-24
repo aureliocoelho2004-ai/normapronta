@@ -14,3 +14,8 @@ NBR 14724:2024, NBR 6023:2025, NBR 10520:2023, NBR 6024:2012, NBR 6027:2012 e NB
 - `src/core.js` — motor de formatação ABNT.
 - `src/template.html` — interface.
 - `src/build.js` — junta os dois e gera o `app/index.html` (`node src/build.js`).
+
+## Blog
+
+- Artigos em `src/blog/posts/*.md` (cabeçalho com title, slug, description, date, category, faq, sources).
+- Gerar: `MARKED_PATH=<caminho do pacote marked> node src/blog/build-blog.js` → escreve `blog/` e atualiza `sitemap.xml`.
