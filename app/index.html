@@ -1647,12 +1647,13 @@ $('again').addEventListener('click', () => { $('res').classList.remove('on'); in
 
 // ---- orçamento ----
 const defaults = [
-  { id: 'exp', nome: 'Expresso', desc: 'Formatação automática + conferência rápida, entrega em até 2 h', tipo: 'faixa', faixas: [[40, 39.9], [100, 59.9], [250, 89.9]] },
+  { id: 'exp', nome: 'Expresso', desc: 'Formatação completa + conferência rápida, entrega em até 24 h', tipo: 'faixa', faixas: [[50, 39.9], [100, 59.9], [250, 89.9]] },
   { id: 'comp', nome: 'Completo', desc: 'Inclui revisão manual das referências, capa e sumário, 24 h', tipo: 'pag', valor: 2.9, minimo: 89 },
   { id: 'prem', nome: 'Premium', desc: 'Dissertação ou tese, 48 h, ajustes ilimitados por 7 dias', tipo: 'pag', valor: 3.9, minimo: 249 }
 ];
 let plans = store.get('plans', defaults);
 if (!Array.isArray(plans) || plans.length !== 3) plans = defaults;
+{ const e = plans.find(x => x.id === 'exp'); if (e && e.faixas && e.faixas[0][0] === 40) { e.faixas[0][0] = 50; e.desc = defaults[0].desc; } }
 let sel = store.get('sel', 'comp');
 function price(p, pages) {
   if (p.tipo === 'faixa') { const f = p.faixas.find(f => pages <= f[0]); return f ? f[1] : p.faixas[p.faixas.length - 1][1] + Math.ceil((pages - p.faixas[p.faixas.length - 1][0]) / 50) * 20; }
@@ -1661,7 +1662,7 @@ function price(p, pages) {
 function renderPlans() {
   const pages = Math.max(1, +$('pages').value || 1);
   $('plans').innerHTML = plans.map(p => '<label><input type="radio" name="plan" value="' + p.id + '"' + (p.id === sel ? ' checked' : '') + '><span><strong>' + p.nome + '</strong><small>' + p.desc + '</small><small>' +
-    (p.tipo === 'pag' ? 'R$ <input data-k="valor" data-id="' + p.id + '" type="number" step="0.1" value="' + p.valor + '" style="width:5.5em;min-height:32px;padding:2px 6px" aria-label="Preço por página ' + p.nome + '"> por página, mínimo R$ ' + p.minimo : 'Até 40 p. ' + fmt(p.faixas[0][1]) + ' · até 100 p. ' + fmt(p.faixas[1][1]) + ' · até 250 p. ' + fmt(p.faixas[2][1])) +
+    (p.tipo === 'pag' ? 'R$ <input data-k="valor" data-id="' + p.id + '" type="number" step="0.1" value="' + p.valor + '" style="width:5.5em;min-height:32px;padding:2px 6px" aria-label="Preço por página ' + p.nome + '"> por página, mínimo R$ ' + p.minimo : 'Até ' + p.faixas[0][0] + ' p. ' + fmt(p.faixas[0][1]) + ' · até 100 p. ' + fmt(p.faixas[1][1]) + ' · até 250 p. ' + fmt(p.faixas[2][1])) +
     '</small></span><span class="pr">' + fmt(price(p, pages)) + '</span></label>').join('');
 }
 function currentQuote() {
