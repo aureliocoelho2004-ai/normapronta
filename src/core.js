@@ -110,10 +110,10 @@
     const dd = ensure(styles, 'docDefaults', ['docDefaults', 'latentStyles', 'style']);
     const rprD = ensure(ensure(dd, 'rPrDefault', ['rPrDefault', 'pPrDefault']), 'rPr');
     setProp(rprD, 'rFonts', fontAttrs(o.font), RPR_ORDER);
-    setProp(rprD, 'sz', { val: 24 }, RPR_ORDER); setProp(rprD, 'szCs', { val: 24 }, RPR_ORDER);
+    setProp(rprD, 'sz', { val: o.SZ }, RPR_ORDER); setProp(rprD, 'szCs', { val: o.SZ }, RPR_ORDER);
     setProp(rprD, 'lang', { val: 'pt-BR', eastAsia: 'en-US', bidi: 'ar-SA' }, RPR_ORDER);
     const pprD = ensure(ensure(dd, 'pPrDefault', ['rPrDefault', 'pPrDefault']), 'pPr');
-    setProp(pprD, 'spacing', { after: 0, line: 360, lineRule: 'auto' }, PPR_ORDER);
+    setProp(pprD, 'spacing', { after: 0, line: o.LINE, lineRule: 'auto' }, PPR_ORDER);
 
     const byName = {};
     for (const st of kids(styles, 'style')) {
@@ -149,12 +149,12 @@
     }
     const ids = {};
     ids.normal = upsert('Normal', 'Normal', 'paragraph', (ppr, rpr) => {
-      setProp(ppr, 'spacing', { before: 0, after: 0, line: 360, lineRule: 'auto' }, PPR_ORDER);
+      setProp(ppr, 'spacing', { before: 0, after: 0, line: o.LINE, lineRule: 'auto' }, PPR_ORDER);
       setProp(ppr, 'jc', { val: 'both' }, PPR_ORDER);
-      setProp(rpr, 'sz', { val: 24 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 24 }, RPR_ORDER);
+      setProp(rpr, 'sz', { val: o.SZ }, RPR_ORDER); setProp(rpr, 'szCs', { val: o.SZ }, RPR_ORDER);
     });
     // NBR 6024: primária MAIÚSC+negrito; secundária MAIÚSC; terciária negrito; quaternária normal; quinária itálico
-    const H = [null, { b: 1, caps: 1 }, { caps: 1 }, { b: 1 }, {}, { i: 1 }];
+    const H = o.HEAD;
     ids.h = [null];
     for (let lv = 1; lv <= 5; lv++) {
       ids.h[lv] = upsert('Heading' + lv, 'heading ' + lv, 'paragraph', (ppr, rpr, st) => {
@@ -163,20 +163,20 @@
         insertOrdered(st, mk(sdoc, 'next', { val: ids.normal }), STYLE_ORDER);
         if (!kid(st, 'qFormat')) insertOrdered(st, mk(sdoc, 'qFormat'), STYLE_ORDER);
         setProp(ppr, 'keepNext', null, PPR_ORDER); setProp(ppr, 'keepLines', null, PPR_ORDER);
-        setProp(ppr, 'spacing', { before: lv === 1 ? 0 : 360, after: 360, line: 360, lineRule: 'auto' }, PPR_ORDER);
+        setProp(ppr, 'spacing', { before: lv === 1 ? 0 : o.LINE, after: o.LINE, line: o.LINE, lineRule: 'auto' }, PPR_ORDER);
         setProp(ppr, 'ind', { left: 0, firstLine: 0 }, PPR_ORDER);
-        setProp(ppr, 'jc', { val: 'left' }, PPR_ORDER);
+        setProp(ppr, 'jc', { val: H[lv].center ? 'center' : 'left' }, PPR_ORDER);
         setProp(ppr, 'outlineLvl', { val: lv - 1 }, PPR_ORDER);
         if (H[lv].b) { setProp(rpr, 'b', null, RPR_ORDER); setProp(rpr, 'bCs', null, RPR_ORDER); } else { setProp(rpr, 'b', { val: 0 }, RPR_ORDER); setProp(rpr, 'bCs', { val: 0 }, RPR_ORDER); }
         setProp(rpr, 'i', { val: H[lv].i ? 1 : 0 }, RPR_ORDER); setProp(rpr, 'iCs', { val: H[lv].i ? 1 : 0 }, RPR_ORDER);
         setProp(rpr, 'caps', { val: H[lv].caps ? 1 : 0 }, RPR_ORDER);
-        setProp(rpr, 'sz', { val: 24 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 24 }, RPR_ORDER);
+        setProp(rpr, 'sz', { val: o.SZ }, RPR_ORDER); setProp(rpr, 'szCs', { val: o.SZ }, RPR_ORDER);
       });
     }
     ids.pre = upsert('ABNTTituloSemIndicativo', 'ABNT Título sem indicativo', 'paragraph', (ppr, rpr, st) => {
       insertOrdered(st, mk(sdoc, 'basedOn', { val: ids.normal }), STYLE_ORDER);
       setProp(ppr, 'keepNext', null, PPR_ORDER);
-      setProp(ppr, 'spacing', { before: 0, after: 360, line: 360, lineRule: 'auto' }, PPR_ORDER);
+      setProp(ppr, 'spacing', { before: 0, after: o.LINE, line: o.LINE, lineRule: 'auto' }, PPR_ORDER);
       setProp(ppr, 'ind', { left: 0, firstLine: 0 }, PPR_ORDER);
       setProp(ppr, 'jc', { val: 'center' }, PPR_ORDER);
       setProp(rpr, 'b', null, RPR_ORDER); setProp(rpr, 'caps', null, RPR_ORDER);
@@ -184,11 +184,11 @@
     upsert('FootnoteText', 'footnote text', 'paragraph', (ppr, rpr) => {
       setProp(ppr, 'spacing', { before: 0, after: 0, line: 240, lineRule: 'auto' }, PPR_ORDER);
       setProp(ppr, 'jc', { val: 'both' }, PPR_ORDER);
-      setProp(rpr, 'sz', { val: 20 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 20 }, RPR_ORDER);
+      setProp(rpr, 'sz', { val: o.SM }, RPR_ORDER); setProp(rpr, 'szCs', { val: o.SM }, RPR_ORDER);
     });
     upsert('Caption', 'caption', 'paragraph', (ppr, rpr) => {
       setProp(ppr, 'spacing', { before: 0, after: 0, line: 240, lineRule: 'auto' }, PPR_ORDER);
-      setProp(rpr, 'sz', { val: 20 }, RPR_ORDER); setProp(rpr, 'szCs', { val: 20 }, RPR_ORDER);
+      setProp(rpr, 'sz', { val: o.SM }, RPR_ORDER); setProp(rpr, 'szCs', { val: o.SM }, RPR_ORDER);
       setProp(rpr, 'i', { val: 0 }, RPR_ORDER);
     });
     // TOC 1..5 (NBR 6027): mesma grafia dos títulos
@@ -197,7 +197,7 @@
         insertOrdered(st, mk(sdoc, 'basedOn', { val: ids.normal }), STYLE_ORDER);
         setProp(ppr, 'tabs', null, PPR_ORDER);
         const tabs = kid(ppr, 'tabs'); tabs.appendChild(mk(sdoc, 'tab', { val: 'right', leader: 'dot', pos: 9061 }));
-        setProp(ppr, 'spacing', { before: 0, after: 0, line: 360, lineRule: 'auto' }, PPR_ORDER);
+        setProp(ppr, 'spacing', { before: 0, after: 0, line: o.LINE, lineRule: 'auto' }, PPR_ORDER);
         setProp(ppr, 'ind', { left: 0, firstLine: 0 }, PPR_ORDER);
         setProp(ppr, 'jc', { val: 'left' }, PPR_ORDER);
         if (H[lv].b) setProp(rpr, 'b', null, RPR_ORDER);
@@ -417,13 +417,14 @@
   function bodyParas(body) { return all(body, 'p'); }
 
   function makeHeaderXml(o) {
-    return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-      '<w:hdr xmlns:w="' + W + '" xmlns:r="' + R + '"><w:p><w:pPr><w:jc w:val="right"/><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:ind w:firstLine="0"/></w:pPr>' +
+    const tag = /^bottom/.test(o.pageNumPos) ? 'ftr' : 'hdr', jc = /center/.test(o.pageNumPos) ? 'center' : 'right';
+    return ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<w:hdr xmlns:w="' + W + '" xmlns:r="' + R + '"><w:p><w:pPr><w:jc w:val="' + jc + '"/><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:ind w:firstLine="0"/></w:pPr>' +
       '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="begin"/></w:r>' +
       '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r>' +
       '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="separate"/></w:r>' +
       '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:t>1</w:t></w:r>' +
-      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="end"/></w:r></w:p></w:hdr>';
+      '<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:fldChar w:fldCharType="end"/></w:r></w:p></w:hdr>').replace(/w:hdr/g, 'w:' + tag);
   }
 
   function fixSect(sp, o) {
@@ -434,7 +435,7 @@
     const land = old && attr(old, 'orient') === 'landscape';
     setProp(sp, 'pgSz', land ? { w: 16838, h: 11906, orient: 'landscape' } : { w: 11906, h: 16838 }, SECT_ORDER);
     // anverso: esquerda/superior 3 cm; direita/inferior 2 cm
-    setProp(sp, 'pgMar', { top: 1701, right: 1134, bottom: 1134, left: 1701, header: 709, footer: 709, gutter: 0 }, SECT_ORDER);
+    setProp(sp, 'pgMar', { top: o.MAR.top, right: o.MAR.right, bottom: o.MAR.bottom, left: o.MAR.left, header: 709, footer: 709, gutter: 0 }, SECT_ORDER);
     delProp(sp, 'pgNumType');
     const cols = kid(sp, 'cols'); if (cols && +attr(cols, 'num') > 1) setProp(sp, 'cols', { space: 708 }, SECT_ORDER);
   }
@@ -477,15 +478,32 @@
     const font = rf ? (attr(rf, 'ascii') || (attr(rf, 'asciiTheme') ? '(tema)' : base.font)) : base.font;
     const sz = kid(rp, 'sz') ? +attr(kid(rp, 'sz'), 'val') : base.sz;
     return {
-      font: !OK_FONT.test(font) || sz !== 24,
-      spacing: rule !== 'auto' || Math.abs(line - 360) > 12 || after > 40 || before > 40,
+      font: !OK_FONT.test(font) || sz !== o.SZ,
+      spacing: rule !== 'auto' || Math.abs(line - o.LINE) > 12 || after > 40 || before > 40,
       align: align !== 'both' && align !== 'distribute',
-      indent: o.indent ? Math.abs(first - 709) > 40 : first !== 0
+      indent: Math.abs(first - o.IND) > 40
     };
   }
 
+  function derive(o) {
+    const n = (v, d) => (typeof v === 'number' && isFinite(v) ? v : d);
+    o.SZ = Math.round(n(o.fontSize, 12) * 2); o.SM = Math.round(n(o.smallSize, 10) * 2);
+    o.LINE = Math.round(240 * n(o.lineSpacing, 1.5));
+    const m = o.margins || {};
+    o.MAR = { top: Math.round(n(m.top, 3) * CM), left: Math.round(n(m.left, 3) * CM), bottom: Math.round(n(m.bottom, 2) * CM), right: Math.round(n(m.right, 2) * CM) };
+    o.IND = o.indent === false ? 0 : Math.round(n(o.indentCm, 1.25) * CM);
+    o.QIND = o.longQuoteIndent === false ? 0 : Math.round(n(o.quoteIndentCm, 4) * CM);
+    o.REFLINE = Math.round(240 * n(o.refsLine, 1)); o.REFAFTER = o.refsGap === false ? 0 : 240;
+    const H = Array.isArray(o.headings) ? o.headings : [];
+    const def = [null, { b: 1, caps: 1 }, { caps: 1 }, { b: 1 }, {}, { i: 1 }];
+    o.HEAD = def.map((d, i) => i ? Object.assign({}, d, H[i] || {}) : null);
+    return o;
+  }
   async function formatDocx(zip, opts, env) {
-    const o = Object.assign({ font: 'Times New Roman', indent: true, longQuoteIndent: true, refsSort: true, refsFix: true, citations: true, removeBlank: true, pageBreaks: true, figAlign: 'center', fixSource: true, pageNumbers: true, hasCover: true }, opts || {});
+    const o = Object.assign({ font: 'Times New Roman', indent: true, longQuoteIndent: true, refsSort: true, refsFix: true, citations: true, removeBlank: true, pageBreaks: true, figAlign: 'center', fixSource: true, pageNumbers: true, hasCover: true,
+      fontSize: 12, smallSize: 10, lineSpacing: 1.5, margins: { top: 3, left: 3, bottom: 2, right: 2 }, indentCm: 1.25, quoteIndentCm: 4, pageNumPos: 'top-right',
+      headings: [null, { b: 1, caps: 1 }, { caps: 1 }, { b: 1 }, {}, { i: 1 }], refsLine: 1, refsGap: true, refsAlign: 'left', sourceText: 'Fonte: elaborado pelo próprio autor.' }, opts || {});
+    derive(o);
     const DP = env.DOMParser, XS = env.XMLSerializer;
     const parse = s => new DP().parseFromString(s, 'application/xml');
     const ser = d => new XS().serializeToString(d);
@@ -509,7 +527,7 @@
       if (sz) { const w = +attr(sz, 'w'), h = +attr(sz, 'h'); const a = Math.min(w, h), b = Math.max(w, h); if (Math.abs(a - 11906) > 60 || Math.abs(b - 16838) > 60) rep.diag.pageSize = true; }
       if (mg) {
         const v = ['top', 'left', 'bottom', 'right'].map(k => +attr(mg, k));
-        const want = [1701, 1701, 1134, 1134];
+        const want = [o.MAR.top, o.MAR.left, o.MAR.bottom, o.MAR.right];
         if (v.some((x, i) => Math.abs(x - want[i]) > 30)) { rep.diag.margins = true; rep.diag.marginsTxt = v.map(x => (x / CM).toFixed(1).replace('.0', '').replace('.', ',')).join(' / ') + ' cm'; }
       } else rep.diag.margins = true;
       // numeração original
@@ -559,7 +577,7 @@
 
       if (inBox) { cleanRuns(p, o); continue; }
       if (inTbl) {
-        cleanRuns(p, o, 20);
+        cleanRuns(p, o, o.SM);
         setPara(p, { spacing: { before: 0, after: 0, line: 240 }, ind: { left: 0, right: 0, firstLine: 0 } });
         inc('Texto de tabelas e quadros em tamanho menor, espaço simples');
         continue;
@@ -603,10 +621,10 @@
 
       // parágrafos comuns
       if (region === 'pre') {
-        cleanRuns(p, o, 24);
+        cleanRuns(p, o, o.SZ);
         if (/^(RESUMO|ABSTRACT|RESUMEN)/.test(preTitle) && tt) {
-          setPara(p, { jc: 'both', ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 0, line: 360 } });
-          if (/^(palavras?-chave|keywords?|palabras clave)\s*:/i.test(tt)) { setPara(p, { spacing: { before: 360, after: 0, line: 360 } }); inc('Resumo em parágrafo único, palavras-chave destacadas (NBR 6028)'); }
+          setPara(p, { jc: 'both', ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 0, line: o.LINE } });
+          if (/^(palavras?-chave|keywords?|palabras clave)\s*:/i.test(tt)) { setPara(p, { spacing: { before: o.LINE, after: 0, line: o.LINE } }); inc('Resumo em parágrafo único, palavras-chave destacadas (NBR 6028)'); }
         } else if (/apresentad[oa]\s+(ao|à|a)|requisito\s+parcial|como\s+requisito|para\s+obten[çc][ãa]o\s+do\s+t[íi]tulo/i.test(tt)) {
           setPara(p, { jc: 'both', ind: { left: 8 * CM, firstLine: 0 }, spacing: { before: 0, after: 0, line: 240 } });
           inc('Natureza do trabalho recuada do meio da mancha, espaço simples');
@@ -616,8 +634,8 @@
 
       if (region === 'refs') {
         if (!tt && !hasDrawing(p)) { if (o.removeBlank && isEmpty(p)) { p.parentNode.removeChild(p); inc('Linhas em branco extras removidas'); rep.diag.blank++; } continue; }
-        cleanRuns(p, o, 24);
-        setPara(p, { style: ids.normal, jc: 'left', ind: { left: 0, right: 0, firstLine: 0, hanging: 0 }, spacing: { before: 0, after: 240, line: 240 } });
+        cleanRuns(p, o, o.SZ);
+        setPara(p, { style: ids.normal, jc: o.refsAlign === 'both' ? 'both' : 'left', ind: { left: 0, right: 0, firstLine: 0, hanging: 0 }, spacing: { before: 0, after: o.REFAFTER, line: o.REFLINE } });
         delProp(pPr(p), 'numPr');
         if (o.refsFix && fixReference(p, rep)) { inc('Referências padronizadas (NBR 6023:2025)'); rep.diag.refs++; }
         refParas.push(p);
@@ -646,7 +664,7 @@
           let pv2 = pv.previousSibling; while (pv2 && pv2.nodeType !== 1) pv2 = pv2.previousSibling;
           if (!(pv2 && pv2.localName === 'p' && CAPTION.test(pText(pv2).trim()))) { pv.parentNode.insertBefore(p, pv); inc('Título de tabela/ilustração movido para cima do elemento (NBR 14724:2024)'); p._figBad = true; }
         }
-        cleanRuns(p, o, 20);
+        cleanRuns(p, o, o.SM);
         setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 240, after: 0, line: 240 }, keepNext: true });
         if (firstTextEdit(p, /^((?:\S+)\s+\d+)\s*[-–—:.]\s*/, '$1 – ')) { inc('Designação de ilustrações e tabelas com travessão'); p._figBad = true; }
         if (p._figBad) rep.diag.figs++;
@@ -654,8 +672,8 @@
         continue;
       }
       if (SOURCE.test(tt)) {
-        cleanRuns(p, o, 20);
-        if (o.fixSource && SOURCE_SELF.test(tt) && !/^Fonte: elaborado pelo próprio autor\.?$/.test(tt)) { rep.diag.figs++; replaceAllText(p, 'Fonte: elaborado pelo próprio autor.'); inc('“Fonte: o autor” atualizado para “elaborado pelo próprio autor” (NBR 14724:2024)'); }
+        cleanRuns(p, o, o.SM);
+        if (o.fixSource && o.sourceText && SOURCE_SELF.test(tt) && tt.replace(/\.$/, '') !== o.sourceText.trim().replace(/\.$/, '')) { rep.diag.figs++; replaceAllText(p, o.sourceText.trim()); inc('“Fonte: o autor” atualizado para “elaborado pelo próprio autor” (NBR 14724:2024)'); }
         setPara(p, { jc: o.figAlign, ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 240, line: 240 } });
         inc('Fontes e notas de ilustrações em tamanho menor, espaço simples');
         continue;
@@ -670,11 +688,11 @@
         {
           const sp0 = kid(pPr(p), 'spacing'); const line0 = sp0 && attr(sp0, 'line') ? +attr(sp0, 'line') : base.line;
           const r0 = runs(p).find(r => kids(r, 't').some(t => t.textContent.trim())); const sz0 = kid(kid(r0, 'rPr'), 'sz') ? +attr(kid(kid(r0, 'rPr'), 'sz'), 'val') : base.sz;
-          if ((o.longQuoteIndent && Math.abs(leftInd - 4 * CM) > 60) || line0 > 260 || sz0 >= 24 || /^[“"«]/.test(tt)) rep.diag.quotes++;
+          if (Math.abs(leftInd - o.QIND) > 60 || line0 > 260 || sz0 > o.SM || /^[“"«]/.test(tt)) rep.diag.quotes++;
         }
-        cleanRuns(p, o, 20);
+        cleanRuns(p, o, o.SM);
         if (/^[“"«]/.test(tt)) { mapChars(p, t.indexOf(tt[0]), t.indexOf(tt[0]) + 1, () => ''); const t2 = pText(p); const m = t2.match(/[”"»](?=\s*(\(|$|\.))/); if (m) mapChars(p, m.index, m.index + 1, () => ''); inc('Aspas removidas de citações longas'); }
-        setPara(p, { style: ids.normal, jc: 'both', ind: { left: o.longQuoteIndent ? 4 * CM : 0, right: 0, firstLine: 0 }, spacing: { before: 360, after: 360, line: 240 } });
+        setPara(p, { style: ids.normal, jc: 'both', ind: { left: o.QIND, right: 0, firstLine: 0 }, spacing: { before: o.LINE, after: o.LINE, line: 240 } });
         p._needsCite = true;
         inc('Citações diretas longas: recuo 4 cm, fonte menor, espaço simples (NBR 10520:2023)');
         continue;
@@ -688,10 +706,10 @@
       }
       cleanRuns(p, o);
       if (isList) {
-        setPara(p, { style: ids.normal, jc: 'both', spacing: { before: 0, after: 0, line: 360 } });
+        setPara(p, { style: ids.normal, jc: 'both', spacing: { before: 0, after: 0, line: o.LINE } });
         inc('Alíneas justificadas, entrelinha 1,5');
       } else {
-        setPara(p, { style: ids.normal, jc: 'both', ind: { left: 0, right: 0, firstLine: o.indent ? Math.round(1.25 * CM) : 0 }, spacing: { before: 0, after: 0, line: 360 } });
+        setPara(p, { style: ids.normal, jc: 'both', ind: { left: 0, right: 0, firstLine: o.IND }, spacing: { before: 0, after: 0, line: o.LINE } });
         inc('Parágrafos justificados, recuo 1,25 cm, entrelinha 1,5');
       }
       p._needsCite = true;
@@ -726,25 +744,26 @@
     inc('Papel A4 e margens 3 cm (sup./esq.) e 2 cm (inf./dir.)');
     if (o.pageNumbers) {
       // parte do cabeçalho
-      let n = 1; while (zip.file('word/headerABNT' + n + '.xml')) n++;
-      const hdrName = 'headerABNT' + n + '.xml';
+      let n = 1; while (zip.file('word/headerABNT' + n + '.xml') || zip.file('word/footerABNT' + n + '.xml')) n++;
+      const isFtr = /^bottom/.test(o.pageNumPos), kind = isFtr ? 'footer' : 'header';
+      const hdrName = kind + 'ABNT' + n + '.xml';
       zip.file('word/' + hdrName, makeHeaderXml(o));
       const relsPath = 'word/_rels/document.xml.rels';
       const rdoc = parse(zip.file(relsPath) ? await zip.file(relsPath).async('string') : '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"/>');
       const RNS = 'http://schemas.openxmlformats.org/package/2006/relationships';
       let rid = 'rIdABNT' + n;
       const rel = rdoc.createElementNS(RNS, 'Relationship');
-      rel.setAttribute('Id', rid); rel.setAttribute('Type', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/header'); rel.setAttribute('Target', hdrName);
+      rel.setAttribute('Id', rid); rel.setAttribute('Type', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/' + kind); rel.setAttribute('Target', hdrName);
       rdoc.documentElement.appendChild(rel);
       zip.file(relsPath, ser(rdoc));
       const ct = parse(await zip.file('[Content_Types].xml').async('string'));
       const CT = 'http://schemas.openxmlformats.org/package/2006/content-types';
       const ov = ct.createElementNS(CT, 'Override');
-      ov.setAttribute('PartName', '/word/' + hdrName); ov.setAttribute('ContentType', 'application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml');
+      ov.setAttribute('PartName', '/word/' + hdrName); ov.setAttribute('ContentType', 'application/vnd.openxmlformats-officedocument.wordprocessingml.' + kind + '+xml');
       ct.documentElement.appendChild(ov);
       zip.file('[Content_Types].xml', ser(ct));
 
-      const addHdr = sp => { const hr = mk(doc, 'headerReference', { type: 'default' }); hr.setAttributeNS(R, 'r:id', rid); sp.insertBefore(hr, sp.firstChild); };
+      const addHdr = sp => { const hr = mk(doc, kind + 'Reference', { type: 'default' }); hr.setAttributeNS(R, 'r:id', rid); sp.insertBefore(hr, sp.firstChild); };
       if (hasPre) {
         // quebra de seção antes da primeira seção textual: pré-textuais sem número visível
         const target = paras[firstText];
@@ -781,7 +800,7 @@
     if (zip.file('word/footnotes.xml')) {
       const fdoc = parse(await zip.file('word/footnotes.xml').async('string'));
       for (const p of all(fdoc.documentElement, 'p')) {
-        cleanRuns(p, o, 20);
+        cleanRuns(p, o, o.SM);
         setPara(p, { jc: 'both', ind: { left: 0, firstLine: 0 }, spacing: { before: 0, after: 0, line: 240 } });
       }
       zip.file('word/footnotes.xml', ser(fdoc));
@@ -939,6 +958,103 @@
     return pages;
   }
 
-  const api = { extractPdfPages, formatDocx, buildDocxFromBlocks, blocksFromPdfPages, parseAuthors };
+
+  // ---------- leitura do manual da instituição (sem IA: busca por padrões) ----------
+  function rulesFromManualText(raw) {
+    const text = String(raw || '').replace(/ /g, ' ').replace(/[ \t]+/g, ' ');
+    const sents = text.split(/\n+|(?<=[.;!?])\s+(?=[A-ZÁÉÍÓÚÂÊÔÃÕÇ0-9“"(])/).map(x => x.trim()).filter(x => x.length > 8 && x.length < 700);
+    const N = x => parseFloat(String(x).replace(',', '.'));
+    const low = x => deaccent(x.toLowerCase());
+    const rules = {}, found = [];
+    const ev = (field, label, value, sent) => { if (found.some(f => f.field === field)) return false; found.push({ field, label, value, sentence: sent.length > 220 ? sent.slice(0, 217) + '…' : sent }); return true; };
+    const NUMCM = /(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:cm|centimetros?)\b/g;
+    // margens
+    const mg = {};
+    let mgSent = '';
+    for (const s of sents) {
+      const l = low(s); if (!/margem|margens/.test(l)) continue;
+      const nums = [...l.matchAll(NUMCM)].map(m => ({ v: N(m[1]), i: m.index, e: m.index + m[0].length }));
+      if (!nums.length) continue;
+      const before = Object.keys(mg).length;
+      for (const m of l.matchAll(/(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:cm|centimetros?)\s*\(([^)]{3,60})\)/g))
+        for (const side of ['superior', 'inferior', 'esquerda', 'direita']) if (m[2].includes(side) && mg[side] == null) mg[side] = N(m[1]);
+      for (const side of ['superior', 'inferior', 'esquerda', 'direita']) {
+        if (mg[side] != null) continue;
+        let idx = l.indexOf(side); if (idx < 0) continue;
+        const after = nums.find(n => n.i > idx && n.i - idx < 45);
+        const bef = nums.filter(n => n.e <= idx && idx - n.e < 25).pop();
+        const pick = after || bef; if (pick && pick.v >= 1 && pick.v <= 5) mg[side] = pick.v;
+      }
+      if (Object.keys(mg).length > before) mgSent = mgSent ? mgSent : s;
+    }
+    if (Object.keys(mg).length) {
+      rules.margins = { top: mg.superior ?? 3, left: mg.esquerda ?? 3, bottom: mg.inferior ?? 2, right: mg.direita ?? 2 };
+      const r = rules.margins;
+      ev('margins', 'Margens', `superior ${r.top} · esquerda ${r.left} · inferior ${r.bottom} · direita ${r.right} cm`.replace(/\./g, ','), mgSent);
+    }
+    for (const s of sents) {
+      const l = low(s);
+      const aboutQuote = /citac/.test(l), aboutNote = /nota|rodape|legenda|paginac|ficha|tabela/.test(l), aboutRef = /referenc/.test(l);
+      // família da fonte
+      if (!rules.font && /fonte|letra|tipo/.test(l)) {
+        const hasT = /times new roman/.test(l), hasA = /\barial\b/.test(l);
+        if (hasT !== hasA) { rules.font = hasT ? 'Times New Roman' : 'Arial'; ev('font', 'Fonte', rules.font, s); }
+      }
+      // tamanho da fonte do texto
+      const exc = l.search(/excet|exceto|excec|salvo|com excecao|menos as|menos nas/);
+      const head = exc > 0 ? l.slice(0, exc) : l, tail = exc > 0 ? l.slice(exc) : '';
+      const headMain = !/citac|nota|rodape|legenda|paginac|ficha|tabela/.test(head);
+      if (rules.fontSize == null && /(fonte|tamanho|corpo|letra)/.test(head) && headMain) {
+        const m = head.match(/(?:tamanho|corpo|fonte|letra)[^0-9]{0,20}(1[0-4])(?!\s*(?:cm|,\d))\b/) || head.match(/\b(1[0-4])\s*(?:pt|pontos)\b/);
+        if (m) { rules.fontSize = +m[1]; ev('fontSize', 'Tamanho do texto', m[1], s); }
+      }
+      // tamanho menor
+      const smallSrc = tail || ((aboutQuote || aboutNote) ? l : '');
+      if (rules.smallSize == null && smallSrc && /(tamanho|corpo|fonte|letra)/.test(smallSrc)) {
+        const m = smallSrc.match(/(?:tamanho|corpo|fonte|letra)[^0-9]{0,40}(\d{1,2})(?!\s*(?:cm|,\d))\b/) || smallSrc.match(/\b(\d{1,2})\s*(?:pt|pontos)\b/);
+        if (m && +m[1] >= 8 && +m[1] <= 11) { rules.smallSize = +m[1]; ev('smallSize', 'Tamanho menor (citações longas, notas, legendas)', m[1], s); }
+      }
+      // entrelinha do texto
+      if (rules.lineSpacing == null && /(espacamento|entrelinha|espaco entre (as )?linhas|espaco entrelinhas)/.test(l) && !aboutQuote && !aboutNote && !aboutRef) {
+        let v = null;
+        if (/\b1[,.]5\b|um e meio/.test(l)) v = 1.5; else if (/\bduplo\b|\b2[,.]0\b/.test(l)) v = 2; else if (/\b1[,.]15\b/.test(l)) v = 1.15; else if (/\bsimples\b/.test(l) && !/1[,.]5/.test(l)) v = 1;
+        if (v) { rules.lineSpacing = v; ev('lineSpacing', 'Entrelinha do texto', String(v).replace('.', ','), s); }
+      }
+      // recuo do parágrafo
+      if (rules.indentCm == null && /(paragrafo|primeira linha)/.test(l) && /(recuo|entrada|adentramento|tabulac|afastamento)/.test(l) && !aboutQuote) {
+        const m = [...l.matchAll(NUMCM)].map(x => N(x[1])).find(v => v > 0 && v <= 3);
+        if (m != null) { rules.indentCm = m; ev('indentCm', 'Recuo da primeira linha', String(m).replace('.', ',') + ' cm', s); }
+      }
+      // recuo da citação longa
+      if (rules.quoteIndentCm == null && aboutQuote && /(recuo|margem esquerda|afastamento|adentramento)/.test(l)) {
+        const m = [...l.matchAll(NUMCM)].map(x => N(x[1])).find(v => v >= 1.5 && v <= 7);
+        if (m != null) { rules.quoteIndentCm = m; ev('quoteIndentCm', 'Recuo da citação longa', String(m).replace('.', ',') + ' cm', s); }
+      }
+      // numeração das páginas
+      if (!rules.pageNumPos && /(numerac|paginac|numero da pagina|numero das paginas|numeradas|numero da folha)/.test(l)) {
+        let v = null;
+        if (/(canto )?superior direit/.test(l)) v = 'top-right';
+        else if (/(canto )?inferior direit/.test(l)) v = 'bottom-right';
+        else if (/(rodape|inferior)[^.]{0,40}(centr)|(centr)[^.]{0,40}(rodape|inferior)/.test(l)) v = 'bottom-center';
+        else if (/(superior|cabecalho)[^.]{0,40}(centr)|(centr)[^.]{0,40}(superior|cabecalho)/.test(l)) v = 'top-center';
+        if (v) { rules.pageNumPos = v; ev('pageNumPos', 'Numeração das páginas', { 'top-right': 'canto superior direito', 'bottom-right': 'canto inferior direito', 'bottom-center': 'rodapé, ao centro', 'top-center': 'cabeçalho, ao centro' }[v], s); }
+      }
+      // títulos das seções primárias centralizados
+      if (!rules.headCenter && /(titulo|secao|secoes)/.test(l) && /(primari|capitulo|secoes principais)/.test(l) && /centraliz/.test(l) && !/sem indicativo|nao numerad/.test(l)) {
+        rules.headCenter = true; ev('headCenter', 'Títulos das seções primárias', 'centralizados', s);
+      }
+      // referências
+      if (aboutRef && /(espaco|espacamento|entrelinha)/.test(l)) {
+        if (rules.refsLine == null) { if (/simples/.test(l)) { rules.refsLine = 1; ev('refsLine', 'Entrelinha das referências', 'simples', s); } else if (/1[,.]5/.test(l)) { rules.refsLine = 1.5; ev('refsLine', 'Entrelinha das referências', '1,5', s); } }
+        if (rules.refsGap == null && /(linha em branco|espaco simples em branco|espaco duplo entre|separad)/.test(l)) { rules.refsGap = true; ev('refsGap', 'Linha em branco entre referências', 'sim', s); }
+      }
+      if (aboutRef && rules.refsAlign == null && /(alinhad|justificad)/.test(l)) {
+        if (/justificad/.test(l) && !/nao (devem ser )?justificad/.test(l)) { rules.refsAlign = 'both'; ev('refsAlign', 'Alinhamento das referências', 'justificado', s); }
+        else if (/esquerda/.test(l)) { rules.refsAlign = 'left'; ev('refsAlign', 'Alinhamento das referências', 'à esquerda', s); }
+      }
+    }
+    return { rules, found };
+  }
+  const api = { rulesFromManualText, extractPdfPages, formatDocx, buildDocxFromBlocks, blocksFromPdfPages, parseAuthors };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.NormaPronta = api;
 })(typeof window !== 'undefined' ? window : globalThis);
