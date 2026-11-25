@@ -3,6 +3,7 @@ title: Checklist de formatação ABNT do TCC: margens, fonte, espaçamento e pag
 slug: checklist-formatacao-tcc-abnt
 description: Confira, item por item, se o seu TCC está nas normas ABNT atualizadas: página, fonte, espaçamento, títulos, paginação, citações, ilustrações e referências.
 date: 2026-11-22
+tldr: Nas normas ABNT atuais, o TCC usa papel A4, margens de 3 cm (superior e esquerda) e 2 cm (inferior e direita), fonte 12 com entrelinha 1,5, texto justificado e fonte menor em espaço simples para citações longas, notas e legendas. A numeração fica no canto superior direito a partir da Introdução, e as referências ficam alinhadas à esquerda, em espaço simples, separadas por uma linha em branco.
 category: Guias práticos
 faq:
   - Qual fonte usar no TCC, Arial ou Times New Roman? || A NBR 14724 pede fonte tamanho 12 no texto, mas não fixa a família da letra. Arial e Times New Roman são as mais usadas e aceitas. Se a sua instituição tiver manual, siga a fonte indicada nele.

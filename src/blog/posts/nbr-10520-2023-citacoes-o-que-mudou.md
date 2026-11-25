@@ -3,6 +3,7 @@ title: Citações na NBR 10520:2023: (SILVA, 2020) ou (Silva, 2020)?
 slug: nbr-10520-2023-citacoes-o-que-mudou
 description: A norma de citações mudou em 2023 e o sobrenome entre parênteses deixou de ser em maiúsculas. Veja o que mudou, com exemplos prontos para copiar no seu TCC.
 date: 2026-11-23
+tldr: Pela NBR 10520:2023, a autoria nas citações vai em maiúsculas e minúsculas, dentro e fora dos parênteses: (Silva, 2020), e não mais (SILVA, 2020). Siglas continuam em maiúsculas. Com quatro ou mais autores pode-se usar et al. em itálico. Na citação com mais de três linhas, o recuo de 4 cm passou a ser recomendado, com fonte menor, espaço simples e sem aspas. Nas referências, o sobrenome continua em maiúsculas.
 category: O que mudou nas normas
 faq:
   - Ainda posso escrever (SILVA, 2020)? || Pela NBR 10520:2023, não. A autoria passou a ser escrita com maiúsculas e minúsculas, dentro e fora dos parênteses: (Silva, 2020). Só siga a forma antiga se o manual da sua instituição pedir.

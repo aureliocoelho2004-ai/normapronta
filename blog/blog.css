@@ -61,3 +61,4 @@ h1,h2,h3{font-family:"DM Serif Display",Georgia,serif;font-weight:400;line-heigh
 .foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px}
 @media(max-width:720px){.nav nav{display:none}.cta-box{grid-template-columns:minmax(0,1fr)}.cta-box .btn{width:100%}body{font-size:17px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.tldr{background:#fff8d6;border:1px solid #f0dc8a;border-radius:14px;padding:16px 20px;margin:24px 0 8px}.tldr strong{display:block;font-size:14px;font-weight:800;margin-bottom:4px}.tldr p{margin:0;font-size:17px}

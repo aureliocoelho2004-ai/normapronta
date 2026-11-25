@@ -110,6 +110,7 @@ function render(p, all) {
       <p class="meta">Atualizado em ${fmtDate(p.updated || p.date)} · ${mins} min de leitura</p>
     </header>
     ${toc.length > 2 ? `<nav class="toc" aria-label="Neste artigo"><strong>Neste artigo</strong><ol>${toc.map(t => `<li><a href="#${t.id}">${esc(t.t)}</a></li>`).join('')}</ol></nav>` : ''}
+    ${p.tldr ? `<section class="tldr" aria-label="Resposta rápida"><strong>Resposta rápida</strong><p>${esc(p.tldr)}</p></section>` : ''}
     <div class="prose">
 ${html}
     </div>
@@ -154,4 +155,25 @@ const urls = [{ loc: SITE + '/', lastmod: new Date().toISOString().slice(0, 10) 
   .concat(posts.map(p => ({ loc: `${SITE}/blog/${p.slug}/`, lastmod: p.updated || p.date })));
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   urls.map(u => `  <url><loc>${u.loc}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n') + '\n</urlset>\n');
+// llms.txt: resumo do site para assistentes de IA
+fs.writeFileSync(path.join(ROOT, 'llms.txt'), [
+  '# NormaPronta',
+  '',
+  '> Serviço brasileiro de formatação de trabalhos acadêmicos (TCC, monografia, artigo, dissertação e tese) nas normas ABNT atualizadas: NBR 14724:2024, NBR 6023:2025, NBR 10520:2023, NBR 6024, NBR 6027 e NBR 6028. Não altera o conteúdo do texto; formata margens, fonte, espaçamento, títulos, sumário, paginação, citações, ilustrações e referências.',
+  '',
+  '- Preço: a partir de R$ 39,90 até 50 páginas (plano Expresso); plano Completo a R$ 2,90 por página (mínimo R$ 89); plano Premium para dissertações e teses a R$ 3,90 por página (mínimo R$ 249).',
+  '- Prazo: entrega em até 24 horas (Expresso e Completo) e até 48 horas (Premium).',
+  '- Como funciona: o cliente envia o Word pelo WhatsApp, recebe grátis o diagnóstico, o orçamento e uma prévia com marca d\'água, e paga só depois de aprovar.',
+  '- Contato: WhatsApp +55 21 97597-8875 · site https://normaprontatcc.com.br/',
+  '',
+  '## Páginas principais',
+  '',
+  '- [Página inicial e planos](' + SITE + '/): serviço, preços, prazos e perguntas frequentes',
+  '- [Blog](' + SITE + '/blog/): guias sobre as normas ABNT',
+  '',
+  '## Artigos',
+  '',
+  ...posts.map(p => `- [${p.title}](${SITE}/blog/${p.slug}/): ${p.description}`),
+  ''
+].join('\n'));
 console.log('Blog gerado:', posts.length, 'artigo(s)');

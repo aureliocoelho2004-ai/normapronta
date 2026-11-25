@@ -3,6 +3,7 @@ title: NBR 14724:2024: o que mudou na formatação do TCC
 slug: nbr-14724-2024-o-que-mudou
 description: A norma de trabalhos acadêmicos foi atualizada depois de 13 anos. Veja, em linguagem simples, o que mudou na NBR 14724:2024 e o que continua igual no seu TCC.
 date: 2026-11-24
+tldr: A NBR 14724:2024 substituiu a versão de 2011. Margens (3 e 2 cm), fonte 12 e entrelinha 1,5 continuam iguais. As mudanças principais: o texto é dividido em seções (não capítulos), a fonte de ilustrações próprias passa a ser "elaborado pelo próprio autor" ou "elaboração própria", todas as ilustrações devem ter o mesmo alinhamento, há regras novas para a epígrafe e as referências de apêndices e anexos ficam junto deles.
 category: O que mudou nas normas
 faq:
   - A NBR 14724:2024 já está valendo? || Sim. A versão de 2024 cancelou e substituiu a de 2011, e recebeu uma errata em abril de 2025. Trabalhos entregues agora devem seguir a versão atual, a menos que o manual da sua instituição diga outra coisa.
