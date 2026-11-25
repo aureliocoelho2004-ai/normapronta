@@ -19,3 +19,7 @@ NBR 14724:2024, NBR 6023:2025, NBR 10520:2023, NBR 6024:2012, NBR 6027:2012 e NB
 
 - Artigos em `src/blog/posts/*.md` (cabeçalho com title, slug, description, date, category, faq, sources).
 - Gerar: `MARKED_PATH=<caminho do pacote marked> node src/blog/build-blog.js` → escreve `blog/` e atualiza `sitemap.xml`.
+
+## Acesso ao app
+
+O app (app.normaprontatcc.com.br) é protegido por senha pela Hostinger (Avançado › Diretórios protegidos por senha). Não versionar `app/.htaccess` nem `.htpasswd`.
