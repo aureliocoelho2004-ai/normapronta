@@ -30,3 +30,7 @@ O app (app.normaprontatcc.com.br) é protegido por senha pela Hostinger (Avança
 - `llms.txt` é gerado pelo build do blog com o resumo do serviço e a lista de artigos.
 - IndexNow: chave em `f6f4b17399ba7c3a6d680ecd89f3baa6.txt`. Após publicar artigo, enviar POST para https://www.bing.com/indexnow com host, key e urlList.
 - Depois de publicar, limpar o cache do CDN da Hostinger (Desempenho › CDN › Limpar cache) para robots.txt e sitemap atualizarem.
+
+## Versão offline
+
+`node src/build.js && node src/build-offline.js app/index.html NormaPronta-offline.html` gera um arquivo único com as bibliotecas embutidas (precisa das libs em /home/claude/abnt/node_modules). Não versionar o HTML gerado.
