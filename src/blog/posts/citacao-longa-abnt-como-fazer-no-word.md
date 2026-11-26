@@ -3,7 +3,6 @@ title: Citação longa na ABNT: como formatar no Word, passo a passo
 slug: citacao-longa-abnt-como-fazer-no-word
 description: Aprenda a formatar no Word a citação direta com mais de três linhas, no padrão da NBR 10520:2023: recuo de 4 cm, fonte menor, espaço simples e sem aspas.
 date: 2026-11-26
-draft: true
 tldr: A citação direta com mais de três linhas fica em parágrafo próprio, com recuo de 4 cm da margem esquerda (recomendado pela NBR 10520:2023), fonte menor que a do texto (geralmente 10), espaçamento simples, sem aspas e com a chamada da fonte no final, como (Silva, 2020, p. 15). No Word, use Parágrafo › Recuo à esquerda 4 cm, Especial: nenhum, Espaçamento entre linhas: simples.
 category: Guias práticos
 faq:
