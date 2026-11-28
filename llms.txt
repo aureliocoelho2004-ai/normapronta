@@ -14,6 +14,7 @@
 
 ## Artigos
 
+- [Como formatar corretamente meu TCC: guia completo no Word](https://normaprontatcc.com.br/blog/como-formatar-tcc-corretamente/): Passo a passo para formatar o TCC nas normas ABNT no Word: página e margens, fonte, espaçamento, títulos, sumário automático, numeração de páginas, citações, figuras e referências.
 - [Citação longa na ABNT: como formatar no Word, passo a passo](https://normaprontatcc.com.br/blog/citacao-longa-abnt-como-fazer-no-word/): Aprenda a formatar no Word a citação direta com mais de três linhas, no padrão da NBR 10520:2023: recuo de 4 cm, fonte menor, espaço simples e sem aspas.
 - [NBR 14724:2024: o que mudou na formatação do TCC](https://normaprontatcc.com.br/blog/nbr-14724-2024-o-que-mudou/): A norma de trabalhos acadêmicos foi atualizada depois de 13 anos. Veja, em linguagem simples, o que mudou na NBR 14724:2024 e o que continua igual no seu TCC.
 - [Citações na NBR 10520:2023: (SILVA, 2020) ou (Silva, 2020)?](https://normaprontatcc.com.br/blog/nbr-10520-2023-citacoes-o-que-mudou/): A norma de citações mudou em 2023 e o sobrenome entre parênteses deixou de ser em maiúsculas. Veja o que mudou, com exemplos prontos para copiar no seu TCC.

@@ -3,7 +3,6 @@ title: Como formatar corretamente meu TCC: guia completo no Word
 slug: como-formatar-tcc-corretamente
 description: Passo a passo para formatar o TCC nas normas ABNT no Word: página e margens, fonte, espaçamento, títulos, sumário automático, numeração de páginas, citações, figuras e referências.
 date: 2026-11-28
-draft: true
 tldr: Para formatar o TCC na ABNT, configure a página em A4 com margens de 3 cm (esquerda e superior) e 2 cm (direita e inferior), fonte tamanho 12, espaçamento 1,5 e texto justificado. Use os estilos de Título do Word para as seções, gere o sumário automático, conte as páginas desde a folha de rosto e mostre o número a partir da introdução. Citações longas, notas, legendas e referências ficam em espaço simples e fonte menor (referências mantêm fonte 12 na maioria dos manuais). Sempre confira o manual da sua instituição, que pode ter regras próprias.
 category: Guias práticos
 faq:
